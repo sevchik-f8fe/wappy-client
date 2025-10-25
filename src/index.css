@@ -1,0 +1,107 @@
+* {
+  box-sizing: border-box;
+}
+
+:root {
+  color-scheme: dark;
+  color: #F2EBFB;
+  background-color: #10002B;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+@font-face {
+  font-family: 'Palui';
+  src: url('./assets/fonts/PaluiSPDemo-Bold.otf');
+}
+
+@font-face {
+  font-family: 'Hasking';
+  src: url('./assets/fonts/hasking/Hasklig-Medium.ttf');
+}
+
+a {
+  color:#2196f3;
+}
+
+.checkbox {
+  font-family: 'Hasking';
+  cursor: pointer;
+  display: flex;
+  align-items: end;
+  gap: 0.5em;
+  text-align: left;
+}
+.checkbox input {
+  display: none;
+}
+.checkbox svg {
+  overflow: visible;
+  margin-top: 0.2em;
+}
+.checkbox span {
+  font-size: .8em;
+}
+.path {
+  fill: none;
+  stroke: #9667E0;
+  stroke-width: 6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: stroke-dasharray 0.5s ease, stroke-dashoffset 0.5s ease;
+  stroke-dasharray: 241 9999999;
+  stroke-dashoffset: 0;
+}
+.checkbox input:checked ~ svg .path {
+  stroke-dasharray: 70.5096664428711 9999999;
+  stroke-dashoffset: -262.2723388671875;
+}
+
+.gradient-box {
+  position: fixed;
+  top: 50%;
+  right: 50%;
+  width: 700px;
+  height: 700px;
+  border-radius: 50%;
+  filter: blur(100px);
+  mix-blend-mode: difference;
+  background-color: #10002B;
+  z-index: -2;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateX(50%) translateY(-70%) scale(1); }
+  50% { transform: translateX(50%) translateY(-30%) scale(1.2); }
+}
+
+.gb1 {
+  animation: float 8s ease-in-out infinite;
+  background: rgb(255, 0, 72, 0.5);
+  transform: translateX(10%);
+  right: 20%;
+  /* left: 25px; */
+}
+
+.gb2 {
+  animation: float 9s ease-in-out infinite;
+  background: rgb(153, 0, 255, 0.5);
+  transform: translateX(50%);
+  right: 50%;
+}
+
+.gb3 {
+  animation: float 12s ease-in-out infinite;
+  background: rgb(0, 238, 255, 0.5);
+  transform: translateX(90%);
+  right: 80%;
+  /* right: 25px; */
+}
