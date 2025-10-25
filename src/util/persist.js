@@ -1,6 +1,7 @@
 import sessionStorage from "redux-persist/lib/storage/session";
 import { persistStore, persistReducer } from "redux-persist";
 import { configureStore } from "@reduxjs/toolkit";
+import { encryptTransform } from 'redux-persist-transform-encrypt';
 
 import { dashboardReducer } from "../pages/DashboardPage/DashboardSlice";
 import { globalReducer } from "../util/globalSlice";
@@ -13,6 +14,17 @@ const persistConfig = {
     key: "user",
     version: 1,
     storage: sessionStorage,
+    transforms: [
+        encryptTransform({
+            secretKey: import.meta.env.VITE_CRYPTO_KEY,
+            onError: function (error) {
+                console.error("Encryption error:", error);
+                if (error.message.includes("decrypt")) {
+                    sessionStorage.removeItem("persist:user");
+                }
+            },
+        }),
+    ],
 };
 
 const persistedReducer = persistReducer(persistConfig, globalReducer);

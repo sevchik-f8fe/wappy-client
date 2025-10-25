@@ -12,7 +12,7 @@ export const ScrollToTop = () => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        if (pathname == '/signin' || pathname == '/signup' || pathname == '/change_email') {
+        if (pathname == '/change_email') {
             if (user == null || token == null) navigate('/')
         }
     }, [pathname, user, token, navigate])
