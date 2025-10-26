@@ -16,6 +16,7 @@ import FavoritePage from "./pages/FavoritePage/FavoritePage";
 import HistoryPage from "./pages/HistoryPage/HistoryPage";
 import { store, persistor } from "./util/persist";
 import ChangeEmailPage from "./pages/ChangeEmailPage/ChangeEmailPage";
+import ErrorPage from "./components/ErrorPage";
 
 const App = () => {
   return (
@@ -44,6 +45,7 @@ const App = () => {
             <Route path="/favorites" element={<FavoritePage />} />
             <Route path="/history" element={<HistoryPage />} />
             <Route path="/change_email" element={<ChangeEmailPage />} />
+            <Route path="*" element={<ErrorPage />} />
           </Routes>
           <Footer />
         </PersistGate>

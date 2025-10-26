@@ -42,136 +42,140 @@ const Header = () => {
     }
 
     return (
-        <>
-            <Box
-                sx={{
-                    backgroundColor: '#2a262eb0',
-                    backdropFilter: 'blur(10px)',
-                    border: '1px solid #D4BBFC',
-                    borderRadius: '1em', p: '1em',
-                    minWidth: '80%',
-                    maxWidth: '80%',
-                    m: '0em auto 2em auto',
-                    display: 'flex',
-                    alignItems: 'center',
-                    padding: '.5em 4em',
-                    justifyContent: 'space-between',
-                    gap: '1em',
-                    position: 'sticky',
-                    top: '2em',
-                    zIndex: '10000000',
-                }}
-            >
-                <Typography onClick={() => navigate('/')} sx={{ cursor: 'pointer' }} variant="h2">ваппи</Typography>
+        <> {(pathname == '/signin' || pathname == '/signup' || pathname == '/' || pathname == '/item' || pathname == '/favorites' || pathname == '/history' || pathname == '/change_email') && (
+            <>
+                <Box
+                    sx={{
+                        backgroundColor: '#2a262eb0',
+                        backdropFilter: 'blur(10px)',
+                        border: '1px solid #D4BBFC',
+                        borderRadius: '1em', p: '1em',
+                        minWidth: '80%',
+                        maxWidth: '80%',
+                        m: '0em auto 2em auto',
+                        display: 'flex',
+                        alignItems: 'center',
+                        padding: '.5em 4em',
+                        justifyContent: 'space-between',
+                        gap: '1em',
+                        position: 'sticky',
+                        top: '2em',
+                        zIndex: '10000000',
+                    }}
+                >
+                    <Typography onClick={() => navigate('/')} sx={{ cursor: 'pointer' }} variant="h2">ваппи</Typography>
 
-                <Typography variant="body2">твой проводник в мире медиа</Typography>
-                <Box sx={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '1em',
-                }}>
-                    <IconButton onClick={() => navigate('/')} disabled={pathname === '/'} color="primary">
-                        <DashboardIcon />
-                    </IconButton>
-                    <IconButton onClick={() => navigate('/history')} disabled={pathname === '/history'} color="primary">
-                        <ScheduleIcon />
-                    </IconButton>
-                    <IconButton onClick={() => navigate('/favorites')} disabled={pathname === '/favorites'} color="primary">
-                        <FavoriteIcon />
-                    </IconButton>
-                    <SpeedDial
-                        size="small"
-                        direction="down"
-                        sx={{
-                            maxHeight: '2.5em', maxWidth: '2.5em', minHeight: '2.5em', minWidth: '2.5em',
-                        }}
-                        FabProps={{
-                            sx: {
-                                maxHeight: '2.5em', maxWidth: '2.5em', minHeight: '2.5em', minWidth: '2.5em', fontSize: '.9em', backgroundColor: 'transparent', // Убираем фон
-                                boxShadow: 'none',
-                                '&:hover': {
-                                    backgroundColor: 'transparent',
-                                    boxShadow: 'none',
-                                },
-                                '&:active': {
-                                    backgroundColor: 'transparent',
-                                    boxShadow: 'none',
-                                }, color: '#a27ae2ff'
-                            },
-                        }}
-                        disabled={pathname === '/profile' || pathname === '/signin' || pathname === '/signup' || pathname === '/reset_pass' || pathname === '/change_pass'}
-                        ariaLabel="SpeedDial basic example"
-                        icon={<PersonIcon sx={{ fontSize: '2em' }} />}
-                    >
-                        {(!token || token.length < 1 || !user) ? (
-                            actionsNotAuth.map((action) => (
-                                <SpeedDialAction
-                                    key={nanoid()}
-                                    icon={action.icon}
-                                    onClick={action.onClick}
-                                    slotProps={{
-                                        tooltip: {
-                                            title: action.name,
-                                        },
-                                    }}
-                                />
-                            ))
-                        ) : (
-                            actionsAuth.map((action) => (
-                                <SpeedDialAction
-                                    key={nanoid()}
-                                    onClick={action.onClick}
-                                    icon={action.icon}
-                                    slotProps={{
-                                        tooltip: {
-                                            title: action.name,
-                                        },
-                                    }}
-                                />
-                            ))
-                        )}
-                    </SpeedDial>
-                </Box>
-            </Box >
-
-            <Dialog
-                sx={{ backgroundColor: '#3C096C6' }}
-                open={outDialog || delDialog}
-                onClose={handleClose}>
-                <DialogTitle>вы уверены{delDialog ? ', что хотите удалить аккаунт навсегда?' : ', что хотите выйти из аккаунта?'}</DialogTitle>
-                <DialogContent>
-                    <DialogContentText>
-                        введите строку "малосольный огурец", чтобы подтвердить выполнение действия
-                    </DialogContentText>
-                    <TextField
-                        autoFocus
-                        inputRef={dialogRef}
-                        margin="dense"
-                        fullWidth
-                        variant="outlined"
-                        size="small"
-                        color='primary'
-                        InputProps={{
-                            style: {
-                                color: '#000',
-                            },
-                        }}
-                    />
-                </DialogContent>
-                <DialogActions>
-                    <Button onClick={handleClose}>Отмена</Button>
-                    <Button onClick={() => {
-                        if (dialogRef.current.value == 'малосольный огурец') {
-                            if (delDialog) deleteAction()
-                            else logOutAction()
-                        } else {
-                            console.log('no')
-                        }
+                    <Typography variant="body2">твой проводник в мире медиа</Typography>
+                    <Box sx={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '1em',
                     }}>
-                        {delDialog ? "удалить" : "выйти"}
-                    </Button>
-                </DialogActions>
-            </Dialog >
+                        <IconButton onClick={() => navigate('/')} disabled={pathname === '/'} color="primary">
+                            <DashboardIcon />
+                        </IconButton>
+                        <IconButton onClick={() => navigate('/history')} disabled={pathname === '/history'} color="primary">
+                            <ScheduleIcon />
+                        </IconButton>
+                        <IconButton onClick={() => navigate('/favorites')} disabled={pathname === '/favorites'} color="primary">
+                            <FavoriteIcon />
+                        </IconButton>
+                        <SpeedDial
+                            size="small"
+                            direction="down"
+                            sx={{
+                                maxHeight: '2.5em', maxWidth: '2.5em', minHeight: '2.5em', minWidth: '2.5em',
+                            }}
+                            FabProps={{
+                                sx: {
+                                    maxHeight: '2.5em', maxWidth: '2.5em', minHeight: '2.5em', minWidth: '2.5em', fontSize: '.9em', backgroundColor: 'transparent', // Убираем фон
+                                    boxShadow: 'none',
+                                    '&:hover': {
+                                        backgroundColor: 'transparent',
+                                        boxShadow: 'none',
+                                    },
+                                    '&:active': {
+                                        backgroundColor: 'transparent',
+                                        boxShadow: 'none',
+                                    }, color: '#a27ae2ff'
+                                },
+                            }}
+                            disabled={pathname === '/profile' || pathname === '/signin' || pathname === '/signup' || pathname === '/reset_pass' || pathname === '/change_pass'}
+                            ariaLabel="SpeedDial basic example"
+                            icon={<PersonIcon sx={{ fontSize: '2em' }} />}
+                        >
+                            {(!token || token.length < 1 || !user) ? (
+                                actionsNotAuth.map((action) => (
+                                    <SpeedDialAction
+                                        key={nanoid()}
+                                        icon={action.icon}
+                                        onClick={action.onClick}
+                                        slotProps={{
+                                            tooltip: {
+                                                title: action.name,
+                                            },
+                                        }}
+                                    />
+                                ))
+                            ) : (
+                                actionsAuth.map((action) => (
+                                    <SpeedDialAction
+                                        key={nanoid()}
+                                        onClick={action.onClick}
+                                        icon={action.icon}
+                                        slotProps={{
+                                            tooltip: {
+                                                title: action.name,
+                                            },
+                                        }}
+                                    />
+                                ))
+                            )}
+                        </SpeedDial>
+                    </Box>
+                </Box >
+
+                <Dialog
+                    sx={{ backgroundColor: '#3C096C6' }}
+                    open={outDialog || delDialog}
+                    onClose={handleClose}>
+                    <DialogTitle>вы уверены{delDialog ? ', что хотите удалить аккаунт навсегда?' : ', что хотите выйти из аккаунта?'}</DialogTitle>
+                    <DialogContent>
+                        <DialogContentText>
+                            введите строку "малосольный огурец", чтобы подтвердить выполнение действия
+                        </DialogContentText>
+                        <TextField
+                            autoFocus
+                            inputRef={dialogRef}
+                            margin="dense"
+                            fullWidth
+                            variant="outlined"
+                            size="small"
+                            color='primary'
+                            InputProps={{
+                                style: {
+                                    color: '#000',
+                                },
+                            }}
+                        />
+                    </DialogContent>
+                    <DialogActions>
+                        <Button onClick={handleClose}>Отмена</Button>
+                        <Button onClick={() => {
+                            if (dialogRef.current.value == 'малосольный огурец') {
+                                if (delDialog) deleteAction()
+                                else logOutAction()
+                            } else {
+                                console.log('no')
+                            }
+                        }}>
+                            {delDialog ? "удалить" : "выйти"}
+                        </Button>
+                    </DialogActions>
+                </Dialog >
+            </>
+        )}
+
         </>
     );
 }
