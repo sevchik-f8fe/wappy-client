@@ -4,11 +4,8 @@ const itemSlice = createSlice({
     name: 'item',
     initialState: {
         variants: null,
-        currentVariant: null,
-        source_url: null,
         original_url: null,
         title: null,
-        loading: false,
     },
     reducers: {
         setData: (state, action) => {

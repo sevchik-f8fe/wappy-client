@@ -5,7 +5,7 @@ const dashboardSlice = createSlice({
     initialState: {
         data: [],
         isImg: true,
-        isVideo: true,
+        isSVG: true,
         isGif: true,
         tenorNext: null,
         query: '',
@@ -17,7 +17,7 @@ const dashboardSlice = createSlice({
         setQuery: (state, action) => {
             state.query = action.payload.query;
             state.isImg = action.payload.isImg;
-            state.isVideo = action.payload.isVideo;
+            state.isSVG = action.payload.isSVG;
             state.isGif = action.payload.isGif;
         },
         setPage: (state, action) => {

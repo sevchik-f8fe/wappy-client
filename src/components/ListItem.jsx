@@ -4,6 +4,7 @@ import DownloadIcon from '@mui/icons-material/Download';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import { useState } from "react";
+import { handleDownload } from "../util/dashboard";
 
 const ListItem = ({ source, data }) => {
     const navigate = useNavigate();
@@ -14,11 +15,25 @@ const ListItem = ({ source, data }) => {
             case 'tenor': {
                 return data?.media[0]?.gif?.url;
             }
-            case 'storyblock': {
-                return data?.thumbnail_url;
+            case 'svg': {
+                return data?.route?.dark;
             }
             default: {
-                return data?.url;
+                return data?.thumbs?.small;
+            }
+        }
+    }
+
+    const getDowloadUrl = (source, data) => {
+        switch (source) {
+            case 'tenor': {
+                return data?.media[0].gif.url;
+            }
+            case 'svg': {
+                return data?.route?.dark;
+            }
+            default: {
+                return data?.path;
             }
         }
     }
@@ -39,7 +54,7 @@ const ListItem = ({ source, data }) => {
                 overflow: 'hidden'
             }}>
             {isMouseOver && <Box
-                onClick={() => navigate('/item', { state: { id: data?.id, source: source, item: data || null } })}
+                onClick={() => navigate('/item', { state: { id: data?.id, source: source, item: data } })}
                 sx={{
                     position: 'absolute',
                     height: '100%',
@@ -64,7 +79,12 @@ const ListItem = ({ source, data }) => {
                     gap: '1em',
                     minWidth: '100%'
                 }}>
-                    <Button variant="contained">
+                    <Button
+                        onClick={(e) => {
+                            e.stopPropagation()
+                            handleDownload(getDowloadUrl(source, data), source)
+                        }}
+                        variant="contained">
                         <DownloadIcon sx={{ fontSize: '1.2em', }} />
                     </Button>
                     <Chip label={source?.toUpperCase()} variant={source} />

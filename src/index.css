@@ -85,25 +85,23 @@ a {
 
 .gb1 {
   animation: float 8s ease-in-out infinite;
-  background: rgb(255, 0, 72, 0.5);
+  background: rgba(167, 0, 47, 0.5);
   transform: translateX(10%);
   right: 20%;
-  /* left: 25px; */
 }
 
 .gb2 {
   animation: float 9s ease-in-out infinite;
-  background: rgb(153, 0, 255, 0.5);
+  background: rgba(101, 0, 168, 0.5);
   transform: translateX(50%);
   right: 50%;
 }
 
 .gb3 {
   animation: float 12s ease-in-out infinite;
-  background: rgb(0, 238, 255, 0.5);
+  background: rgba(0, 168, 180, 0.5);
   transform: translateX(90%);
   right: 80%;
-  /* right: 25px; */
 }
 
 .masonry-grid {

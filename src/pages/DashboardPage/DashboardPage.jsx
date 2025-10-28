@@ -20,13 +20,13 @@ const DashboardPage = () => {
 
     const queryRef = useRef(null);
     const isImgRef = useRef(null);
-    const isVideoRef = useRef(null);
+    const isSVGRef = useRef(null);
     const isGifRef = useRef(null);
     const lastSearchTimeRef = useRef(0);
 
     const getCurrentFilters = useCallback(() => ({
         isImg: isImgRef.current?.checked ?? true,
-        isVideo: isVideoRef.current?.checked ?? true,
+        isSVG: isSVGRef.current?.checked ?? true,
         isGif: isGifRef.current?.checked ?? true
     }), []);
 
@@ -60,7 +60,7 @@ const DashboardPage = () => {
             isImg ? axios.post('http://127.0.0.1:3000/api/photos/list',
                 { page },
                 { headers: { 'Content-Type': 'application/json' } }
-            ).then(res => res?.data?.photos?.photos).catch((err) => {
+            ).then(res => { console.log(res.data); return res?.data?.photo }).catch((err) => {
                 console.log(err);
                 notify();
                 return [];
@@ -77,11 +77,57 @@ const DashboardPage = () => {
 
         return combinedData;
     }, [tenorNext, page, dispatch, notify]);
+    //     const { isImg, isGif, isSVG } = filters;
 
-    const getContentByQuery = useCallback(async (filters, searchQuery) => {
-        const { isImg, isGif, isVideo } = filters;
+    //     const [tenor, photos, svg] = await Promise.allSettled([
+    //         isGif ? axios.post('http://127.0.0.1:3000/api/tenor/search',
+    //             { page, query: searchQuery },
+    //             { headers: { 'Content-Type': 'application/json' } }
+    //         ).then(res => res?.data?.tenor).catch((err) => {
+    //             console.log(err);
+    //             notify();
+    //             return [];
+    //         }) : Promise.resolve([]),
 
-        const [tenor, photos, storyblock_v] = await Promise.allSettled([
+    //         isImg ? axios.post('http://127.0.0.1:3000/api/photos/search',
+    //             { page, query: searchQuery },
+    //             { headers: { 'Content-Type': 'application/json' } }
+    //         ).then(res => res?.data?.photos).catch((err) => {
+    //             console.log(err);
+    //             notify();
+    //             return [];
+    //         }) : Promise.resolve([]),
+
+    //         isSVG ? axios.post('http://127.0.0.1:3000/api/svg/search',
+    //             { page, query: searchQuery },
+    //             { headers: { 'Content-Type': 'application/json' } }
+    //         ).then(res => res?.data?.svg).catch((err) => {
+    //             console.log(err);
+    //             notify();
+    //             return [];
+    //         }) : Promise.resolve([])
+    //     ]);
+
+    //     const tenorResults = tenor.status === 'fulfilled' ? tenor.value : [];
+    //     const photosResults = photos.status === 'fulfilled' ? photos.value : [];
+    //     const SVGResults = svg.status === 'fulfilled' ? svg.value : [];
+    //     const combinedData = combineAndShuffleArrays(photosResults, tenorResults, SVGResults);
+
+    //     if (combinedData.length === 0) {
+    //         dispatch(setScrollField({ field: 'hasMore', value: false }));
+    //     }
+
+    //     return combinedData;
+    // }, [page, dispatch, notify]);
+
+    const getContentByQuery = useCallback(async (filters, searchQuery, existingData = []) => {
+        const { isImg, isGif, isSVG } = filters;
+
+        const hasSVGInData = existingData.some(item => item.source === 'svg');
+
+        const shouldFetchSVG = isSVG && !hasSVGInData;
+
+        const [tenor, photos, svg] = await Promise.allSettled([
             isGif ? axios.post('http://127.0.0.1:3000/api/tenor/search',
                 { page, query: searchQuery },
                 { headers: { 'Content-Type': 'application/json' } }
@@ -91,19 +137,19 @@ const DashboardPage = () => {
                 return [];
             }) : Promise.resolve([]),
 
-            isImg ? axios.post('http://127.0.0.1:3000/api/photos/photosByQuery',
+            isImg ? axios.post('http://127.0.0.1:3000/api/photos/search',
                 { page, query: searchQuery },
                 { headers: { 'Content-Type': 'application/json' } }
-            ).then(res => res?.data?.photos?.photos).catch((err) => {
+            ).then(res => res?.data?.photos).catch((err) => {
                 console.log(err);
                 notify();
                 return [];
             }) : Promise.resolve([]),
 
-            isVideo ? axios.post('http://127.0.0.1:3000/api/storyblock/videosByQuery',
+            shouldFetchSVG ? axios.post('http://127.0.0.1:3000/api/svg/search',
                 { page, query: searchQuery },
                 { headers: { 'Content-Type': 'application/json' } }
-            ).then(res => res?.data?.storyblock?.results).catch((err) => {
+            ).then(res => res?.data?.svg).catch((err) => {
                 console.log(err);
                 notify();
                 return [];
@@ -112,8 +158,8 @@ const DashboardPage = () => {
 
         const tenorResults = tenor.status === 'fulfilled' ? tenor.value : [];
         const photosResults = photos.status === 'fulfilled' ? photos.value : [];
-        const storyblockResults = storyblock_v.status === 'fulfilled' ? storyblock_v.value : [];
-        const combinedData = combineAndShuffleArrays(photosResults, tenorResults, storyblockResults);
+        const SVGResults = svg.status === 'fulfilled' ? svg.value : [];
+        const combinedData = combineAndShuffleArrays(photosResults, tenorResults, SVGResults);
 
         if (combinedData.length === 0) {
             dispatch(setScrollField({ field: 'hasMore', value: false }));
@@ -137,7 +183,7 @@ const DashboardPage = () => {
             const newData =
                 query.length === 0
                     ? await getContentWithoutQuery(currentFilters)
-                    : await getContentByQuery(currentFilters, query);
+                    : await getContentByQuery(currentFilters, query, data);
 
             dispatch(setData({ data: [...data, ...newData] }));
         } catch (error) {
@@ -166,7 +212,7 @@ const DashboardPage = () => {
             setQuery({
                 query: searchQuery,
                 isImg: currentFilters.isImg,
-                isVideo: currentFilters.isVideo,
+                isSVG: currentFilters.isSVG,
                 isGif: currentFilters.isGif,
             })
         );
@@ -175,7 +221,7 @@ const DashboardPage = () => {
             const newData =
                 searchQuery.length === 0
                     ? await getContentWithoutQuery(currentFilters)
-                    : await getContentByQuery(currentFilters, searchQuery);
+                    : await getContentByQuery(currentFilters, searchQuery, data);
 
             dispatch(setData({ data: newData }));
         } catch (error) {
@@ -183,7 +229,7 @@ const DashboardPage = () => {
         } finally {
             dispatch(setSimpleField({ field: 'loading', value: false }));
         }
-    }, [getContentWithoutQuery, getContentByQuery, dispatch, getCurrentFilters]);
+    }, [getContentWithoutQuery, getContentByQuery, dispatch, getCurrentFilters, data]);
 
     const newFetch = debounce(unDebouncedNewFetch, 500);
 
@@ -286,11 +332,11 @@ const DashboardPage = () => {
                     <FormControlLabel
                         control={
                             <Checkbox
-                                slotProps={{ input: { ref: isVideoRef } }}
+                                slotProps={{ input: { ref: isSVGRef } }}
                                 defaultChecked
                             />
                         }
-                        label="видео"
+                        label="SVG"
                     />
                     <FormControlLabel
                         control={

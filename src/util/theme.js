@@ -158,7 +158,7 @@ export const theme = createTheme({
                     },
                 },
                 {
-                    props: { variant: 'photo' },
+                    props: { variant: 'whvn' },
                     style: {
                         backgroundColor: 'rgb(31,41,55)',
                         color: 'rgb(96,165,250)',
@@ -181,7 +181,7 @@ export const theme = createTheme({
                     },
                 },
                 {
-                    props: { variant: 'storyblock' },
+                    props: { variant: 'svg' },
                     style: {
                         backgroundColor: 'rgb(255,225,33)', // Основной желтый цвет Storyblok
                         color: '#000', // Черный текст
