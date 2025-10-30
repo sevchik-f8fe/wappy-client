@@ -105,7 +105,7 @@ const ChangeEmailPage = () => {
                                 onChange={codeHandle}
                             />
                             <Button
-                                // disabled={resendDisabled}
+                                disabled={resendDisabled}
                                 sx={{ alignSelf: 'end' }}
                                 color="linkColor"
                                 variant="text"

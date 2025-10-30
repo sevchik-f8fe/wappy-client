@@ -1,4 +1,4 @@
-import { Box, Typography, Button, Skeleton } from "@mui/material";
+import { Box, Typography, Button } from "@mui/material";
 import DownloadIcon from '@mui/icons-material/Download';
 import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
@@ -9,12 +9,18 @@ import { useTenor, useSVG, usePhoto } from "./itemHooks";
 import { nanoid } from "nanoid";
 import { setData } from "./ItemSlice";
 import { handleDownload } from "../../util/dashboard";
+import { useFavorites } from "../FavoritePage/FavoritesHooks";
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import { setGlobalData } from "../../util/globalSlice";
 
 const ItemPage = () => {
     const location = useLocation();
     const dispatch = useDispatch();
     const stateLocation = location.state;
-    const { variants, original_url, title } = useSelector((state) => state.item);
+    const { variants, original_url, title, data } = useSelector((state) => state.item);
+    const { user, token } = useSelector(state => state.global)
+    const { addToFavorites, removeFromFavorites } = useFavorites();
 
     const { getTenorVariants } = useTenor();
     const { getPhotoVariants } = usePhoto();
@@ -36,9 +42,9 @@ const ItemPage = () => {
             await axios.post('http://127.0.0.1:3000/api/tenor/getByID', { id: stateLocation.id }, { headers: { 'Content-Type': 'application/json' } })
                 .then(res => res.data.tenor)
                 .then(res => {
-                    console.log(res);
                     dispatch(setData({ field: 'variants', value: getTenorVariants(res) }));
                     dispatch(setData({ field: 'original_url', value: res.url }));
+                    dispatch(setData({ field: 'data', value: res }));
                     return res;
                 })
                 .catch((err) => {
@@ -53,7 +59,7 @@ const ItemPage = () => {
                 dispatch(setData({ field: 'variants', value: getPhotoVariants(stateLocation.item) }));
                 dispatch(setData({ field: 'original_url', value: stateLocation.item.short_url }));
                 dispatch(setData({ field: 'loading', value: false }))
-                console.log(stateLocation.item)
+                dispatch(setData({ field: 'data', value: stateLocation.item }));
                 break;
             }
             case 'svg': {
@@ -61,7 +67,7 @@ const ItemPage = () => {
                 dispatch(setData({ field: 'title', value: stateLocation.item.title }));
                 dispatch(setData({ field: 'original_url', value: stateLocation.item.url }));
                 dispatch(setData({ field: 'loading', value: false }))
-                console.log(stateLocation.item)
+                dispatch(setData({ field: 'data', value: stateLocation.item }));
                 break;
             }
             case 'tenor': {
@@ -79,6 +85,14 @@ const ItemPage = () => {
 
     const getSize = (size) => {
         return (size / (1024)).toFixed(2) > 1000 ? `${(size / (1024 * 1024)).toFixed(1)} МБ` : `${(size / (1024)).toFixed(1)} КБ`;
+    }
+
+    const handleFavoritesClick = () => {
+        if (user?.favorites?.find(elem => (elem.data == data && elem.source == stateLocation.source))) {
+            removeFromFavorites(stateLocation.source, data);
+        } else {
+            addToFavorites(stateLocation.source, data);
+        }
     }
 
     return (
@@ -99,7 +113,18 @@ const ItemPage = () => {
                         >
                             оригинал
                         </Button>
-                        <Button variant="outlined" color="secondary" size="small">в избранные</Button>
+                        <Button
+                            onClick={handleFavoritesClick}
+                            variant="outlined"
+                            color="secondary"
+                            size="small"
+                        >
+                            {user?.favorites?.find(elem => (elem.data == data && elem.source == stateLocation.source)) ? (
+                                <FavoriteIcon sx={{ fontSize: '1.2em', }} />
+                            ) : (
+                                <FavoriteBorderIcon sx={{ fontSize: '1.2em', }} />
+                            )}
+                        </Button>
                     </Box>
                     <Typography>{title}</Typography>
                     <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1em' }}>
@@ -108,7 +133,14 @@ const ItemPage = () => {
                                 key={nanoid()}
                                 color="success"
                                 variant="outlined"
-                                onClick={() => handleDownload(variant.url, stateLocation.source)}
+                                onClick={() => {
+                                    handleDownload(variant.url, stateLocation.source, data, user?.email, token)
+                                    if (user?.historyLoad?.length > 0) {
+                                        dispatch(setGlobalData({ field: 'user', value: { ...user, historyLoad: [{ source: stateLocation.source, data }, ...user.historyLoad] } }))
+                                    } else {
+                                        dispatch(setGlobalData({ field: 'user', value: { ...user, historyLoad: [{ source: stateLocation.source, data }] } }))
+                                    }
+                                }}
                             >
                                 <DownloadIcon sx={{ mr: '.5em' }} />
                                 {variant.format} {(variant?.height && variant?.width) && `${variant?.width}x${variant?.height}`} {variant?.duration && `- ${variant?.duration} сек. `}{variant?.size && `(${getSize(variant.size)})`}

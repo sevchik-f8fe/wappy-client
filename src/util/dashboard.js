@@ -5,16 +5,29 @@ export const combineAndShuffleArrays = (photos, tenor, svg) => {
 
     photos?.forEach(item => result.push({ source: 'whvn', data: item }));
     tenor?.forEach(item => result.push({ source: 'tenor', data: item }));
-    // nouns?.forEach(item => result.push({ source: 'noun', data: item }));
     svg?.forEach(item => result.push({ source: 'svg', data: item }));
-    // storyblockPhotos?.forEach(item => result.push({ source: 'storyblock', data: item }));
 
     console.log(result.sort(() => Math.random() - 0.5))
     return result.sort(() => Math.random() - 0.5);
 }
 
-export const handleDownload = async (res_url, source) => {
+export const getUrl = (source, data) => {
+    switch (source) {
+        case 'tenor': {
+            return data?.media[0]?.gif?.url;
+        }
+        case 'svg': {
+            return data?.route?.dark;
+        }
+        default: {
+            return data?.path;
+        }
+    }
+}
+
+export const handleDownload = async (res_url, source, data, email = null, token = null) => {
     try {
+        console.log(res_url);
         if (source == 'svg') {
             const svgCode = await axios.post('http://127.0.0.1:3000/api/svg/code', { name: res_url.split('/')[res_url.split('/').length - 1] })
                 .then(res => res.data.svg)
@@ -35,10 +48,14 @@ export const handleDownload = async (res_url, source) => {
             const url = window.URL.createObjectURL(blob);
             const link = document.createElement('a');
             link.href = url;
-            link.download = 'wappy.gif';
+            link.download = 'wappy';
             link.click();
             window.URL.revokeObjectURL(url);
         }
+
+        (email && token) && await axios.post('http://127.0.0.1:3000/profile/history/add', { user_email: email, item: data, source }, { headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` } })
+            .then((res) => console.log(res.data))
+            .catch(e => console.log(e))
     } catch (error) {
         console.error('Download failed:', error);
     }

@@ -4,37 +4,26 @@ import DownloadIcon from '@mui/icons-material/Download';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import { useState } from "react";
-import { handleDownload } from "../util/dashboard";
+import { getUrl, handleDownload } from "../util/dashboard";
+import { useDispatch, useSelector } from "react-redux";
+import { useFavorites } from "../pages/FavoritePage/FavoritesHooks";
+import { setGlobalData } from "../util/globalSlice";
 
-const ListItem = ({ source, data }) => {
+const ListItem = ({ source, data, loadDate }) => {
     const navigate = useNavigate();
+    const dispatch = useDispatch();
     const [isMouseOver, setIsMouseOver] = useState(false);
+    const { user, token } = useSelector(state => state.global)
 
-    const getUrl = () => {
-        switch (source) {
-            case 'tenor': {
-                return data?.media[0]?.gif?.url;
-            }
-            case 'svg': {
-                return data?.route?.dark;
-            }
-            default: {
-                return data?.thumbs?.small;
-            }
-        }
-    }
+    const { addToFavorites, removeFromFavorites } = useFavorites();
 
-    const getDowloadUrl = (source, data) => {
-        switch (source) {
-            case 'tenor': {
-                return data?.media[0].gif.url;
-            }
-            case 'svg': {
-                return data?.route?.dark;
-            }
-            default: {
-                return data?.path;
-            }
+    const handleFavoritesClick = () => {
+        if (user?.favorites?.find(elem => (elem.data == data && elem.source == source))) {
+            console.log('rem')
+            removeFromFavorites(source, data);
+        } else {
+            console.log('add')
+            addToFavorites(source, data);
         }
     }
 
@@ -74,32 +63,68 @@ const ListItem = ({ source, data }) => {
             >
                 <Box sx={{
                     display: 'flex',
-                    alignItems: 'start',
+                    alignItems: 'center',
                     justifyContent: 'space-between',
+                    flexDirection: 'column',
                     gap: '1em',
-                    minWidth: '100%'
+                    minHeight: '100%',
+                    minWidth: '100%',
                 }}>
-                    <Button
-                        onClick={(e) => {
-                            e.stopPropagation()
-                            handleDownload(getDowloadUrl(source, data), source)
+                    <Box
+                        sx={{
+                            display: 'flex',
+                            justifyContent: 'space-between',
+                            minWidth: '100%',
+                            gap: '1em',
                         }}
-                        variant="contained">
-                        <DownloadIcon sx={{ fontSize: '1.2em', }} />
-                    </Button>
-                    <Chip label={source?.toUpperCase()} variant={source} />
-                    <Button variant="contained">
-                        <FavoriteIcon sx={{ fontSize: '1.2em', }} />
-                    </Button>
+                    >
+                        <Button
+                            onClick={(e) => {
+                                e.stopPropagation()
+                                handleDownload(getUrl(source, data), source, data, user?.email, token);
+                                if (user?.historyLoad?.length > 0) {
+                                    dispatch(setGlobalData({ field: 'user', value: { ...user, historyLoad: [{ source, data, loadDate: new Date().getTime() }, ...user.historyLoad] } }))
+                                } else {
+                                    dispatch(setGlobalData({ field: 'user', value: { ...user, historyLoad: [{ source, data, loadDate: new Date().getTime() }] } }))
+                                }
+                            }}
+                            variant="contained">
+                            <DownloadIcon sx={{ fontSize: '1.2em', }} />
+                        </Button>
+                        <Chip label={source?.toUpperCase()} variant={source} />
+                        <Button
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                handleFavoritesClick();
+                            }}
+                            variant="contained"
+                        >
+                            {user?.favorites?.find(elem => (elem.data == data && elem.source == source)) ? (
+                                <FavoriteIcon sx={{ fontSize: '1.2em', }} />
+                            ) : (
+                                <FavoriteBorderIcon sx={{ fontSize: '1.2em', }} />
+                            )}
+                        </Button>
+                    </Box>
+                    <Box
+                        sx={{
+                            alignSelf: 'end',
+                            display: 'flex',
+                            justifyContent: 'end',
+                            alignItems: 'end',
+                            gap: '1em',
+
+                        }}
+                    >
+                        {loadDate && <Typography sx={{ backgroundColor: '#333', p: '2px  5px', borderRadius: '5px' }}>{new Date(loadDate)?.toLocaleDateString()}</Typography>}
+                    </Box>
+
                 </Box>
-
-                {data?.title && <Typography sx={{ textShadow: '0px 0px 6px rgba(0, 0, 0, 1)' }}>{data?.title}</Typography>}
-
             </Box>}
 
             <Box
                 component="img"
-                src={getUrl()}
+                src={getUrl(source, data)}
                 sx={{
                     width: '100%',
                     height: 'auto',

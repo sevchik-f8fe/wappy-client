@@ -6,6 +6,7 @@ const itemSlice = createSlice({
         variants: null,
         original_url: null,
         title: null,
+        data: null,
     },
     reducers: {
         setData: (state, action) => {

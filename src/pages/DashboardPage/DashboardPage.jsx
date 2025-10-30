@@ -77,48 +77,6 @@ const DashboardPage = () => {
 
         return combinedData;
     }, [tenorNext, page, dispatch, notify]);
-    //     const { isImg, isGif, isSVG } = filters;
-
-    //     const [tenor, photos, svg] = await Promise.allSettled([
-    //         isGif ? axios.post('http://127.0.0.1:3000/api/tenor/search',
-    //             { page, query: searchQuery },
-    //             { headers: { 'Content-Type': 'application/json' } }
-    //         ).then(res => res?.data?.tenor).catch((err) => {
-    //             console.log(err);
-    //             notify();
-    //             return [];
-    //         }) : Promise.resolve([]),
-
-    //         isImg ? axios.post('http://127.0.0.1:3000/api/photos/search',
-    //             { page, query: searchQuery },
-    //             { headers: { 'Content-Type': 'application/json' } }
-    //         ).then(res => res?.data?.photos).catch((err) => {
-    //             console.log(err);
-    //             notify();
-    //             return [];
-    //         }) : Promise.resolve([]),
-
-    //         isSVG ? axios.post('http://127.0.0.1:3000/api/svg/search',
-    //             { page, query: searchQuery },
-    //             { headers: { 'Content-Type': 'application/json' } }
-    //         ).then(res => res?.data?.svg).catch((err) => {
-    //             console.log(err);
-    //             notify();
-    //             return [];
-    //         }) : Promise.resolve([])
-    //     ]);
-
-    //     const tenorResults = tenor.status === 'fulfilled' ? tenor.value : [];
-    //     const photosResults = photos.status === 'fulfilled' ? photos.value : [];
-    //     const SVGResults = svg.status === 'fulfilled' ? svg.value : [];
-    //     const combinedData = combineAndShuffleArrays(photosResults, tenorResults, SVGResults);
-
-    //     if (combinedData.length === 0) {
-    //         dispatch(setScrollField({ field: 'hasMore', value: false }));
-    //     }
-
-    //     return combinedData;
-    // }, [page, dispatch, notify]);
 
     const getContentByQuery = useCallback(async (filters, searchQuery, existingData = []) => {
         const { isImg, isGif, isSVG } = filters;
