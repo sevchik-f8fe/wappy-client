@@ -1,9 +1,10 @@
 import { Box, Chip, Typography, Button } from "@mui/material";
+import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import DownloadIcon from '@mui/icons-material/Download';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
-import { useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { getUrl, handleDownload } from "../util/dashboard";
 import { useDispatch, useSelector } from "react-redux";
 import { useFavorites } from "../pages/FavoritePage/FavoritesHooks";
@@ -14,36 +15,70 @@ const ListItem = ({ source, data, loadDate }) => {
     const dispatch = useDispatch();
     const [isMouseOver, setIsMouseOver] = useState(false);
     const { user, token } = useSelector(state => state.global)
-
     const { addToFavorites, removeFromFavorites } = useFavorites();
 
-    const handleFavoritesClick = () => {
-        if (user?.favorites?.find(elem => (elem.data == data && elem.source == source))) {
-            console.log('rem')
+    const imageUrl = useMemo(() => getUrl(source, data), [source, data]);
+
+    const isFavorite = useMemo(() =>
+        user?.favorites?.find(elem => elem.data === data && elem.source === source),
+        [user, data, source]
+    );
+
+    const handleMouseEnter = useCallback(() => setIsMouseOver(true), []);
+    const handleMouseLeave = useCallback(() => setIsMouseOver(false), []);
+
+    const handleItemClick = useCallback(() => {
+        navigate('/item', { state: { id: data?.id, source, item: data } });
+    }, [navigate, data, source]);
+
+    const handleDownloadClick = useCallback((e) => {
+        e.stopPropagation();
+        handleDownload(imageUrl, source);
+
+        if (user?.historyLoad && token) {
+            dispatch(setGlobalData({
+                field: 'user',
+                value: {
+                    ...user,
+                    historyLoad: [{
+                        source,
+                        data,
+                        loadDate: Date.now()
+                    }, ...user.historyLoad]
+                }
+            }));
+
+            axios.post('http://127.0.0.1:3000/profile/history/add', { refreshToken: user?.refreshToken, email: user?.email, user_email: user?.email, item: data, source }, { headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` } })
+                .then((res) => {
+                    if (res?.data?.token) {
+                        dispatch(setGlobalData({ field: 'user', value: res?.data?.user }))
+                        dispatch(setGlobalData({ field: 'token', value: res?.data?.token }))
+                    } else {
+                        dispatch(setGlobalData({ field: 'user', value: res?.data?.user }));
+                    }
+                })
+                .catch(e => console.log(e))
+        }
+    }, [imageUrl, source, data, user, token, dispatch]);
+
+    const handleFavoritesClick = useCallback((e) => {
+        e.stopPropagation();
+        if (isFavorite) {
             removeFromFavorites(source, data);
         } else {
-            console.log('add')
             addToFavorites(source, data);
         }
-    }
+    }, [isFavorite, source, data, addToFavorites, removeFromFavorites]);
 
-    return (
-        <Box
-            onMouseOver={() => setIsMouseOver(true)}
-            onMouseOut={() => setIsMouseOver(false)}
+    const formattedDate = useMemo(() =>
+        loadDate ? new Date(loadDate).toLocaleDateString() : null,
+        [loadDate]
+    );
 
-            sx={{
-                backgroundColor: '#10002B',
-                borderRadius: '1em',
-                position: 'relative',
-                breakInside: 'avoid-column',
-                display: 'inline-block',
-                width: '100%',
-                mb: '1em',
-                overflow: 'hidden'
-            }}>
-            {isMouseOver && <Box
-                onClick={() => navigate('/item', { state: { id: data?.id, source: source, item: data } })}
+    const hoverOverlay = useMemo(() =>
+        isMouseOver && (
+            <Box
+                onClick={handleItemClick}
                 sx={{
                     position: 'absolute',
                     height: '100%',
@@ -58,7 +93,8 @@ const ListItem = ({ source, data, loadDate }) => {
                     alignItems: 'start',
                     justifyContent: 'space-between',
                     gap: '1em',
-                    padding: '1em'
+                    padding: '1em',
+                    cursor: 'pointer'
                 }}
             >
                 <Box sx={{
@@ -70,61 +106,79 @@ const ListItem = ({ source, data, loadDate }) => {
                     minHeight: '100%',
                     minWidth: '100%',
                 }}>
-                    <Box
-                        sx={{
-                            display: 'flex',
-                            justifyContent: 'space-between',
-                            minWidth: '100%',
-                            gap: '1em',
-                        }}
+                    <Box sx={{
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        minWidth: '100%',
+                        gap: '1em',
+                    }}
                     >
                         <Button
-                            onClick={(e) => {
-                                e.stopPropagation()
-                                handleDownload(getUrl(source, data), source, data, user?.email, token);
-                                if (user?.historyLoad?.length > 0) {
-                                    dispatch(setGlobalData({ field: 'user', value: { ...user, historyLoad: [{ source, data, loadDate: new Date().getTime() }, ...user.historyLoad] } }))
-                                } else {
-                                    dispatch(setGlobalData({ field: 'user', value: { ...user, historyLoad: [{ source, data, loadDate: new Date().getTime() }] } }))
-                                }
-                            }}
-                            variant="contained">
-                            <DownloadIcon sx={{ fontSize: '1.2em', }} />
-                        </Button>
-                        <Chip label={source?.toUpperCase()} variant={source} />
-                        <Button
-                            onClick={(e) => {
-                                e.stopPropagation();
-                                handleFavoritesClick();
-                            }}
+                            onClick={handleDownloadClick}
                             variant="contained"
                         >
-                            {user?.favorites?.find(elem => (elem.data == data && elem.source == source)) ? (
-                                <FavoriteIcon sx={{ fontSize: '1.2em', }} />
+                            <DownloadIcon sx={{ fontSize: '1.2em' }} />
+                        </Button>
+                        <Chip
+                            label={source?.toUpperCase()}
+                            variant={source}
+                        />
+                        <Button
+                            disabled={!user?.favorites && !token}
+                            onClick={handleFavoritesClick}
+                            variant="contained"
+                        >
+                            {isFavorite ? (
+                                <FavoriteIcon sx={{ fontSize: '1.2em' }} />
                             ) : (
-                                <FavoriteBorderIcon sx={{ fontSize: '1.2em', }} />
+                                <FavoriteBorderIcon sx={{ fontSize: '1.2em' }} />
                             )}
                         </Button>
                     </Box>
-                    <Box
-                        sx={{
-                            alignSelf: 'end',
-                            display: 'flex',
-                            justifyContent: 'end',
-                            alignItems: 'end',
-                            gap: '1em',
-
-                        }}
+                    <Box sx={{
+                        alignSelf: 'end',
+                        display: 'flex',
+                        justifyContent: 'end',
+                        alignItems: 'end',
+                        gap: '1em',
+                    }}
                     >
-                        {loadDate && <Typography sx={{ backgroundColor: '#333', p: '2px  5px', borderRadius: '5px' }}>{new Date(loadDate)?.toLocaleDateString()}</Typography>}
+                        {formattedDate && (
+                            <Typography sx={{
+                                backgroundColor: '#333',
+                                p: '2px 5px',
+                                borderRadius: '5px'
+                            }}>
+                                {formattedDate}
+                            </Typography>
+                        )}
                     </Box>
-
                 </Box>
-            </Box>}
+            </Box>
+        ),
+        [isMouseOver, handleItemClick, handleDownloadClick, source, handleFavoritesClick, user, token, isFavorite, formattedDate]
+    );
+
+    return (
+        <Box
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
+            sx={{
+                backgroundColor: '#10002B',
+                borderRadius: '1em',
+                position: 'relative',
+                breakInside: 'avoid-column',
+                display: 'inline-block',
+                width: '100%',
+                mb: '1em',
+                overflow: 'hidden'
+            }}
+        >
+            {hoverOverlay}
 
             <Box
                 component="img"
-                src={getUrl(source, data)}
+                src={imageUrl}
                 sx={{
                     width: '100%',
                     height: 'auto',
@@ -133,8 +187,9 @@ const ListItem = ({ source, data, loadDate }) => {
                     objectFit: 'contain'
                 }}
                 alt={data?.title}
+                loading="lazy"
             />
-        </Box >
+        </Box>
     );
 }
 

@@ -194,10 +194,16 @@ export const useServer = () => {
 
     const changeEmail = async (enterCode, newEmail) => {
         dispatch(setSimpleField({ field: 'loading', value: true }))
-        await axios.post('http://127.0.0.1:3000/profile/changeEmail', { enterCode, newEmail, email: user.email }, { headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` } })
+        await axios.post('http://127.0.0.1:3000/profile/changeEmail', { refreshToken: user.refreshToken, enterCode, newEmail, email: user.email }, { headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` } })
             .then((res) => res.data)
             .then((data) => {
-                dispatch(setGlobalData({ field: 'user', value: data.user }))
+                if (data?.token) {
+                    dispatch(setGlobalData({ field: 'user', value: data?.user }))
+                    dispatch(setGlobalData({ field: 'token', value: data?.token }))
+                } else {
+                    dispatch(setGlobalData({ field: 'user', value: data?.user }));
+                }
+
                 return data;
             })
             .then((data) => {

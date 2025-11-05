@@ -1,7 +1,7 @@
 import { Box, Typography, Button } from "@mui/material";
 import DownloadIcon from '@mui/icons-material/Download';
 import { useLocation } from "react-router-dom";
-import { useEffect } from "react";
+import { useCallback, useEffect } from "react";
 import axios from "axios";
 import { toast, Bounce } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
@@ -26,7 +26,7 @@ const ItemPage = () => {
     const { getPhotoVariants } = usePhoto();
     const { getSVGVariants } = useSVG();
 
-    const notify = () => toast.error("Что-то пошло не так :(", {
+    const notify = useCallback(() => toast.error("Что-то пошло не так :(", {
         position: "bottom-left",
         autoClose: 3000,
         hideProgressBar: true,
@@ -35,7 +35,7 @@ const ItemPage = () => {
         progress: undefined,
         theme: "dark",
         transition: Bounce,
-    });
+    }), []);
 
     useEffect(() => {
         const getTenor = async () => {
@@ -64,7 +64,6 @@ const ItemPage = () => {
             }
             case 'svg': {
                 dispatch(setData({ field: 'variants', value: getSVGVariants(stateLocation.item) }));
-                dispatch(setData({ field: 'title', value: stateLocation.item.title }));
                 dispatch(setData({ field: 'original_url', value: stateLocation.item.url }));
                 dispatch(setData({ field: 'loading', value: false }))
                 dispatch(setData({ field: 'data', value: stateLocation.item }));
@@ -87,20 +86,46 @@ const ItemPage = () => {
         return (size / (1024)).toFixed(2) > 1000 ? `${(size / (1024 * 1024)).toFixed(1)} МБ` : `${(size / (1024)).toFixed(1)} КБ`;
     }
 
-    const handleFavoritesClick = () => {
-        if (user?.favorites?.find(elem => (elem.data == data && elem.source == stateLocation.source))) {
+    const handleFavoritesClick = useCallback(() => {
+        if (user?.favorites?.find(elem => elem.data === data && elem.source === stateLocation.source)) {
             removeFromFavorites(stateLocation.source, data);
         } else {
             addToFavorites(stateLocation.source, data);
         }
-    }
+    }, [user, data, stateLocation.source, addToFavorites, removeFromFavorites]);
+
+
+    const handleDownloadClick = useCallback((variantUrl) => {
+        handleDownload(variantUrl, stateLocation.source);
+
+        if (user?.historyLoad && token) {
+            dispatch(setGlobalData({
+                field: 'user',
+                value: {
+                    ...user,
+                    historyLoad: [{ source: stateLocation.source, data, loadDate: Date.now() }, ...user.historyLoad]
+                }
+            }));
+
+            axios.post('http://127.0.0.1:3000/profile/history/add', { refreshToken: user?.refreshToken, email: user?.email, user_email: user?.email, item: data, source: stateLocation.source }, { headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` } })
+                .then((res) => {
+                    if (res?.data?.token) {
+                        dispatch(setGlobalData({ field: 'user', value: res?.data?.user }))
+                        dispatch(setGlobalData({ field: 'token', value: res?.data?.token }))
+                    } else {
+                        dispatch(setGlobalData({ field: 'user', value: res?.data?.user }));
+                    }
+                })
+                .catch(e => console.log(e))
+        }
+    }, [stateLocation.source, data, user, token, dispatch]);
 
     return (
         <Box sx={{ backgroundColor: '#F2EBFB30', backdropFilter: 'blur(10px)', border: '1px solid #D4BBFC', borderRadius: '1em', p: '1em', maxWidth: '80%', minWidth: '80%', m: '4em auto 2em auto' }}>
 
             <Box sx={{ display: 'flex', alignItems: 'start', gap: '1em' }}>
 
-                <img style={{ felx: 1, maxWidth: '50%', borderRadius: '1em', maxHeight: '27em' }} src={variants && variants[0]?.url} alt={title} />
+                <img style={{ felx: 1, width: '50%', borderRadius: '1em' }} src={variants && variants[0]?.url} alt={title} />
 
                 <Box sx={{ flex: 1, display: 'flex', gap: '1em', flexDirection: 'column' }}>
                     <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '1em' }}>
@@ -126,21 +151,13 @@ const ItemPage = () => {
                             )}
                         </Button>
                     </Box>
-                    <Typography>{title}</Typography>
                     <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1em' }}>
                         {variants?.map(variant => (
                             <Button
                                 key={nanoid()}
                                 color="success"
                                 variant="outlined"
-                                onClick={() => {
-                                    handleDownload(variant.url, stateLocation.source, data, user?.email, token)
-                                    if (user?.historyLoad?.length > 0) {
-                                        dispatch(setGlobalData({ field: 'user', value: { ...user, historyLoad: [{ source: stateLocation.source, data }, ...user.historyLoad] } }))
-                                    } else {
-                                        dispatch(setGlobalData({ field: 'user', value: { ...user, historyLoad: [{ source: stateLocation.source, data }] } }))
-                                    }
-                                }}
+                                onClick={() => handleDownloadClick(variant.url)}
                             >
                                 <DownloadIcon sx={{ mr: '.5em' }} />
                                 {variant.format} {(variant?.height && variant?.width) && `${variant?.width}x${variant?.height}`} {variant?.duration && `- ${variant?.duration} сек. `}{variant?.size && `(${getSize(variant.size)})`}

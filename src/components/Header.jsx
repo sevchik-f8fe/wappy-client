@@ -74,10 +74,10 @@ const Header = () => {
                         <IconButton onClick={() => navigate('/')} disabled={pathname === '/'} color="primary">
                             <DashboardIcon />
                         </IconButton>
-                        <IconButton onClick={() => navigate('/history')} disabled={pathname === '/history'} color="primary">
+                        <IconButton onClick={() => navigate('/history')} disabled={pathname === '/history' || !user?.historyLoad || !token?.length} color="primary">
                             <ScheduleIcon />
                         </IconButton>
-                        <IconButton onClick={() => navigate('/favorites')} disabled={pathname === '/favorites'} color="primary">
+                        <IconButton onClick={() => navigate('/favorites')} disabled={pathname === '/favorites' || !user?.favorites || !token?.length} color="primary">
                             <FavoriteIcon />
                         </IconButton>
                         <SpeedDial

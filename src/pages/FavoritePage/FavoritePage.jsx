@@ -3,9 +3,18 @@ import { nanoid } from "nanoid";
 import ListItem from "../../components/ListItem";
 import Masonry from "react-masonry-css";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 const FavoritePage = () => {
-    const { user } = useSelector(state => state.global)
+    const { user, token } = useSelector(state => state.global)
+
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if (!user?.favorites && token?.length == 0) navigate('/');
+    }, [user, token, navigate])
+
 
     const listItems = user?.favorites && (user?.favorites?.map((elem) =>
         <ListItem source={elem.source} data={elem.data} key={nanoid()} />

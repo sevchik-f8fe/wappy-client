@@ -17,7 +17,7 @@ export const getUrl = (source, data) => {
             return data?.media[0]?.gif?.url;
         }
         case 'svg': {
-            return data?.route?.dark;
+            return data?.route?.dark || data?.route;
         }
         default: {
             return data?.path;
@@ -25,7 +25,7 @@ export const getUrl = (source, data) => {
     }
 }
 
-export const handleDownload = async (res_url, source, data, email = null, token = null) => {
+export const handleDownload = async (res_url, source) => {
     try {
         console.log(res_url);
         if (source == 'svg') {
@@ -43,19 +43,19 @@ export const handleDownload = async (res_url, source, data, email = null, token 
             document.body.removeChild(link);
             URL.revokeObjectURL(url);
         } else {
-            const response = await fetch(res_url);
-            const blob = await response.blob();
-            const url = window.URL.createObjectURL(blob);
-            const link = document.createElement('a');
-            link.href = url;
-            link.download = 'wappy';
-            link.click();
-            window.URL.revokeObjectURL(url);
+            if (source == 'whvn') {
+                window.open(res_url, '_blank');
+            } else {
+                const response = await fetch(res_url);
+                const blob = await response.blob();
+                const url = window.URL.createObjectURL(blob);
+                const link = document.createElement('a');
+                link.href = url;
+                link.download = 'wappy';
+                link.click();
+                window.URL.revokeObjectURL(url);
+            }
         }
-
-        (email && token) && await axios.post('http://127.0.0.1:3000/profile/history/add', { user_email: email, item: data, source }, { headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` } })
-            .then((res) => console.log(res.data))
-            .catch(e => console.log(e))
     } catch (error) {
         console.error('Download failed:', error);
     }

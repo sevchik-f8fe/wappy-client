@@ -23,12 +23,12 @@ export const useTenor = () => {
 
 export const useSVG = () => {
     const getSVGVariants = (data) => {
-        return [
-            { format: 'svg (dark)', url: data.route.dark },
-            { format: 'svg (light)', url: data.route.light },
-            { format: 'svg (dark wordmark)', url: data.wordmark.dark },
-            { format: 'svg (light wordmark)', url: data.wordmark.light },
-        ]
+        return data?.route?.dark ? [
+            { format: 'svg (dark)', url: data?.route?.dark },
+            { format: 'svg (light)', url: data?.route?.light },
+            { format: 'svg (dark wordmark)', url: data?.wordmark?.dark },
+            { format: 'svg (light wordmark)', url: data?.wordmark?.light },
+        ] : [{ format: 'svg', url: data?.route }]
     }
 
     return {

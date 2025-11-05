@@ -4,6 +4,7 @@ import { setGlobalData } from "./globalSlice";
 import { setHeaderData } from "../components/HeaderSlice";
 import axios from "axios";
 import { Bounce, toast } from "react-toastify";
+import { setQuery } from "../pages/DashboardPage/DashboardSlice";
 
 export const usePannel = () => {
     const navigate = useNavigate();
@@ -27,6 +28,7 @@ export const usePannel = () => {
                 dispatch(setHeaderData({ field: 'delDialog', vale: false }));
                 dispatch(setGlobalData({ field: 'user', value: null }));
                 dispatch(setGlobalData({ field: 'token', value: null }));
+                dispatch(setQuery({ query: '', isImg: true, isSVG: true, isGif: true }));
             })
             .catch((err) => {
                 console.log(err)
@@ -39,10 +41,11 @@ export const usePannel = () => {
         dispatch(setGlobalData({ field: 'token', value: null }));
 
         dispatch(setHeaderData({ field: 'outDialog', vale: false }));
+        dispatch(setQuery({ query: '', isImg: true, isSVG: true, isGif: true }));
     }
 
     const logInAction = () => {
-        navigate('signin');
+        navigate('/signin');
     }
 
     const changeEmailAction = () => {

@@ -26,7 +26,6 @@ const GetPDFButton = ({ loadHistoryData }) => {
         doc.text('WAPPY', pageWidth / 2, 20, { align: 'center' });
         doc.setFontSize(10);
 
-        // Используем for...of вместо forEach для асинхронных операций
         for (let index = 0; index < data.length; index++) {
             const item = data[index];
 
@@ -52,10 +51,8 @@ const GetPDFButton = ({ loadHistoryData }) => {
 
             try {
                 const imageUrl = getUrl(item.source, item.data);
-                if (imageUrl) {
+                if (imageUrl && item.source != 'whvn' && item.source != 'svg') {
                     const img = await loadImage(imageUrl);
-
-                    console.log("Изображение загружено:", img);
 
                     const maxWidth = 200;
                     const maxHeight = 200;
@@ -78,7 +75,7 @@ const GetPDFButton = ({ loadHistoryData }) => {
                     doc.addImage(img, 'JPEG', 25, yPosition, imgWidth, imgHeight);
                     yPosition += imgHeight + 40;
                 } else {
-                    doc.text('URL изображения не найден', 25, yPosition);
+                    doc.text(`only url: ${imageUrl}`, 25, yPosition);
                     yPosition += 20;
                 }
             } catch (error) {

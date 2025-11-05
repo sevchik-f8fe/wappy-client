@@ -4,9 +4,16 @@ import ListItem from "../../components/ListItem";
 import Masonry from "react-masonry-css";
 import { useSelector } from "react-redux";
 import GetPDFButton from "../../components/GetPDFButton";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 const HistoryPage = () => {
-    const { user } = useSelector(state => state.global)
+    const { user, token } = useSelector(state => state.global)
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if (!user?.historyLoad && token?.length == 0) navigate('/');
+    }, [user, token, navigate])
 
     const listItems = user?.historyLoad && (user?.historyLoad?.map((elem) =>
         <ListItem source={elem.source} loadDate={elem.loadDate} data={elem.data} key={nanoid()} />
