@@ -1,4 +1,4 @@
-import axios from "axios";
+import api from "./axiosConfig";
 
 export const combineAndShuffleArrays = (photos, tenor, svg) => {
     const result = [];
@@ -29,7 +29,7 @@ export const handleDownload = async (res_url, source) => {
     try {
         console.log(res_url);
         if (source == 'svg') {
-            const svgCode = await axios.post('http://127.0.0.1:3000/api/svg/code', { name: res_url.split('/')[res_url.split('/').length - 1] })
+            const svgCode = await api.post('/api/svg/code', { name: res_url.split('/')[res_url.split('/').length - 1] })
                 .then(res => res.data.svg)
                 .catch(e => console.log(e))
 

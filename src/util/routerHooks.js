@@ -2,6 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { setSimpleField } from "../pages/SignUpPage/AuthSlice";
+import { initializeCSRF } from "./axiosConfig";
 
 
 export const ScrollToTop = () => {
@@ -33,3 +34,11 @@ export const ScrollToTop = () => {
 
     return null;
 }
+
+export const UseCSRF = () => {
+    useEffect(() => {
+        initializeCSRF();
+    }, []);
+
+    return null;
+};

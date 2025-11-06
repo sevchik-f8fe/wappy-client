@@ -2,9 +2,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom"
 import { setGlobalData } from "./globalSlice";
 import { setHeaderData } from "../components/HeaderSlice";
-import axios from "axios";
 import { Bounce, toast } from "react-toastify";
 import { setQuery } from "../pages/DashboardPage/DashboardSlice";
+import api from "./axiosConfig";
 
 export const usePannel = () => {
     const navigate = useNavigate();
@@ -22,8 +22,8 @@ export const usePannel = () => {
         transition: Bounce,
     });
 
-    const deleteAction = async () => {
-        await axios.post('http://127.0.0.1:3000/profile/delete', { email: user.email }, { headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` } })
+    const deleteAction = () => {
+        api.post('/profile/delete', { email: user.email }, { headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` } })
             .then(() => {
                 dispatch(setHeaderData({ field: 'delDialog', vale: false }));
                 dispatch(setGlobalData({ field: 'user', value: null }));

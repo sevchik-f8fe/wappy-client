@@ -2,9 +2,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { setAuthField, setAuthError, setSimpleField } from "../pages/SignUpPage/AuthSlice";
 import { setGlobalData } from "./globalSlice";
 import { useEffect, useState } from "react";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { toast, Bounce } from "react-toastify";
+import api, { initializeCSRF } from "./axiosConfig";
 
 export const useEmailHandle = () => {
     const dispatch = useDispatch();
@@ -122,7 +122,7 @@ export const useServer = () => {
 
     const setNewUser = async (data) => {
         dispatch(setSimpleField({ field: 'loading', value: true }))
-        const fetchData = await axios.post('http://127.0.0.1:3000/auth/signup', data, { headers: { 'Content-Type': 'application/json' } })
+        const fetchData = await api.post('/auth/signup', data, { headers: { 'Content-Type': 'application/json' } })
             .then((res) => res.data)
             .catch(() => {
                 notify();
@@ -135,7 +135,7 @@ export const useServer = () => {
 
     const setOldUser = async (data) => {
         dispatch(setSimpleField({ field: 'loading', value: true }))
-        const fetchData = await axios.post('http://127.0.0.1:3000/auth/signin', data, { headers: { 'Content-Type': 'application/json' } })
+        const fetchData = await api.post('/auth/signin', data, { headers: { 'Content-Type': 'application/json' } })
             .then((res) => res.data)
             .catch(() => {
                 notify();
@@ -148,7 +148,7 @@ export const useServer = () => {
 
     const sendMail = async (email, path) => {
         dispatch(setSimpleField({ field: 'loading', value: true }))
-        await axios.post('http://127.0.0.1:3000/auth/sendMail', { email, path }, { headers: { 'Content-Type': 'application/json' } })
+        await api.post('/auth/sendMail', { email, path }, { headers: { 'Content-Type': 'application/json' } })
             .then((res) => res.data)
             .catch(() => {
                 notify();
@@ -160,7 +160,7 @@ export const useServer = () => {
 
     const sendMailForChange = async (email) => {
         dispatch(setSimpleField({ field: 'loading', value: true }))
-        const fetchData = await axios.post('http://127.0.0.1:3000/auth/sendMail', { newEmail: email, email: user.email, path: 'emailChange' }, { headers: { 'Content-Type': 'application/json' } })
+        const fetchData = await api.post('/auth/sendMail', { newEmail: email, email: user.email, path: 'emailChange' }, { headers: { 'Content-Type': 'application/json' } })
             .then((res) => res.data)
             .catch(() => {
                 notify();
@@ -173,7 +173,7 @@ export const useServer = () => {
 
     const confirmMail = async (code, path) => {
         dispatch(setSimpleField({ field: 'loading', value: true }))
-        await axios.post('http://127.0.0.1:3000/auth/confirmMail', { enterCode: code, email: user.email, path: path }, { headers: { 'Content-Type': 'application/json' } })
+        await api.post('/auth/confirmMail', { enterCode: code, email: user.email, path: path }, { headers: { 'Content-Type': 'application/json' } })
             .then((res) => res.data)
             .then((data) => {
                 dispatch(setGlobalData({ field: 'user', value: data.user }))
@@ -194,7 +194,7 @@ export const useServer = () => {
 
     const changeEmail = async (enterCode, newEmail) => {
         dispatch(setSimpleField({ field: 'loading', value: true }))
-        await axios.post('http://127.0.0.1:3000/profile/changeEmail', { refreshToken: user.refreshToken, enterCode, newEmail, email: user.email }, { headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` } })
+        await api.post('/profile/changeEmail', { refreshToken: user.refreshToken, enterCode, newEmail, email: user.email }, { headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` } })
             .then((res) => res.data)
             .then((data) => {
                 if (data?.token) {

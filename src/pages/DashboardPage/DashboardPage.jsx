@@ -6,12 +6,12 @@ import { useRef, useCallback, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setData, setNextPage, setPage, setQuery, setScrollField } from "./DashboardSlice";
 import { debounce, throttle } from "lodash";
-import axios from "axios";
 import { Bounce, toast } from "react-toastify";
 import { combineAndShuffleArrays } from "../../util/dashboard";
 import { setSimpleField } from "../SignUpPage/AuthSlice";
 import useInfiniteScroll from 'react-infinite-scroll-hook';
 import Masonry from 'react-masonry-css'
+import api from "../../util/axiosConfig";
 
 const DashboardPage = () => {
     const dispatch = useDispatch();
@@ -45,7 +45,7 @@ const DashboardPage = () => {
         const { isImg, isGif } = filters;
 
         const [tenor, photos] = await Promise.allSettled([
-            isGif ? axios.post('http://127.0.0.1:3000/api/tenor/list',
+            isGif ? api.post('/api/tenor/list',
                 { next: tenorNext },
                 { headers: { 'Content-Type': 'application/json' } }
             ).then(res => res?.data?.tenor).then(res => {
@@ -57,7 +57,7 @@ const DashboardPage = () => {
                 return [];
             }) : Promise.resolve([]),
 
-            isImg ? axios.post('http://127.0.0.1:3000/api/photos/list',
+            isImg ? api.post('/api/photos/list',
                 { page },
                 { headers: { 'Content-Type': 'application/json' } }
             ).then(res => { console.log(res.data); return res?.data?.photo }).catch((err) => {
@@ -86,7 +86,7 @@ const DashboardPage = () => {
         const shouldFetchSVG = isSVG && !hasSVGInData;
 
         const [tenor, photos, svg] = await Promise.allSettled([
-            isGif ? axios.post('http://127.0.0.1:3000/api/tenor/search',
+            isGif ? api.post('/api/tenor/search',
                 { page, query: searchQuery },
                 { headers: { 'Content-Type': 'application/json' } }
             ).then(res => res?.data?.tenor).catch((err) => {
@@ -95,7 +95,7 @@ const DashboardPage = () => {
                 return [];
             }) : Promise.resolve([]),
 
-            isImg ? axios.post('http://127.0.0.1:3000/api/photos/search',
+            isImg ? api.post('/api/photos/search',
                 { page, query: searchQuery },
                 { headers: { 'Content-Type': 'application/json' } }
             ).then(res => res?.data?.photos).catch((err) => {
@@ -104,7 +104,7 @@ const DashboardPage = () => {
                 return [];
             }) : Promise.resolve([]),
 
-            shouldFetchSVG ? axios.post('http://127.0.0.1:3000/api/svg/search',
+            shouldFetchSVG ? api.post('/api/svg/search',
                 { page, query: searchQuery },
                 { headers: { 'Content-Type': 'application/json' } }
             ).then(res => res?.data?.svg).catch((err) => {

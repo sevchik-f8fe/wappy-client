@@ -6,7 +6,7 @@ import SignInPage from "./pages/SignInPage/SignInPage";
 import { ToastContainer, Bounce } from "react-toastify";
 import { PersistGate } from "redux-persist/integration/react";
 
-import { ScrollToTop } from "./util/routerHooks";
+import { ScrollToTop, UseCSRF } from "./util/routerHooks";
 import DashboardPage from "./pages/DashboardPage/DashboardPage";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
@@ -19,39 +19,40 @@ import ChangeEmailPage from "./pages/ChangeEmailPage/ChangeEmailPage";
 import ErrorPage from "./components/ErrorPage";
 
 const App = () => {
-  return (
-    <BrowserRouter>
-      <Provider store={store}>
-        <PersistGate persistor={persistor} loading={null}>
-          <ScrollToTop />
-          <Background />
-          <Header />
-          <ToastContainer
-            position="top-center"
-            autoClose={3000}
-            hideProgressBar={true}
-            newestOnTop={false}
-            closeOnClick={false}
-            rtl={false}
-            draggable
-            theme="dark"
-            transition={Bounce}
-          />
-          <Routes>
-            <Route path="/signin" element={<SignInPage />} />
-            <Route path="/signup" element={<SignUpPage />} />
-            <Route path="/" element={<DashboardPage />} />
-            <Route path="/item" element={<ItemPage />} />
-            <Route path="/favorites" element={<FavoritePage />} />
-            <Route path="/history" element={<HistoryPage />} />
-            <Route path="/change_email" element={<ChangeEmailPage />} />
-            <Route path="*" element={<ErrorPage />} />
-          </Routes>
-          <Footer />
-        </PersistGate>
-      </Provider>
-    </BrowserRouter>
-  );
+    return (
+        <BrowserRouter>
+            <Provider store={store}>
+                <PersistGate persistor={persistor} loading={null}>
+                    <ScrollToTop />
+                    <UseCSRF />
+                    <Background />
+                    <Header />
+                    <ToastContainer
+                        position="top-center"
+                        autoClose={3000}
+                        hideProgressBar={true}
+                        newestOnTop={false}
+                        closeOnClick={false}
+                        rtl={false}
+                        draggable
+                        theme="dark"
+                        transition={Bounce}
+                    />
+                    <Routes>
+                        <Route path="/signin" element={<SignInPage />} />
+                        <Route path="/signup" element={<SignUpPage />} />
+                        <Route path="/" element={<DashboardPage />} />
+                        <Route path="/item" element={<ItemPage />} />
+                        <Route path="/favorites" element={<FavoritePage />} />
+                        <Route path="/history" element={<HistoryPage />} />
+                        <Route path="/change_email" element={<ChangeEmailPage />} />
+                        <Route path="*" element={<ErrorPage />} />
+                    </Routes>
+                    <Footer />
+                </PersistGate>
+            </Provider>
+        </BrowserRouter>
+    );
 }
 
 export default App;

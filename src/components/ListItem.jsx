@@ -1,5 +1,4 @@
 import { Box, Chip, Typography, Button } from "@mui/material";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import DownloadIcon from '@mui/icons-material/Download';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
@@ -9,6 +8,7 @@ import { getUrl, handleDownload } from "../util/dashboard";
 import { useDispatch, useSelector } from "react-redux";
 import { useFavorites } from "../pages/FavoritePage/FavoritesHooks";
 import { setGlobalData } from "../util/globalSlice";
+import api from "../util/axiosConfig";
 
 const ListItem = ({ source, data, loadDate }) => {
     const navigate = useNavigate();
@@ -48,7 +48,7 @@ const ListItem = ({ source, data, loadDate }) => {
                 }
             }));
 
-            axios.post('http://127.0.0.1:3000/profile/history/add', { refreshToken: user?.refreshToken, email: user?.email, user_email: user?.email, item: data, source }, { headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` } })
+            api.post('/profile/history/add', { refreshToken: user?.refreshToken, email: user?.email, user_email: user?.email, item: data, source }, { headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` } })
                 .then((res) => {
                     if (res?.data?.token) {
                         dispatch(setGlobalData({ field: 'user', value: res?.data?.user }))

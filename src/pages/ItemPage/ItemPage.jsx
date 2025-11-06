@@ -1,8 +1,7 @@
-import { Box, Typography, Button } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import DownloadIcon from '@mui/icons-material/Download';
 import { useLocation } from "react-router-dom";
 import { useCallback, useEffect } from "react";
-import axios from "axios";
 import { toast, Bounce } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 import { useTenor, useSVG, usePhoto } from "./itemHooks";
@@ -13,6 +12,7 @@ import { useFavorites } from "../FavoritePage/FavoritesHooks";
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import { setGlobalData } from "../../util/globalSlice";
+import api from "../../util/axiosConfig";
 
 const ItemPage = () => {
     const location = useLocation();
@@ -39,7 +39,7 @@ const ItemPage = () => {
 
     useEffect(() => {
         const getTenor = async () => {
-            await axios.post('http://127.0.0.1:3000/api/tenor/getByID', { id: stateLocation.id }, { headers: { 'Content-Type': 'application/json' } })
+            await api.post('/api/tenor/getByID', { id: stateLocation.id }, { headers: { 'Content-Type': 'application/json' } })
                 .then(res => res.data.tenor)
                 .then(res => {
                     dispatch(setData({ field: 'variants', value: getTenorVariants(res) }));
@@ -107,7 +107,7 @@ const ItemPage = () => {
                 }
             }));
 
-            axios.post('http://127.0.0.1:3000/profile/history/add', { refreshToken: user?.refreshToken, email: user?.email, user_email: user?.email, item: data, source: stateLocation.source }, { headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` } })
+            api.post('/profile/history/add', { refreshToken: user?.refreshToken, email: user?.email, user_email: user?.email, item: data, source: stateLocation.source }, { headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` } })
                 .then((res) => {
                     if (res?.data?.token) {
                         dispatch(setGlobalData({ field: 'user', value: res?.data?.user }))
