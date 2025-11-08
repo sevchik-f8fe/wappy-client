@@ -10,7 +10,6 @@ import { ScrollToTop, UseCSRF } from "./util/routerHooks";
 import DashboardPage from "./pages/DashboardPage/DashboardPage";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
-import Background from "./components/Background";
 import ItemPage from "./pages/ItemPage/ItemPage";
 import FavoritePage from "./pages/FavoritePage/FavoritePage";
 import HistoryPage from "./pages/HistoryPage/HistoryPage";
@@ -25,7 +24,6 @@ const App = () => {
                 <PersistGate persistor={persistor} loading={null}>
                     <ScrollToTop />
                     <UseCSRF />
-                    <Background />
                     <Header />
                     <ToastContainer
                         position="top-center"

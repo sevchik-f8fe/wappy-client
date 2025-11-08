@@ -51,8 +51,7 @@ const DashboardPage = () => {
             ).then(res => res?.data?.tenor).then(res => {
                 dispatch(setNextPage({ field: 'tenorNext', next: res.next }));
                 return res.results;
-            }).catch((err) => {
-                console.log(err);
+            }).catch(() => {
                 notify();
                 return [];
             }) : Promise.resolve([]),
@@ -60,8 +59,7 @@ const DashboardPage = () => {
             isImg ? api.post('/api/photos/list',
                 { page },
                 { headers: { 'Content-Type': 'application/json' } }
-            ).then(res => { console.log(res.data); return res?.data?.photo }).catch((err) => {
-                console.log(err);
+            ).then(res => res?.data?.photo).catch((err) => {
                 notify();
                 return [];
             }) : Promise.resolve([])
@@ -80,7 +78,6 @@ const DashboardPage = () => {
 
     const getContentByQuery = useCallback(async (filters, searchQuery, existingData = []) => {
         const { isImg, isGif, isSVG } = filters;
-
         const hasSVGInData = existingData.some(item => item.source === 'svg');
 
         const shouldFetchSVG = isSVG && !hasSVGInData;
@@ -90,7 +87,6 @@ const DashboardPage = () => {
                 { page, query: searchQuery },
                 { headers: { 'Content-Type': 'application/json' } }
             ).then(res => res?.data?.tenor).catch((err) => {
-                console.log(err);
                 notify();
                 return [];
             }) : Promise.resolve([]),
@@ -98,8 +94,9 @@ const DashboardPage = () => {
             isImg ? api.post('/api/photos/search',
                 { page, query: searchQuery },
                 { headers: { 'Content-Type': 'application/json' } }
-            ).then(res => res?.data?.photos).catch((err) => {
-                console.log(err);
+            ).then(res => {
+                return res?.data?.photo
+            }).catch((err) => {
                 notify();
                 return [];
             }) : Promise.resolve([]),
@@ -108,7 +105,6 @@ const DashboardPage = () => {
                 { page, query: searchQuery },
                 { headers: { 'Content-Type': 'application/json' } }
             ).then(res => res?.data?.svg).catch((err) => {
-                console.log(err);
                 notify();
                 return [];
             }) : Promise.resolve([])
@@ -219,7 +215,7 @@ const DashboardPage = () => {
 
     const memoizedListItems = useMemo(() =>
         data.map((elem) =>
-            <ListItem source={elem.source} data={elem.data} key={nanoid()} />
+            <ListItem source={elem.source} data={elem.data} key={`${elem.source}:${elem.data.id}`} />
         ), [data]
     );
 
@@ -227,12 +223,12 @@ const DashboardPage = () => {
         loading,
         hasNextPage: hasMore,
         onLoadMore: loadMore,
-        rootMargin: '0px 0px 2000px 0px',
+        rootMargin: '0px 0px 1000px 0px',
     });
 
     return (
         <Box sx={{
-            backgroundColor: '#F2EBFB30',
+            backgroundColor: '#2a262eb0',
             backdropFilter: 'blur(10px)',
             border: '1px solid #D4BBFC',
             borderRadius: '1em',
@@ -317,9 +313,10 @@ const DashboardPage = () => {
                 }}
                 className="masonry-grid"
                 columnClassName="masonry-grid_column"
+                style={{ minHeight: '1500px' }}
             >
                 {memoizedListItems}
-                {(loading || hasMore) && memoizedSkeletons}
+                {(loading && hasMore) && memoizedSkeletons}
                 <div ref={sentryRef} />
             </Masonry>
         </Box>

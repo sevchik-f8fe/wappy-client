@@ -1,4 +1,4 @@
-import { Box, Typography, Button, Divider } from "@mui/material";
+import { Box, Typography, Button, Divider, Link } from "@mui/material";
 import { useLocation, useNavigate } from "react-router-dom";
 
 const Footer = () => {
@@ -28,39 +28,18 @@ const Footer = () => {
                     <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'start', gap: '1em', justifyContent: 'center' }}>
                         <Typography onClick={() => navigate('/')} sx={{ cursor: 'pointer' }} variant="h2">ваппи</Typography>
                         <Typography variant="body2">твой проводник в мире медиа</Typography>
-                        <Button color="primary" variant="contained">поиск</Button>
+                        <Button onClick={() => {
+                            if (pathname != '/') navigate('/')
+                            else window.scrollTo(0, 0);
+                        }} color="primary" variant="contained">поиск</Button>
                     </Box>
                     <Box sx={{
                         display: 'flex',
                         gap: '2em'
                     }}>
                         <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '.5em' }}>
-                            <Typography variant="body2">ПЛАТФОРМА</Typography>
-                            <Divider />
-                            <Button variant="text" color="hide" size="small">возможности</Button>
-                            <Button variant="text" color="hide" size="small">цель</Button>
-                            <Button variant="text" color="hide" size="small">планы</Button>
-                            <Button variant="text" color="hide" size="small">политика конф.</Button>
-                            <Button variant="text" color="hide" size="small">рук. пользователя</Button>
-                        </Box>
-                        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '.5em' }}>
-                            <Typography variant="body2">ПОДДЕРЖКА</Typography>
-                            <Divider />
-                            <Button variant="text" color="hide" size="small">Телеграмм</Button>
-                            <Button variant="text" color="hide" size="small">Вконтакте</Button>
-                            <Button variant="text" color="hide" size="small">макс</Button>
-                            <Button variant="text" color="hide" size="small">эл. почта</Button>
-
-                        </Box>
-                        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '.5em' }}>
-                            <Typography variant="body2">ПРОЕКТ</Typography>
-                            <Divider />
-                            <Button variant="text" color="hide" size="small">React</Button>
-                            <Button variant="text" color="hide" size="small">api</Button>
-                            <Button variant="text" color="hide" size="small">MUI</Button>
-                            <Button variant="text" color="hide" size="small">Exspress js</Button>
-                            <Button variant="text" color="hide" size="small">Redux</Button>
-
+                            <Button target="_blank" component='a' href='https://github.com/sevchik-f8fe/wappy-client' variant="text" color="hide" size="small">GitHub</Button>
+                            <Button target="_blank" component='a' href='mailto:kononovseva06@yandex.ru' variant="text" color="hide" size="small">эл. почта</Button>
                         </Box>
                     </Box>
 

@@ -47,15 +47,17 @@ const ItemPage = () => {
                     dispatch(setData({ field: 'data', value: res }));
                     return res;
                 })
-                .catch((err) => {
-                    console.log(err)
+                .catch(() => {
                     notify();
                 })
                 .finally(() => dispatch(setData({ field: 'loading', value: false })))
         }
+
         dispatch(setData({ field: 'loading', value: true }))
+
         switch (stateLocation.source) {
             case 'whvn': {
+                console.log(stateLocation.item)
                 dispatch(setData({ field: 'variants', value: getPhotoVariants(stateLocation.item) }));
                 dispatch(setData({ field: 'original_url', value: stateLocation.item.short_url }));
                 dispatch(setData({ field: 'loading', value: false }))
@@ -74,7 +76,6 @@ const ItemPage = () => {
                 break;
             }
             default: {
-                console.log('err d')
                 notify();
                 dispatch(setData({ field: 'loading', value: false }))
 
@@ -116,15 +117,12 @@ const ItemPage = () => {
                         dispatch(setGlobalData({ field: 'user', value: res?.data?.user }));
                     }
                 })
-                .catch(e => console.log(e))
         }
     }, [stateLocation.source, data, user, token, dispatch]);
 
     return (
-        <Box sx={{ backgroundColor: '#F2EBFB30', backdropFilter: 'blur(10px)', border: '1px solid #D4BBFC', borderRadius: '1em', p: '1em', maxWidth: '80%', minWidth: '80%', m: '4em auto 2em auto' }}>
-
+        <Box sx={{ backgroundColor: '#2a262eb0', backdropFilter: 'blur(10px)', border: '1px solid #D4BBFC', borderRadius: '1em', p: '1em', maxWidth: '80%', minWidth: '80%', m: '4em auto 2em auto' }}>
             <Box sx={{ display: 'flex', alignItems: 'start', gap: '1em' }}>
-
                 <img style={{ felx: 1, width: '50%', borderRadius: '1em' }} src={variants && variants[0]?.url} alt={title} />
 
                 <Box sx={{ flex: 1, display: 'flex', gap: '1em', flexDirection: 'column' }}>
@@ -165,7 +163,6 @@ const ItemPage = () => {
                         ))}
                     </Box>
                 </Box>
-
             </Box>
         </Box>
     );

@@ -10,7 +10,6 @@ const itemSlice = createSlice({
     },
     reducers: {
         setData: (state, action) => {
-            console.log(action.payload)
             const { field, value } = action.payload;
 
             state[field] = value

@@ -5,7 +5,7 @@
 :root {
   color-scheme: dark;
   color: #F2EBFB;
-  background-color: #10002B;
+  background-color: #201f22;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -63,45 +63,6 @@ a {
 .checkbox input:checked ~ svg .path {
   stroke-dasharray: 70.5096664428711 9999999;
   stroke-dashoffset: -262.2723388671875;
-}
-
-.gradient-box {
-  position: fixed;
-  top: 50%;
-  right: 50%;
-  width: 700px;
-  height: 700px;
-  border-radius: 50%;
-  filter: blur(100px);
-  mix-blend-mode: difference;
-  background-color: #10002B;
-  z-index: -2;
-}
-
-@keyframes float {
-  0%, 100% { transform: translateX(50%) translateY(-70%) scale(1); }
-  50% { transform: translateX(50%) translateY(-30%) scale(1.2); }
-}
-
-.gb1 {
-  animation: float 8s ease-in-out infinite;
-  background: rgba(167, 0, 47, 0.5);
-  transform: translateX(10%);
-  right: 20%;
-}
-
-.gb2 {
-  animation: float 9s ease-in-out infinite;
-  background: rgba(101, 0, 168, 0.5);
-  transform: translateX(50%);
-  right: 50%;
-}
-
-.gb3 {
-  animation: float 12s ease-in-out infinite;
-  background: rgba(0, 168, 180, 0.5);
-  transform: translateX(90%);
-  right: 80%;
 }
 
 .masonry-grid {

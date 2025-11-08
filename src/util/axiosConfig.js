@@ -55,12 +55,7 @@ api.interceptors.response.use(
 );
 
 export const initializeCSRF = async () => {
-    try {
-        await fetchCSRFToken();
-        console.log('CSRF token initialized');
-    } catch (error) {
-        console.warn('CSRF token initialization failed:', error);
-    }
+    await fetchCSRFToken();
 };
 
 export default api;

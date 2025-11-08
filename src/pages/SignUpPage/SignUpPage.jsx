@@ -115,7 +115,7 @@ const SignUpPage = () => {
                                 value={persOk}
                                 label='я согласен на обработку '
                                 link='персональных данных'
-                                href='#'
+                                href='../../../public/confirm_wappy.pdf'
                                 error={null}
                             />
                             <Checkbox
@@ -123,7 +123,7 @@ const SignUpPage = () => {
                                 value={confOk}
                                 label='я ознакомлен и согласен с '
                                 link='политикой конфиденциальности'
-                                href='#'
+                                href='../../../public/policy_wappy.pdf'
                                 error={null}
                             />
                         </>

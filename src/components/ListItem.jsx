@@ -17,7 +17,7 @@ const ListItem = ({ source, data, loadDate }) => {
     const { user, token } = useSelector(state => state.global)
     const { addToFavorites, removeFromFavorites } = useFavorites();
 
-    const imageUrl = useMemo(() => getUrl(source, data), [source, data]);
+    const imageUrl = useMemo(() => getUrl(source, data, 'thumb'), [source, data]);
 
     const isFavorite = useMemo(() =>
         user?.favorites?.find(elem => elem.data === data && elem.source === source),
@@ -33,7 +33,7 @@ const ListItem = ({ source, data, loadDate }) => {
 
     const handleDownloadClick = useCallback((e) => {
         e.stopPropagation();
-        handleDownload(imageUrl, source);
+        handleDownload(getUrl(source, data), source);
 
         if (user?.historyLoad && token) {
             dispatch(setGlobalData({
@@ -57,7 +57,6 @@ const ListItem = ({ source, data, loadDate }) => {
                         dispatch(setGlobalData({ field: 'user', value: res?.data?.user }));
                     }
                 })
-                .catch(e => console.log(e))
         }
     }, [imageUrl, source, data, user, token, dispatch]);
 

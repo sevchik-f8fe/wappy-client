@@ -30,8 +30,7 @@ export const usePannel = () => {
                 dispatch(setGlobalData({ field: 'token', value: null }));
                 dispatch(setQuery({ query: '', isImg: true, isSVG: true, isGif: true }));
             })
-            .catch((err) => {
-                console.log(err)
+            .catch(() => {
                 notify();
             });
     }

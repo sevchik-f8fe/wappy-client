@@ -35,8 +35,6 @@ const Header = () => {
     ]
 
     const handleClose = () => {
-        console.log('close')
-        console.log('||', delDialog || outDialog)
         dispatch(setHeaderData({ field: 'outDialog', data: false }))
         dispatch(setHeaderData({ field: 'delDialog', data: false }))
     }
@@ -63,7 +61,10 @@ const Header = () => {
                         zIndex: '10000000',
                     }}
                 >
-                    <Typography onClick={() => navigate('/')} sx={{ cursor: 'pointer' }} variant="h2">ваппи</Typography>
+                    <Typography onClick={() => {
+                        if (pathname != '/') navigate('/')
+                        else window.scrollTo(0, 0);
+                    }} sx={{ cursor: 'pointer' }} variant="h2">ваппи</Typography>
 
                     <Typography variant="body2">твой проводник в мире медиа</Typography>
                     <Box sx={{
@@ -165,8 +166,6 @@ const Header = () => {
                             if (dialogRef.current.value == 'малосольный огурец') {
                                 if (delDialog) deleteAction()
                                 else logOutAction()
-                            } else {
-                                console.log('no')
                             }
                         }}>
                             {delDialog ? "удалить" : "выйти"}

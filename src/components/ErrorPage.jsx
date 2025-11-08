@@ -6,7 +6,7 @@ const ErrorPage = () => {
 
     return (
         <Box sx={{
-            backgroundColor: 'rgba(218, 189, 189, 1)',
+            backgroundColor: '#2a262eb0',
             backdropFilter: 'blur(10px)',
             border: '1px solid #cf3737ff',
             borderRadius: '1em',

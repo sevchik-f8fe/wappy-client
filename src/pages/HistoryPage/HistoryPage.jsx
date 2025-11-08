@@ -20,7 +20,7 @@ const HistoryPage = () => {
     ));
 
     return (
-        <Box sx={{ backgroundColor: '#F2EBFB30', backdropFilter: 'blur(10px)', border: '1px solid #D4BBFC', borderRadius: '1em', p: '1em', maxWidth: '80%', minWidth: '80%', m: '4em auto 2em auto' }}>
+        <Box sx={{ backgroundColor: '#2a262eb0', backdropFilter: 'blur(10px)', border: '1px solid #D4BBFC', borderRadius: '1em', p: '1em', maxWidth: '80%', minWidth: '80%', m: '4em auto 2em auto' }}>
             <Typography variant="h1" gutterBottom>История загрузок</Typography>
             {user?.historyLoad?.length > 0 && <GetPDFButton loadHistoryData={user?.historyLoad} />}
             {user?.historyLoad?.length > 0 ? (

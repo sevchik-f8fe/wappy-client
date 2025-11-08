@@ -1,59 +1,66 @@
 import api from "./axiosConfig";
 
 export const combineAndShuffleArrays = (photos, tenor, svg) => {
-    const result = [];
+    const uniqueItems = new Map();
 
-    photos?.forEach(item => result.push({ source: 'whvn', data: item }));
-    tenor?.forEach(item => result.push({ source: 'tenor', data: item }));
-    svg?.forEach(item => result.push({ source: 'svg', data: item }));
+    const processArray = (array, source) => {
+        array?.forEach(item => {
+            const key = item.id;
+            if (key && !uniqueItems.has(key)) {
+                uniqueItems.set(key, { source, data: item });
+            }
+        });
+    };
 
-    console.log(result.sort(() => Math.random() - 0.5))
-    return result.sort(() => Math.random() - 0.5);
-}
+    processArray(photos, 'whvn');
+    processArray(tenor, 'tenor');
+    processArray(svg, 'svg');
 
-export const getUrl = (source, data) => {
+    return Array.from(uniqueItems.values()).sort(() => Math.random() - 0.5);
+};
+
+export const getUrl = (source, data, type = 'original') => {
     switch (source) {
         case 'tenor': {
+            if (type == 'thumb') return data?.media[0]?.tinygif?.url || data?.media[0]?.gif?.url;
             return data?.media[0]?.gif?.url;
         }
         case 'svg': {
             return data?.route?.dark || data?.route;
         }
         default: {
-            return data?.path;
+            if (type == 'thumb') return data?.thumbs?.small || data?.path;
+            return data?.path
         }
     }
 }
 
+const createLinkElem = (blob) => {
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = 'wappy';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+}
+
 export const handleDownload = async (res_url, source) => {
     try {
-        console.log(res_url);
         if (source == 'svg') {
             const svgCode = await api.post('/api/svg/code', { name: res_url.split('/')[res_url.split('/').length - 1] })
                 .then(res => res.data.svg)
-                .catch(e => console.log(e))
 
             const blob = new Blob([svgCode], { type: 'image/svg+xml' });
-            const url = URL.createObjectURL(blob);
-            const link = document.createElement('a');
-            link.href = url;
-            link.download = 'wappy';
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-            URL.revokeObjectURL(url);
+            createLinkElem(blob);
         } else {
             if (source == 'whvn') {
-                window.open(res_url, '_blank');
+                window.open(res_url, '_blank')
             } else {
                 const response = await fetch(res_url);
                 const blob = await response.blob();
-                const url = window.URL.createObjectURL(blob);
-                const link = document.createElement('a');
-                link.href = url;
-                link.download = 'wappy';
-                link.click();
-                window.URL.revokeObjectURL(url);
+                createLinkElem(blob)
             }
         }
     } catch (error) {

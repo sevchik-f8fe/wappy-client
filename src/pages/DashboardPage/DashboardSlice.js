@@ -32,8 +32,11 @@ const dashboardSlice = createSlice({
         },
         setData: (state, action) => {
             const { data } = action.payload;
+            const uniqueData = Array.from(
+                new Map(data.map(elem => [`${elem?.data?.id}:${elem?.source}`, elem])).values()
+            );
 
-            state.data = data
+            state.data = uniqueData;
         },
         setScrollField: (state, action) => {
             const { field, value } = action.payload;

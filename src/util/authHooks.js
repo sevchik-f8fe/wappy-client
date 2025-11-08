@@ -210,9 +210,8 @@ export const useServer = () => {
                 if (data.user.active) navigate('/');
                 return data
             })
-            .catch((err) => {
+            .catch(() => {
                 notify();
-                console.log(err)
             })
             .finally(() => {
                 dispatch(setSimpleField({ field: 'loading', value: false }))

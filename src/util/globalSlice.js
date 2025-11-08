@@ -9,7 +9,6 @@ const globalSlice = createSlice({
     },
     reducers: {
         setGlobalData: (state, action) => {
-            console.log(action.payload)
             const { field, value } = action.payload;
             state[field] = value;
         },
