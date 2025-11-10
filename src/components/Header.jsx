@@ -7,13 +7,13 @@ import PersonIcon from '@mui/icons-material/Person';
 import LoginIcon from '@mui/icons-material/Login';
 import LogoutIcon from '@mui/icons-material/Logout';
 import AlternateEmailIcon from '@mui/icons-material/AlternateEmail';
-import VpnKeyIcon from '@mui/icons-material/VpnKey';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useDispatch, useSelector } from "react-redux";
 import { nanoid } from "nanoid";
 import { setHeaderData } from "./HeaderSlice";
 import { usePannel } from "../util/headerHoocks";
 import { useRef } from "react";
+import React from 'react'; //for tests
 
 const Header = () => {
     const navigate = useNavigate();

@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useFavorites } from "../pages/FavoritePage/FavoritesHooks";
 import { setGlobalData } from "../util/globalSlice";
 import api from "../util/axiosConfig";
+import React from 'react'; //for test
 
 const ListItem = ({ source, data, loadDate }) => {
     const navigate = useNavigate();
@@ -115,6 +116,7 @@ const ListItem = ({ source, data, loadDate }) => {
                         <Button
                             onClick={handleDownloadClick}
                             variant="contained"
+                            aria-label="Download"
                         >
                             <DownloadIcon sx={{ fontSize: '1.2em' }} />
                         </Button>
@@ -126,6 +128,7 @@ const ListItem = ({ source, data, loadDate }) => {
                             disabled={!user?.favorites && !token}
                             onClick={handleFavoritesClick}
                             variant="contained"
+                            aria-label="Favorite"
                         >
                             {isFavorite ? (
                                 <FavoriteIcon sx={{ fontSize: '1.2em' }} />

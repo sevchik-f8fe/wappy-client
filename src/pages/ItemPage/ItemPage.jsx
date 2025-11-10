@@ -14,6 +14,8 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import { setGlobalData } from "../../util/globalSlice";
 import api from "../../util/axiosConfig";
 
+import React from 'react'; //for test
+
 const ItemPage = () => {
     const location = useLocation();
     const dispatch = useDispatch();
@@ -57,7 +59,6 @@ const ItemPage = () => {
 
         switch (stateLocation.source) {
             case 'whvn': {
-                console.log(stateLocation.item)
                 dispatch(setData({ field: 'variants', value: getPhotoVariants(stateLocation.item) }));
                 dispatch(setData({ field: 'original_url', value: stateLocation.item.short_url }));
                 dispatch(setData({ field: 'loading', value: false }))

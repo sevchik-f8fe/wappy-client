@@ -16,7 +16,8 @@ const persistConfig = {
     storage: sessionStorage,
     transforms: [
         encryptTransform({
-            secretKey: import.meta.env.VITE_CRYPTO_KEY,
+            secretKey: 'import.meta.env.VITE_CRYPTO_KEY', // for tests
+            // secretKey: import.meta.env.VITE_CRYPTO_KEY,
             onError: function (error) {
                 console.error("Encryption error:", error);
                 if (error.message.includes("decrypt")) {

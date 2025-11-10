@@ -8,6 +8,8 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { setAuthError, setAuthField, setSimpleField } from "./ChenageEmailSlice";
 import { useNavigate } from "react-router-dom";
 
+import React from 'react'; // for  test
+
 const ChangeEmailPage = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();

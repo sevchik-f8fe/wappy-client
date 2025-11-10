@@ -23,7 +23,7 @@ export const usePannel = () => {
     });
 
     const deleteAction = () => {
-        api.post('/profile/delete', { email: user.email }, { headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` } })
+        user?.email && api.post('/profile/delete', { email: user.email }, { headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` } })
             .then(() => {
                 dispatch(setHeaderData({ field: 'delDialog', vale: false }));
                 dispatch(setGlobalData({ field: 'user', value: null }));

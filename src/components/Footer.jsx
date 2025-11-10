@@ -1,5 +1,6 @@
-import { Box, Typography, Button, Divider, Link } from "@mui/material";
+import { Box, Typography, Button } from "@mui/material";
 import { useLocation, useNavigate } from "react-router-dom";
+import React from 'react'; //for tests
 
 const Footer = () => {
     const navigate = useNavigate();

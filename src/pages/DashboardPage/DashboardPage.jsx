@@ -12,6 +12,7 @@ import { setSimpleField } from "../SignUpPage/AuthSlice";
 import useInfiniteScroll from 'react-infinite-scroll-hook';
 import Masonry from 'react-masonry-css'
 import api from "../../util/axiosConfig";
+import React from 'react'; //for test
 
 const DashboardPage = () => {
     const dispatch = useDispatch();

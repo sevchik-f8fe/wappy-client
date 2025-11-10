@@ -1,3 +1,5 @@
+import React from 'react'; //for tests
+
 import { TextField } from "@mui/material";
 
 export const AuthField = ({ help, label, error, value, onchange, type, placeholder }) => {
@@ -16,7 +18,7 @@ export const AuthField = ({ help, label, error, value, onchange, type, placehold
             helperText={help}
             InputProps={{
                 style: {
-                    color: '#F2EBFB', // Изменяем цвет текста ввода на красный
+                    color: '#F2EBFB',
                 },
             }}
         />

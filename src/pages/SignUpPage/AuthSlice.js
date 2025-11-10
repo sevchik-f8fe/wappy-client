@@ -20,15 +20,15 @@ const authSlice = createSlice({
     reducers: {
         setAuthField: (state, action) => {
             const { field, value } = action.payload;
-            state[field].value = value;
+            if (state.hasOwnProperty(field)) state[field].value = value;
         },
         setAuthError: (state, action) => {
             const { field, error } = action.payload;
-            state[field].error = error;
+            if (state.hasOwnProperty(field)) state[field].error = error;
         },
         setSimpleField: (state, action) => {
             const { field, value } = action.payload;
-            state[field] = value;
+            if (state.hasOwnProperty(field)) state[field] = value;
         }
     }
 });

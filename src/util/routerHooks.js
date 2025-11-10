@@ -37,7 +37,9 @@ export const ScrollToTop = () => {
 
 export const UseCSRF = () => {
     useEffect(() => {
-        initializeCSRF();
+        initializeCSRF().catch(() => {
+            console.error('Failed to initialize CSRF');
+        });
     }, []);
 
     return null;

@@ -1,4 +1,7 @@
 import { Button } from "@mui/material";
+
+import React from 'react'; //for tests
+
 import jsPDF from "jspdf";
 import { getUrl } from "../util/dashboard";
 import { useState } from "react";
@@ -95,7 +98,9 @@ const GetPDFButton = ({ loadHistoryData }) => {
             loading={loading}
             variant="contained"
             color="primary"
-            onClick={() => generatePDF(loadHistoryData)}
+            onClick={() => {
+                generatePDF(loadHistoryData)
+            }}
         >
             получить  отчет
         </Button>

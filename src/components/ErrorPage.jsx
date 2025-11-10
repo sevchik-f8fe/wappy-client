@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { Box, Typography, Button } from "@mui/material";
+import React from 'react'; //for tests
 
 const ErrorPage = () => {
     const navigate = useNavigate();

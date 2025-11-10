@@ -10,7 +10,7 @@ const headerSlice = createSlice({
         setHeaderData: (state, action) => {
             const { data, field } = action.payload;
 
-            state[field] = data;
+            if (state.hasOwnProperty(field)) state[field] = data;
         },
     }
 });

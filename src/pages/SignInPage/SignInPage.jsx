@@ -2,6 +2,7 @@ import { Box, Typography, Button, Step, Stepper, StepLabel } from "@mui/material
 import { MuiOtpInput } from 'mui-one-time-password-input';
 import { useCallback, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import React from 'react'; //for test
 
 import { setSimpleField } from "../SignUpPage/AuthSlice";
 import { AuthField } from "../../components/AuthField";

@@ -4,7 +4,7 @@ import { setGlobalData } from "./globalSlice";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast, Bounce } from "react-toastify";
-import api, { initializeCSRF } from "./axiosConfig";
+import api from "./axiosConfig";
 
 export const useEmailHandle = () => {
     const dispatch = useDispatch();

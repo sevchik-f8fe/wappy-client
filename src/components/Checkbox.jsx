@@ -1,3 +1,5 @@
+import React from 'react'; //for tests
+
 export const Checkbox = ({ error, label, link, href, value, onchange }) => {
     return (
         <div>

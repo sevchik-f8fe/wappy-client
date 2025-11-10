@@ -19,6 +19,7 @@ const dashboardSlice = createSlice({
             state.isImg = action.payload.isImg;
             state.isSVG = action.payload.isSVG;
             state.isGif = action.payload.isGif;
+            state.page = 1;
         },
         setPage: (state, action) => {
             const { page } = action.payload;
