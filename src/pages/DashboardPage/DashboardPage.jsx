@@ -52,8 +52,9 @@ const DashboardPage = () => {
             ).then(res => res?.data?.tenor).then(res => {
                 dispatch(setNextPage({ field: 'tenorNext', next: res.next }));
                 return res.results;
-            }).catch(() => {
+            }).catch((e) => {
                 notify();
+                console.log(e)
                 return [];
             }) : Promise.resolve([]),
 
@@ -63,7 +64,11 @@ const DashboardPage = () => {
             ).then(res => res?.data?.photo).catch((err) => {
                 notify();
                 return [];
-            }) : Promise.resolve([])
+            }).catch((e) => {
+                notify();
+                console.log(e)
+                return [];
+            }) : Promise.resolve([]),
         ]);
 
         const tenorResults = tenor.status === 'fulfilled' ? tenor.value : [];

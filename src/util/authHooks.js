@@ -137,7 +137,8 @@ export const useServer = () => {
         dispatch(setSimpleField({ field: 'loading', value: true }))
         const fetchData = await api.post('/auth/signin', data, { headers: { 'Content-Type': 'application/json' } })
             .then((res) => res.data)
-            .catch(() => {
+            .catch((err) => {
+                console.log(err)
                 notify();
             })
             .finally(() => {

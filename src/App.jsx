@@ -7,7 +7,7 @@ import SignInPage from "./pages/SignInPage/SignInPage";
 import { ToastContainer, Bounce } from "react-toastify";
 import { PersistGate } from "redux-persist/integration/react";
 
-import { ScrollToTop, UseCSRF } from "./util/routerHooks";
+import { ScrollToTop } from "./util/routerHooks";
 import DashboardPage from "./pages/DashboardPage/DashboardPage";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
@@ -24,7 +24,6 @@ const App = () => {
             <Provider store={store}>
                 <PersistGate persistor={persistor} loading={null}>
                     <ScrollToTop />
-                    <UseCSRF />
                     <Header />
                     <ToastContainer
                         position="top-center"

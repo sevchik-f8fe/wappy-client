@@ -2,8 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { setSimpleField } from "../pages/SignUpPage/AuthSlice";
-import { initializeCSRF } from "./axiosConfig";
-
+import { getCsrfToken } from "./axiosConfig";
 
 export const ScrollToTop = () => {
     const { user, token } = useSelector((state) => state.global);
@@ -34,13 +33,3 @@ export const ScrollToTop = () => {
 
     return null;
 }
-
-export const UseCSRF = () => {
-    useEffect(() => {
-        initializeCSRF().catch(() => {
-            console.error('Failed to initialize CSRF');
-        });
-    }, []);
-
-    return null;
-};
