@@ -20,7 +20,7 @@ import ErrorPage from "./components/ErrorPage";
 
 const App = () => {
     return (
-        <BrowserRouter>
+        <BrowserRouter basename="wappy-client">
             <Provider store={store}>
                 <PersistGate persistor={persistor} loading={null}>
                     <ScrollToTop />
