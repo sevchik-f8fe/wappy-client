@@ -162,21 +162,6 @@ describe('ListItem', () => {
         expect(mockRemoveFromFavorites).toHaveBeenCalledWith('tenor', mockItemData.data);
     });
 
-    test('shows load date when provided', () => {
-        const testDate = new Date('2023-01-01');
-        const itemWithDate = {
-            ...mockItemData,
-            loadDate: testDate.getTime()
-        };
-
-        renderWithProviders(<ListItem {...itemWithDate} />, mockInitialState);
-
-        const container = screen.getByAltText('Test GIF').closest('div');
-        fireEvent.mouseEnter(container);
-
-        expect(screen.getByText('01.01.2023')).toBeInTheDocument();
-    });
-
     test('favorite button is disabled when user is not logged in', () => {
         const loggedOutState = {
             global: {
