@@ -1,4 +1,5 @@
 <img width="1904" height="964" alt="Pasted image 20251114124726" src="https://github.com/user-attachments/assets/b479fa2b-e8a2-4f20-86ba-ff638a2ac3fa" />
+
 # WAPPY 
 
 ---
