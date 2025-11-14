@@ -22,7 +22,9 @@ You don't have to register to download or find what you need.
 ---
 ## Theme
 <img width="1920" height="845" alt="Pasted image 20251114132238" src="https://github.com/user-attachments/assets/752c1b2d-a784-4e47-bda6-35bebd50865d" />
-[paluiSP](https://fonts-online.ru/fonts/palui-sp), [hasklig](https://fonts-online.ru/fonts/hasklig)
+
+- **Palui SP**: Необычный декоративный шрифт. [Скачать шрифт](https://fonts-online.ru/fonts/palui-sp)
+- **Hasklig**: Программистский шрифт с лигатурами. [Скачать шрифт](https://fonts-online.ru/fonts/hasklig)
 
 ---
 ## What To Fix?
