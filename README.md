@@ -2,7 +2,6 @@
 
 # WAPPY 
 
----
 Wappy is the website for my course and graduation project. First of all, it was created to create media content (stock images from wallheven, gifs from tenor and svg from svgl). The number of API resources to search is limited by the budget and location :)
 
 I'm not promoting this as a convenient tool or replacement for something, because I would never use it myself, but **you can use this project to understand the main technologies used or write your thesis project** :))
