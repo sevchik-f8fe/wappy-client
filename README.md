@@ -1,6 +1,6 @@
 [![npm version](https://img.shields.io/npm/v/@renditions/react-img.svg?style=flat-square)](https://www.npmjs.com/package/@renditions/react-img) [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat-square)](https://github.com/feross/standard)
 
-![Static Badge](https://img.shields.io/badge/REACT-red?logo=react&logoColor=%2361DAFB&labelColor=grey&color=%2361DAFB) ![Static Badge](https://img.shields.io/badge/VITE-red?logo=vite&logoColor=%23646CFF&labelColor=grey&color=%23646CFF)![Static Badge](https://img.shields.io/badge/JEST-red?logo=jest&logoColor=%23C21325&labelColor=grey&color=%23C21325) ![Static Badge](https://img.shields.io/badge/MUI-red?logo=mui&logoColor=%23007FFF&labelColor=grey&color=%23007FFF) ![Static Badge](https://img.shields.io/badge/REDUX-red?logo=redux&logoColor=%23764ABC&labelColor=grey&color=%23764ABC)
+![Static Badge](https://img.shields.io/badge/REACT-red?logo=react&logoColor=%2361DAFB&labelColor=black&color=%2361DAFB) ![Static Badge](https://img.shields.io/badge/VITE-red?logo=vite&logoColor=%23646CFF&labelColor=black&color=%23646CFF)![Static Badge](https://img.shields.io/badge/JEST-red?logo=jest&logoColor=%23C21325&labelColor=black&color=%23C21325) ![Static Badge](https://img.shields.io/badge/MUI-red?logo=mui&logoColor=%23007FFF&labelColor=black&color=%23007FFF) ![Static Badge](https://img.shields.io/badge/REDUX-red?logo=redux&logoColor=%23764ABC&labelColor=black&color=%23764ABC)
 
 
 
