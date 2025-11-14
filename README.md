@@ -1,3 +1,9 @@
+[![npm version](https://img.shields.io/npm/v/@renditions/react-img.svg?style=flat-square)](https://www.npmjs.com/package/@renditions/react-img) [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat-square)](https://github.com/feross/standard)
+
+![Static Badge](https://img.shields.io/badge/REACT-19.2.0-red?logo=react&logoColor=%2361DAFB&labelColor=white&color=%2361DAFB)![Static Badge](https://img.shields.io/badge/VITE-7.2.0-red?logo=vite&logoColor=%23646CFF&labelColor=white&color=%23646CFF)![Static Badge](https://img.shields.io/badge/JEST-30.2.0-red?logo=jest&logoColor=%23C21325&labelColor=white&color=%23C21325)![Static Badge](https://img.shields.io/badge/MUI-red?logo=mui&logoColor=%23007FFF&labelColor=white&color=%23007FFF)
+
+
+
 <img width="1904" height="964" alt="Pasted image 20251114124726" src="https://github.com/user-attachments/assets/b479fa2b-e8a2-4f20-86ba-ff638a2ac3fa" />
 
 # WAPPY 
