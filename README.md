@@ -1,5 +1,6 @@
-![[Pasted image 20251114124726.png]]
-# WAPPY ![[Pasted image 20251114130129.png]]
+![[Past<img width="1904" height="964" alt="Pasted image 20251114124726" src="https://github.com/user-attachments/assets/b479fa2b-e8a2-4f20-86ba-ff638a2ac3fa" />
+ed image 20251114130129.png]]
+# WAPPY 
 ---
 Wappy is the website for my course and graduation project. First of all, it was created to create media content (stock images from wallheven, gifs from tenor and svg from svgl). The number of API resources to search is limited by the budget and location :)
 
@@ -12,15 +13,15 @@ I'm not promoting this as a convenient tool or replacement for something, becaus
 ## How To Use 
 
 when you visit the site, you get to the main page where you can search (in english only). Logs are collected during the search and other requests (req), but they are not shared with anyone. 
-![[Pasted image 20251114130228.png]]
+<img width="1903" height="960" alt="Pasted image 20251114130228" src="https://github.com/user-attachments/assets/eabd59da-c80b-447e-8dde-3611c75dcbe8" />
 *how the search works*: the search queries are sent to the server in parallel. the returned results are checked and shuffled.
 You don't have to register to download or find what you need.
-![[Pasted image 20251114130713.png]]
+<img width="1901" height="966" alt="Pasted image 20251114130713" src="https://github.com/user-attachments/assets/6f0e36aa-9b55-4c31-b354-c537404f81b2" />
 **Key features**: two-factor authentication, registration, confirmation when changing email (Yandex SMTP), session storage encryption (absolutely all your data), CSRF token stored in axios, favorites, history of load, ~~inability to directly download images from Wallhaven~~:)
 
 ---
 ## Theme
-![[Pasted image 20251114132238.png]]
+<img width="1920" height="845" alt="Pasted image 20251114132238" src="https://github.com/user-attachments/assets/752c1b2d-a784-4e47-bda6-35bebd50865d" />
 **fonts** - paluiSP, hasklig
 
 ---
