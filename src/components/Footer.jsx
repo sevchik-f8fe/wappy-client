@@ -1,10 +1,35 @@
+/**
+ * Нижний колонтитул приложения
+ * 
+ * Отображается на основных страницах:
+ * - /signin, /signup, /, /item, /favorites, /history, /change_email
+ * 
+ * Структура:
+ * - Левая часть: логотип, описание, кнопка поиска
+ * - Правая часть: ссылки на GitHub и email
+ * 
+ * Особенности:
+ * - Стеклянный эффект (blur) с фиолетовой границей
+ * - Адаптивные отступы (разные для десктопа и мобильных)
+ * - Кнопка поиска: на главной скроллит вверх, иначе переходит на главную
+ * - useMediaQuery для адаптивности (breakpoint 'md')
+ * 
+ * Навигация:
+ * - Логотип ведет на главную
+ * - GitHub открывается в новой вкладке (target="_blank")
+ */
+
 import { Box, Typography, Button } from "@mui/material";
 import { useLocation, useNavigate } from "react-router-dom";
 import React from 'react'; //for tests
+import { useTheme } from '@mui/material/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
 
 const Footer = () => {
     const navigate = useNavigate();
     const { pathname } = useLocation();
+    const theme = useTheme();
+    const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
     return (
         <>
@@ -15,12 +40,12 @@ const Footer = () => {
                         backdropFilter: 'blur(10px)',
                         border: '1px solid #D4BBFC',
                         borderRadius: '1em', p: '1em',
-                        minWidth: '80%',
-                        maxWidth: '80%',
+                        maxWidth: !isMobile ? '80%' : '100%',
+                        minWidth: !isMobile ? '80%' : '100%',
                         m: '2em auto',
                         display: 'flex',
                         alignItems: 'center',
-                        padding: '2em 4em',
+                        padding: isMobile ? '1em 1em' : '2em 4em',
                         justifyContent: 'space-between',
                         gap: '1em'
                     }
@@ -32,7 +57,7 @@ const Footer = () => {
                         <Button onClick={() => {
                             if (pathname != '/') navigate('/')
                             else window.scrollTo(0, 0);
-                        }} color="primary" variant="contained">поиск</Button>
+                        }} size={isMobile ? 'small' : 'medium'} color="primary" variant="contained">поиск</Button>
                     </Box>
                     <Box sx={{
                         display: 'flex',
@@ -44,7 +69,7 @@ const Footer = () => {
                         </Box>
                     </Box>
 
-                </Box>
+                </Box >
             )}
         </>
     );

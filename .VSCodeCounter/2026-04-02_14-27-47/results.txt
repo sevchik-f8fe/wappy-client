@@ -1,0 +1,118 @@
+Date : 2026-04-02 14:27:47
+Directory : c:\Users\TBG\Documents\wappy\client
+Total : 67 files,  16851 codes, 732 comments, 921 blanks, all 18504 lines
+
+Languages
++----------------+------------+------------+------------+------------+------------+
+| language       | files      | code       | comment    | blank      | total      |
++----------------+------------+------------+------------+------------+------------+
+| JSON           |          2 |     11,050 |          0 |          2 |     11,052 |
+| JavaScript JSX |         31 |      3,679 |        466 |        524 |      4,669 |
+| JavaScript     |         30 |      1,967 |        266 |        363 |      2,596 |
+| CSS            |          1 |         72 |          0 |         10 |         82 |
+| YAML           |          1 |         46 |          0 |         13 |         59 |
+| Markdown       |          1 |         23 |          0 |          8 |         31 |
+| HTML           |          1 |         14 |          0 |          1 |         15 |
++----------------+------------+------------+------------+------------+------------+
+
+Directories
++--------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                                 | files      | code       | comment    | blank      | total      |
++--------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                                    |         67 |     16,851 |        732 |        921 |     18,504 |
+| . (Files)                                                                            |          6 |     11,129 |          1 |         15 |     11,145 |
+| .github                                                                              |          1 |         46 |          0 |         13 |         59 |
+| .github\workflows                                                                    |          1 |         46 |          0 |         13 |         59 |
+| src                                                                                  |         60 |      5,676 |        731 |        893 |      7,300 |
+| src (Files)                                                                          |          4 |        176 |         51 |         25 |        252 |
+| src\components                                                                       |          9 |        707 |        208 |         75 |        990 |
+| src\pages                                                                            |         13 |      1,524 |        324 |        180 |      2,028 |
+| src\pages\ChangeEmailPage                                                            |          2 |        197 |         44 |         31 |        272 |
+| src\pages\DashboardPage                                                              |          2 |        419 |         54 |         58 |        531 |
+| src\pages\FavoritePage                                                               |          2 |         89 |         45 |         15 |        149 |
+| src\pages\HistoryPage                                                                |          1 |         57 |         22 |          6 |         85 |
+| src\pages\ItemPage                                                                   |          3 |        271 |         69 |         31 |        371 |
+| src\pages\SignInPage                                                                 |          1 |        204 |         31 |         15 |        250 |
+| src\pages\SignUpPage                                                                 |          2 |        287 |         59 |         24 |        370 |
+| src\util                                                                             |         34 |      3,269 |        148 |        613 |      4,030 |
+| src\util (Files)                                                                     |          8 |        712 |        139 |         85 |        936 |
+| src\util\__mocks__                                                                   |          1 |         14 |          0 |          1 |         15 |
+| src\util\tests                                                                       |         25 |      2,543 |          9 |        527 |      3,079 |
+| src\util\tests\components                                                            |          8 |        585 |          1 |        123 |        709 |
+| src\util\tests\hooks                                                                 |         12 |        987 |          2 |        227 |      1,216 |
+| src\util\tests\pages                                                                 |          5 |        971 |          6 |        177 |      1,154 |
++--------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++--------------------------------------------------------------------------------------+----------------+------------+------------+------------+------------+
+| filename                                                                             | language       | code       | comment    | blank      | total      |
++--------------------------------------------------------------------------------------+----------------+------------+------------+------------+------------+
+| c:\Users\TBG\Documents\wappy\client\.github\workflows\test.yml                       | YAML           |         46 |          0 |         13 |         59 |
+| c:\Users\TBG\Documents\wappy\client\README.md                                        | Markdown       |         23 |          0 |          8 |         31 |
+| c:\Users\TBG\Documents\wappy\client\eslint.config.js                                 | JavaScript     |         28 |          0 |          2 |         30 |
+| c:\Users\TBG\Documents\wappy\client\index.html                                       | HTML           |         14 |          0 |          1 |         15 |
+| c:\Users\TBG\Documents\wappy\client\package-lock.json                                | JSON           |     10,962 |          0 |          1 |     10,963 |
+| c:\Users\TBG\Documents\wappy\client\package.json                                     | JSON           |         88 |          0 |          1 |         89 |
+| c:\Users\TBG\Documents\wappy\client\src\App.jsx                                      | JavaScript JSX |         52 |         29 |          5 |         86 |
+| c:\Users\TBG\Documents\wappy\client\src\components\AuthContainer.jsx                 | JavaScript JSX |         31 |         20 |          4 |         55 |
+| c:\Users\TBG\Documents\wappy\client\src\components\AuthField.jsx                     | JavaScript JSX |         24 |         18 |          3 |         45 |
+| c:\Users\TBG\Documents\wappy\client\src\components\Checkbox.jsx                      | JavaScript JSX |         16 |         22 |          2 |         40 |
+| c:\Users\TBG\Documents\wappy\client\src\components\ErrorPage.jsx                     | JavaScript JSX |         32 |         21 |          4 |         57 |
+| c:\Users\TBG\Documents\wappy\client\src\components\Footer.jsx                        | JavaScript JSX |         53 |         20 |          5 |         78 |
+| c:\Users\TBG\Documents\wappy\client\src\components\GetPDFButton.jsx                  | JavaScript JSX |         88 |         26 |         23 |        137 |
+| c:\Users\TBG\Documents\wappy\client\src\components\Header.jsx                        | JavaScript JSX |        269 |         27 |         15 |        311 |
+| c:\Users\TBG\Documents\wappy\client\src\components\HeaderSlice.js                    | JavaScript     |         16 |         18 |          5 |         39 |
+| c:\Users\TBG\Documents\wappy\client\src\components\ListItem.jsx                      | JavaScript JSX |        178 |         36 |         14 |        228 |
+| c:\Users\TBG\Documents\wappy\client\src\index.css                                    | CSS            |         72 |          0 |         10 |         82 |
+| c:\Users\TBG\Documents\wappy\client\src\main.jsx                                     | JavaScript JSX |         11 |         22 |          3 |         36 |
+| c:\Users\TBG\Documents\wappy\client\src\pages\ChangeEmailPage\ChangeEmailPage.jsx    | JavaScript JSX |        171 |         25 |         25 |        221 |
+| c:\Users\TBG\Documents\wappy\client\src\pages\ChangeEmailPage\ChenageEmailSlice.js   | JavaScript     |         26 |         19 |          6 |         51 |
+| c:\Users\TBG\Documents\wappy\client\src\pages\DashboardPage\DashboardPage.jsx        | JavaScript JSX |        374 |         32 |         50 |        456 |
+| c:\Users\TBG\Documents\wappy\client\src\pages\DashboardPage\DashboardSlice.js        | JavaScript     |         45 |         22 |          8 |         75 |
+| c:\Users\TBG\Documents\wappy\client\src\pages\FavoritePage\FavoritePage.jsx          | JavaScript JSX |         54 |         20 |          8 |         82 |
+| c:\Users\TBG\Documents\wappy\client\src\pages\FavoritePage\FavoritesHooks.js         | JavaScript     |         35 |         25 |          7 |         67 |
+| c:\Users\TBG\Documents\wappy\client\src\pages\HistoryPage\HistoryPage.jsx            | JavaScript JSX |         57 |         22 |          6 |         85 |
+| c:\Users\TBG\Documents\wappy\client\src\pages\ItemPage\ItemPage.jsx                  | JavaScript JSX |        203 |         27 |         20 |        250 |
+| c:\Users\TBG\Documents\wappy\client\src\pages\ItemPage\ItemSlice.js                  | JavaScript     |         18 |         18 |          5 |         41 |
+| c:\Users\TBG\Documents\wappy\client\src\pages\ItemPage\itemHooks.jsx                 | JavaScript JSX |         50 |         24 |          6 |         80 |
+| c:\Users\TBG\Documents\wappy\client\src\pages\SignInPage\SignInPage.jsx              | JavaScript JSX |        204 |         31 |         15 |        250 |
+| c:\Users\TBG\Documents\wappy\client\src\pages\SignUpPage\AuthSlice.js                | JavaScript     |         31 |         22 |          8 |         61 |
+| c:\Users\TBG\Documents\wappy\client\src\pages\SignUpPage\SignUpPage.jsx              | JavaScript JSX |        256 |         37 |         16 |        309 |
+| c:\Users\TBG\Documents\wappy\client\src\setupTests.js                                | JavaScript     |         41 |          0 |          7 |         48 |
+| c:\Users\TBG\Documents\wappy\client\src\util\__mocks__\axiosConfig.js                | JavaScript     |         14 |          0 |          1 |         15 |
+| c:\Users\TBG\Documents\wappy\client\src\util\authHooks.js                            | JavaScript     |        199 |         13 |         32 |        244 |
+| c:\Users\TBG\Documents\wappy\client\src\util\axiosConfig.js                          | JavaScript     |         74 |         16 |         16 |        106 |
+| c:\Users\TBG\Documents\wappy\client\src\util\dashboard.js                            | JavaScript     |         61 |         13 |         10 |         84 |
+| c:\Users\TBG\Documents\wappy\client\src\util\globalSlice.js                          | JavaScript     |         17 |         14 |          4 |         35 |
+| c:\Users\TBG\Documents\wappy\client\src\util\headerHoocks.js                         | JavaScript     |         49 |         15 |          9 |         73 |
+| c:\Users\TBG\Documents\wappy\client\src\util\persist.js                              | JavaScript     |         42 |         19 |          6 |         67 |
+| c:\Users\TBG\Documents\wappy\client\src\util\routerHooks.js                          | JavaScript     |         28 |         22 |          6 |         56 |
+| c:\Users\TBG\Documents\wappy\client\src\util\tests\components\AuthContainer.test.jsx | JavaScript JSX |         57 |          0 |          8 |         65 |
+| c:\Users\TBG\Documents\wappy\client\src\util\tests\components\AuthField.test.jsx     | JavaScript JSX |         53 |          0 |          9 |         62 |
+| c:\Users\TBG\Documents\wappy\client\src\util\tests\components\Checkbox.test.jsx      | JavaScript JSX |         63 |          0 |         10 |         73 |
+| c:\Users\TBG\Documents\wappy\client\src\util\tests\components\ErrorPage.test.jsx     | JavaScript JSX |         33 |          0 |          6 |         39 |
+| c:\Users\TBG\Documents\wappy\client\src\util\tests\components\Footer.test.jsx        | JavaScript JSX |         59 |          1 |         11 |         71 |
+| c:\Users\TBG\Documents\wappy\client\src\util\tests\components\GetPDFButton.test.jsx  | JavaScript JSX |         86 |          0 |         22 |        108 |
+| c:\Users\TBG\Documents\wappy\client\src\util\tests\components\Header.test.jsx        | JavaScript JSX |         90 |          0 |         20 |        110 |
+| c:\Users\TBG\Documents\wappy\client\src\util\tests\components\ListItem.test.jsx      | JavaScript JSX |        144 |          0 |         37 |        181 |
+| c:\Users\TBG\Documents\wappy\client\src\util\tests\hooks\AuthSlice.test.js           | JavaScript     |         41 |          0 |          7 |         48 |
+| c:\Users\TBG\Documents\wappy\client\src\util\tests\hooks\ChenageEmailSlice.test.js   | JavaScript     |         51 |          0 |         16 |         67 |
+| c:\Users\TBG\Documents\wappy\client\src\util\tests\hooks\DashboardSlice.test.js      | JavaScript     |         53 |          0 |         10 |         63 |
+| c:\Users\TBG\Documents\wappy\client\src\util\tests\hooks\FavoritesHooks.test.js      | JavaScript     |        153 |          1 |         27 |        181 |
+| c:\Users\TBG\Documents\wappy\client\src\util\tests\hooks\GlobalSlice.test.js         | JavaScript     |         27 |          0 |          5 |         32 |
+| c:\Users\TBG\Documents\wappy\client\src\util\tests\hooks\HeaderSlice.test.js         | JavaScript     |         50 |          1 |         15 |         66 |
+| c:\Users\TBG\Documents\wappy\client\src\util\tests\hooks\authHooks.test.js           | JavaScript     |         95 |          0 |         27 |        122 |
+| c:\Users\TBG\Documents\wappy\client\src\util\tests\hooks\dashboard.test.js           | JavaScript     |         35 |          0 |          8 |         43 |
+| c:\Users\TBG\Documents\wappy\client\src\util\tests\hooks\headerHooks.test.js         | JavaScript     |        134 |          0 |         28 |        162 |
+| c:\Users\TBG\Documents\wappy\client\src\util\tests\hooks\itemHooks.test.js           | JavaScript     |         86 |          0 |         23 |        109 |
+| c:\Users\TBG\Documents\wappy\client\src\util\tests\hooks\itemSlice.test.js           | JavaScript     |         62 |          0 |         14 |         76 |
+| c:\Users\TBG\Documents\wappy\client\src\util\tests\hooks\routerHooks.test.js         | JavaScript     |        200 |          0 |         47 |        247 |
+| c:\Users\TBG\Documents\wappy\client\src\util\tests\pages\ChangeEmailPage.test.jsx    | JavaScript JSX |        184 |          0 |         32 |        216 |
+| c:\Users\TBG\Documents\wappy\client\src\util\tests\pages\DashboardPage.test.jsx      | JavaScript JSX |        159 |          3 |         35 |        197 |
+| c:\Users\TBG\Documents\wappy\client\src\util\tests\pages\ItemPage.test.jsx           | JavaScript JSX |        139 |          1 |         24 |        164 |
+| c:\Users\TBG\Documents\wappy\client\src\util\tests\pages\SignInPage.test.jsx         | JavaScript JSX |        180 |          2 |         34 |        216 |
+| c:\Users\TBG\Documents\wappy\client\src\util\tests\pages\SignUpPage.test.jsx         | JavaScript JSX |        309 |          0 |         52 |        361 |
+| c:\Users\TBG\Documents\wappy\client\src\util\theme.js                                | JavaScript     |        242 |         27 |          2 |        271 |
+| c:\Users\TBG\Documents\wappy\client\vite.config.js                                   | JavaScript     |         14 |          1 |          2 |         17 |
+| Total                                                                                |                |     16,851 |        732 |        921 |     18,504 |
++--------------------------------------------------------------------------------------+----------------+------------+------------+------------+------------+

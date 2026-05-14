@@ -1,3 +1,26 @@
+/**
+ * Redux Slice для управления дашбордом
+ * 
+ * Состояние:
+ * @property {Array} data - Массив элементов для отображения
+ * @property {boolean} isImg/isSVG/isGif - Фильтры типов контента
+ * @property {string|null} tenorNext - Токен для пагинации Tenor
+ * @property {string} query - Поисковый запрос
+ * @property {number} page - Номер страницы (WHVN/SVG)
+ * @property {boolean} hasMore - Флаг наличия следующих страниц
+ * 
+ * Reducers:
+ * @function setQuery - Установка запроса и сброс страницы на 1
+ * @function setPage - Обновление номера страницы
+ * @function setNextPage - Обновление токена пагинации Tenor
+ * @function setData - Установка данных с дедупликацией по id+source
+ * @function setScrollField - Универсальное обновление полей (hasMore)
+ * 
+ * Дедупликация:
+ * - Использует Map с ключом `${data?.id}:${source}`
+ * - Предотвращает дублирование элементов из разных источников
+ */
+
 import { createSlice } from "@reduxjs/toolkit";
 
 const dashboardSlice = createSlice({

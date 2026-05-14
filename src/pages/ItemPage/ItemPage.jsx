@@ -1,3 +1,31 @@
+/**
+ * Страница детального просмотра медиа-элемента
+ * 
+ * Отображает:
+ * - Превью элемента в увеличенном размере
+ * - Список доступных форматов/разрешений для скачивания
+ * - Кнопки: "оригинал" (ссылка на источник), "избранное"
+ * 
+ * Поддерживаемые источники:
+ * - whvn: фото (использует usePhoto)
+ * - svg: векторная графика (использует useSVG)
+ * - tenor: гифки/видео (использует useTenor)
+ * 
+ * Функциональность:
+ * - Загрузка данных через API для Tenor (по ID)
+ * - Добавление в избранное
+ * - Добавление в историю загрузок
+ * - Форматирование размера файла (КБ/МБ)
+ * 
+ * Адаптивность:
+ * - Мобильная версия: вертикальная компоновка
+ * - Десктоп: горизонтальная компоновка (изображение + кнопки)
+ * 
+ * Состояние Redux:
+ * - state.item: variants, original_url, data
+ * - state.global: user, token
+ */
+
 import { Box, Button } from "@mui/material";
 import DownloadIcon from '@mui/icons-material/Download';
 import { useLocation } from "react-router-dom";
@@ -13,10 +41,14 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import { setGlobalData } from "../../util/globalSlice";
 import api from "../../util/axiosConfig";
-
+import { useTheme } from '@mui/material/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
 import React from 'react'; //for test
 
 const ItemPage = () => {
+    const theme = useTheme();
+    const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+
     const location = useLocation();
     const dispatch = useDispatch();
     const stateLocation = location.state;
@@ -121,7 +153,52 @@ const ItemPage = () => {
         }
     }, [stateLocation.source, data, user, token, dispatch]);
 
-    return (
+    return isMobile ? (
+        <Box sx={{ backgroundColor: '#2a262eb0', backdropFilter: 'blur(10px)', border: '1px solid #D4BBFC', borderRadius: '1em', maxWidth: '100%', minWidth: '100%', m: '4em auto 2em auto' }}>
+            <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1em' }}>
+                <img style={{ felx: 1, width: '100%', borderRadius: '1em' }} src={variants && variants[0]?.url} alt={title} />
+
+                <Box sx={{ flex: 1, display: 'flex', gap: '1em', flexDirection: 'column' }}>
+                    <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '1em', p: '0 1em' }}>
+                        <Button
+                            component="a"
+                            href={original_url}
+                            target="_blank"
+                            color="hide"
+                            size="small"
+                        >
+                            оригинал
+                        </Button>
+                        <Button
+                            onClick={handleFavoritesClick}
+                            variant="outlined"
+                            color="secondary"
+                            size="small"
+                        >
+                            {user?.favorites?.find(elem => (elem.data == data && elem.source == stateLocation.source)) ? (
+                                <FavoriteIcon sx={{ fontSize: '1.2em', }} />
+                            ) : (
+                                <FavoriteBorderIcon sx={{ fontSize: '1.2em', }} />
+                            )}
+                        </Button>
+                    </Box>
+                    <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1em', p: '1em' }}>
+                        {variants?.map(variant => (
+                            <Button
+                                key={nanoid()}
+                                color="success"
+                                variant="outlined"
+                                onClick={() => handleDownloadClick(variant.url)}
+                            >
+                                <DownloadIcon sx={{ mr: '.5em' }} />
+                                {variant.format} {(variant?.height && variant?.width) && `${variant?.width}x${variant?.height}`} {variant?.duration && `- ${variant?.duration} сек. `}{variant?.size && `(${getSize(variant.size)})`}
+                            </Button>
+                        ))}
+                    </Box>
+                </Box>
+            </Box>
+        </Box>
+    ) : (
         <Box sx={{ backgroundColor: '#2a262eb0', backdropFilter: 'blur(10px)', border: '1px solid #D4BBFC', borderRadius: '1em', p: '1em', maxWidth: '80%', minWidth: '80%', m: '4em auto 2em auto' }}>
             <Box sx={{ display: 'flex', alignItems: 'start', gap: '1em' }}>
                 <img style={{ felx: 1, width: '50%', borderRadius: '1em' }} src={variants && variants[0]?.url} alt={title} />

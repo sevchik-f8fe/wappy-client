@@ -1,3 +1,33 @@
+/**
+ * Корневой компонент приложения
+ * 
+ * Отвечает за:
+ * - Настройку маршрутизации (React Router)
+ * - Подключение Redux store и PersistGate для сохранения состояния
+ * - Глобальные компоненты (Header, Footer, ToastContainer)
+ * - Защиту маршрутов через ScrollToTop
+ * 
+ * Структура приложения:
+ * 1. BrowserRouter с basename="wappy-client" - базовая маршрутизация
+ * 2. Redux Provider - доступ к глобальному состоянию
+ * 3. PersistGate - восстановление сохраненного состояния при загрузке
+ * 4. ScrollToTop - управление прокруткой и защита маршрутов
+ * 5. Header - шапка приложения (везде)
+ * 6. ToastContainer - глобальные уведомления
+ * 7. Routes - маршруты страниц:
+ *    - /signin - вход
+ *    - /signup - регистрация
+ *    - / - главная (дашборд)
+ *    - /item - страница элемента
+ *    - /favorites - избранное
+ *    - /history - история
+ *    - /change_email - смена email
+ *    - * - 404 ошибка
+ * 8. Footer - подвал приложения (везде)
+ * 
+ * Зависимости: React Router, Redux, Redux Persist, React Toastify
+ */
+
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Provider } from "react-redux";
 import React from 'react'; // for tests

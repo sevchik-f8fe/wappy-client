@@ -1,0 +1,34 @@
+"filename", "language", "JavaScript JSX", "JavaScript", "comment", "blank", "total"
+"c:\Users\TBG\Documents\wappy\client\src\App.jsx", "JavaScript JSX", 0, 0, 29, 1, 30
+"c:\Users\TBG\Documents\wappy\client\src\components\AuthContainer.jsx", "JavaScript JSX", 0, 0, 20, 1, 21
+"c:\Users\TBG\Documents\wappy\client\src\components\AuthField.jsx", "JavaScript JSX", 0, 0, 18, 1, 19
+"c:\Users\TBG\Documents\wappy\client\src\components\Checkbox.jsx", "JavaScript JSX", 0, 0, 22, 1, 23
+"c:\Users\TBG\Documents\wappy\client\src\components\ErrorPage.jsx", "JavaScript JSX", 0, 0, 21, 1, 22
+"c:\Users\TBG\Documents\wappy\client\src\components\Footer.jsx", "JavaScript JSX", 0, 0, 20, 1, 21
+"c:\Users\TBG\Documents\wappy\client\src\components\GetPDFButton.jsx", "JavaScript JSX", 0, 0, 26, 1, 27
+"c:\Users\TBG\Documents\wappy\client\src\components\Header.jsx", "JavaScript JSX", 0, 0, 27, 1, 28
+"c:\Users\TBG\Documents\wappy\client\src\components\HeaderSlice.js", "JavaScript", 0, 0, 18, 1, 19
+"c:\Users\TBG\Documents\wappy\client\src\components\ListItem.jsx", "JavaScript JSX", 0, 0, 36, 1, 37
+"c:\Users\TBG\Documents\wappy\client\src\main.jsx", "JavaScript JSX", 0, 0, 22, 1, 23
+"c:\Users\TBG\Documents\wappy\client\src\pages\ChangeEmailPage\ChangeEmailPage.jsx", "JavaScript JSX", 0, 0, 25, 1, 26
+"c:\Users\TBG\Documents\wappy\client\src\pages\ChangeEmailPage\ChenageEmailSlice.js", "JavaScript", 0, 0, 19, 1, 20
+"c:\Users\TBG\Documents\wappy\client\src\pages\DashboardPage\DashboardPage.jsx", "JavaScript JSX", 0, 0, 32, 1, 33
+"c:\Users\TBG\Documents\wappy\client\src\pages\DashboardPage\DashboardSlice.js", "JavaScript", 0, 0, 22, 1, 23
+"c:\Users\TBG\Documents\wappy\client\src\pages\FavoritePage\FavoritePage.jsx", "JavaScript JSX", 0, 0, 20, 1, 21
+"c:\Users\TBG\Documents\wappy\client\src\pages\FavoritePage\FavoritesHooks.js", "JavaScript", 0, 0, 25, 1, 26
+"c:\Users\TBG\Documents\wappy\client\src\pages\HistoryPage\HistoryPage.jsx", "JavaScript JSX", 0, 0, 22, 1, 23
+"c:\Users\TBG\Documents\wappy\client\src\pages\ItemPage\ItemPage.jsx", "JavaScript JSX", 0, 0, 27, 1, 28
+"c:\Users\TBG\Documents\wappy\client\src\pages\ItemPage\ItemSlice.js", "JavaScript", 0, 0, 18, 1, 19
+"c:\Users\TBG\Documents\wappy\client\src\pages\ItemPage\itemHooks.jsx", "JavaScript JSX", 0, 0, 24, 1, 25
+"c:\Users\TBG\Documents\wappy\client\src\pages\SignInPage\SignInPage.jsx", "JavaScript JSX", 0, 0, 31, 1, 32
+"c:\Users\TBG\Documents\wappy\client\src\pages\SignUpPage\AuthSlice.js", "JavaScript", 0, 0, 22, 1, 23
+"c:\Users\TBG\Documents\wappy\client\src\pages\SignUpPage\SignUpPage.jsx", "JavaScript JSX", 0, 0, 37, 1, 38
+"c:\Users\TBG\Documents\wappy\client\src\util\authHooks.js", "JavaScript", 0, 0, 13, 1, 14
+"c:\Users\TBG\Documents\wappy\client\src\util\axiosConfig.js", "JavaScript", 0, 0, 16, 1, 17
+"c:\Users\TBG\Documents\wappy\client\src\util\dashboard.js", "JavaScript", 0, 0, 13, 1, 14
+"c:\Users\TBG\Documents\wappy\client\src\util\globalSlice.js", "JavaScript", 0, 0, 14, 1, 15
+"c:\Users\TBG\Documents\wappy\client\src\util\headerHoocks.js", "JavaScript", 0, 0, 15, 1, 16
+"c:\Users\TBG\Documents\wappy\client\src\util\persist.js", "JavaScript", 0, 0, 19, 1, 20
+"c:\Users\TBG\Documents\wappy\client\src\util\routerHooks.js", "JavaScript", 0, 0, 22, 1, 23
+"c:\Users\TBG\Documents\wappy\client\src\util\theme.js", "JavaScript", 0, 0, 27, 1, 28
+"Total", "-", 0, 0, 722, 32, 754

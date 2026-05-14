@@ -1,3 +1,26 @@
+/**
+ * Кастомный чекбокс с анимированной SVG-галочкой
+ * 
+ * Особенности:
+ * - Скрывает стандартный input, использует кастомный SVG
+ * - Анимация пути при клике (pathLength атрибут)
+ * - Встроенная ссылка внутри лейбла
+ * - Класс 'error' для подсветки ошибки валидации
+ * 
+ * Props:
+ * @param {boolean} error - Флаг ошибки (добавляет класс 'error')
+ * @param {string} label - Текст перед ссылкой
+ * @param {string} link - Текст ссылки
+ * @param {string} href - URL для ссылки
+ * @param {boolean} value - Состояние чекбокса
+ * @param {function} onchange - Обработчик изменения
+ * 
+ * CSS классы:
+ * - .checkbox: обычное состояние
+ * - .checkbox.error: состояние ошибки (красная подсветка)
+ * - .path: SVG путь для анимации
+ */
+
 import React from 'react'; //for tests
 
 export const Checkbox = ({ error, label, link, href, value, onchange }) => {

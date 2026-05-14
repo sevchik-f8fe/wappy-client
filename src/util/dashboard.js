@@ -1,3 +1,18 @@
+/**
+ * Утилиты для работы с дашбордом и медиа-контентом
+ * 
+ * Функции:
+ * - combineAndShuffleArrays: Объединение и перемешивание массивов из разных источников (whvn, tenor, svg)
+ * - getUrl: Получение URL медиафайла в зависимости от источника (поддержка thumbnail)
+ * - handleDownload: Скачивание файла с поддержкой разных форматов:
+ *   • SVG: получение кода с сервера и создание Blob
+ *   • WHVN: открытие в новой вкладке
+ *   • Tenor: загрузка через fetch и сохранение
+ * 
+ * Вспомогательная функция: createLinkElem - создание временной ссылки для скачивания
+ */
+
+import { Bounce, toast } from "react-toastify";
 import api from "./axiosConfig";
 
 export const combineAndShuffleArrays = (photos, tenor, svg) => {
@@ -46,6 +61,17 @@ const createLinkElem = (blob) => {
     URL.revokeObjectURL(url);
 }
 
+const notify = () => toast.error("Что-то пошло не так :(", {
+    position: "bottom-left",
+    autoClose: 3000,
+    hideProgressBar: true,
+    closeOnClick: false,
+    draggable: true,
+    progress: undefined,
+    theme: "dark",
+    transition: Bounce,
+});
+
 export const handleDownload = async (res_url, source) => {
     try {
         if (source == 'svg') {
@@ -64,6 +90,6 @@ export const handleDownload = async (res_url, source) => {
             }
         }
     } catch (error) {
-        console.error('Download failed:', error);
+        notify();
     }
 };

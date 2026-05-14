@@ -1,10 +1,42 @@
-import { Box, TextField, InputAdornment, Button, FormGroup, Checkbox, FormControlLabel, Typography, Skeleton } from "@mui/material";
-import SearchIcon from '@mui/icons-material/Search';
+/**
+ * Главная страница с поиском медиа-контента
+ * 
+ * Функциональность:
+ * - Поиск по трем источникам: Tenor (гифки), WHVN (фото), SVG
+ * - Бесконечная прокрутка (infinite scroll)
+ * - Фильтры по типам контента (картинки, SVG, гифки)
+ * - Masonry сетка для отображения результатов
+ * - Дебаунс поиска (500ms) и троттлинг загрузки
+ * 
+ * Оптимизация:
+ * - useMemo для скелетонов и списка элементов
+ * - useCallback для обработчиков
+ * - debounce/throttle из lodash
+ * - React.memo (неявно через useMemo)
+ * 
+ * Адаптивность:
+ * - DesktopMenu и TabletMenu компоненты
+ * - breakpoint 'md' переключает версии
+ * - Masonry адаптивные колонки (4,3,2,1)
+ * 
+ * API эндпоинты:
+ * - /api/tenor/list - получение гифок
+ * - /api/photos/list - получение фото
+ * - /api/tenor/search - поиск гифок
+ * - /api/photos/search - поиск фото
+ * - /api/svg/search - поиск SVG
+ * 
+ * Пагинация:
+ * - Для Tenor используется next токен
+ * - Для WHVN и SVG используется номер страницы
+ */
+
+import { Box, Skeleton } from "@mui/material";
 import { nanoid } from "nanoid";
 import ListItem from "../../components/ListItem";
-import { useRef, useCallback, useMemo } from "react";
+import { useState, useCallback, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setData, setNextPage, setPage, setQuery, setScrollField } from "./DashboardSlice";
+import { setData, setNextPage, setPage, setScrollField } from "./DashboardSlice";
 import { debounce, throttle } from "lodash";
 import { Bounce, toast } from "react-toastify";
 import { combineAndShuffleArrays } from "../../util/dashboard";
@@ -13,23 +45,19 @@ import useInfiniteScroll from 'react-infinite-scroll-hook';
 import Masonry from 'react-masonry-css'
 import api from "../../util/axiosConfig";
 import React from 'react'; //for test
+import { useTheme } from '@mui/material/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import DesctopMenu from "./Menu/DesctopMenu";
+import TabletMenu from "./Menu/TabletMenu";
 
 const DashboardPage = () => {
     const dispatch = useDispatch();
     const { page, query, hasMore, tenorNext, data } = useSelector((state) => state.dashboard);
     const { loading } = useSelector(state => state.auth);
+    const [localState, setLocalState] = useState({ isGif: true, isSVG: true, isImg: true, query: '' });
 
-    const queryRef = useRef(null);
-    const isImgRef = useRef(null);
-    const isSVGRef = useRef(null);
-    const isGifRef = useRef(null);
-    const lastSearchTimeRef = useRef(0);
-
-    const getCurrentFilters = useCallback(() => ({
-        isImg: isImgRef.current?.checked ?? true,
-        isSVG: isSVGRef.current?.checked ?? true,
-        isGif: isGifRef.current?.checked ?? true
-    }), []);
+    const theme = useTheme();
+    const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
     const notify = useCallback(() => toast.error("Что-то пошло не так :(", {
         position: "bottom-left",
@@ -42,11 +70,9 @@ const DashboardPage = () => {
         transition: Bounce,
     }), []);
 
-    const getContentWithoutQuery = useCallback(async (filters) => {
-        const { isImg, isGif } = filters;
-
+    const getContentWithoutQuery = useCallback(async (searchState) => {
         const [tenor, photos] = await Promise.allSettled([
-            isGif ? api.post('/api/tenor/list',
+            searchState.isGif ? api.post('/api/tenor/list',
                 { next: tenorNext },
                 { headers: { 'Content-Type': 'application/json' } }
             ).then(res => res?.data?.tenor).then(res => {
@@ -54,11 +80,10 @@ const DashboardPage = () => {
                 return res.results;
             }).catch((e) => {
                 notify();
-                console.log(e)
                 return [];
             }) : Promise.resolve([]),
 
-            isImg ? api.post('/api/photos/list',
+            searchState.isImg ? api.post('/api/photos/list',
                 { page },
                 { headers: { 'Content-Type': 'application/json' } }
             ).then(res => res?.data?.photo).catch((err) => {
@@ -66,7 +91,6 @@ const DashboardPage = () => {
                 return [];
             }).catch((e) => {
                 notify();
-                console.log(e)
                 return [];
             }) : Promise.resolve([]),
         ]);
@@ -82,23 +106,22 @@ const DashboardPage = () => {
         return combinedData;
     }, [tenorNext, page, dispatch, notify]);
 
-    const getContentByQuery = useCallback(async (filters, searchQuery, existingData = []) => {
-        const { isImg, isGif, isSVG } = filters;
+    const getContentByQuery = useCallback(async (searchState, existingData = []) => {
         const hasSVGInData = existingData.some(item => item.source === 'svg');
 
-        const shouldFetchSVG = isSVG && !hasSVGInData;
+        const shouldFetchSVG = searchState.isSVG && !hasSVGInData;
 
         const [tenor, photos, svg] = await Promise.allSettled([
-            isGif ? api.post('/api/tenor/search',
-                { page, query: searchQuery },
+            searchState.isGif ? api.post('/api/tenor/search',
+                { page, query: searchState.query },
                 { headers: { 'Content-Type': 'application/json' } }
             ).then(res => res?.data?.tenor).catch((err) => {
                 notify();
                 return [];
             }) : Promise.resolve([]),
 
-            isImg ? api.post('/api/photos/search',
-                { page, query: searchQuery },
+            searchState.isImg ? api.post('/api/photos/search',
+                { page, query: searchState.query },
                 { headers: { 'Content-Type': 'application/json' } }
             ).then(res => {
                 return res?.data?.photo
@@ -108,7 +131,7 @@ const DashboardPage = () => {
             }) : Promise.resolve([]),
 
             shouldFetchSVG ? api.post('/api/svg/search',
-                { page, query: searchQuery },
+                { page, query: searchState.query },
                 { headers: { 'Content-Type': 'application/json' } }
             ).then(res => res?.data?.svg).catch((err) => {
                 notify();
@@ -128,73 +151,55 @@ const DashboardPage = () => {
         return combinedData;
     }, [page, dispatch, notify]);
 
-    const unThrottledLoadMore = useCallback(async () => {
-        const now = Date.now();
-        if (now - lastSearchTimeRef.current < 500) return;
-        lastSearchTimeRef.current = now;
-
+    const unThrottledLoadMore = useCallback(async (searchState) => {
         dispatch(setSimpleField({ field: 'loading', value: true }));
         dispatch(setScrollField({ field: 'hasMore', value: true }));
         dispatch(setPage({ page: page + 1 }));
 
-        const currentFilters = getCurrentFilters();
-
         try {
+
             const newData =
-                query.length === 0
-                    ? await getContentWithoutQuery(currentFilters)
-                    : await getContentByQuery(currentFilters, query, data);
+                searchState.query.length <= 0
+                    ? await getContentWithoutQuery(searchState)
+                    : await getContentByQuery(searchState, data);
 
             dispatch(setData({ data: [...data, ...newData] }));
         } catch (error) {
-            console.error('Load more error:', error);
+            notify();
         } finally {
             dispatch(setSimpleField({ field: 'loading', value: false }));
         }
-    }, [page, query, data, getContentWithoutQuery, getContentByQuery, dispatch, getCurrentFilters]);
+    }, [page, query, data, getContentWithoutQuery, getContentByQuery, dispatch]);
 
     const loadMore = throttle(unThrottledLoadMore, 500, { leading: true, trailing: false });
 
-    const unDebouncedNewFetch = useCallback(async () => {
-        const now = Date.now();
-        if (now - lastSearchTimeRef.current < 500) return;
-        lastSearchTimeRef.current = now;
-
+    const unDebouncedNewFetch = useCallback(async (searchState) => {
         dispatch(setSimpleField({ field: 'loading', value: true }));
         dispatch(setScrollField({ field: 'hasMore', value: true }));
         dispatch(setPage({ page: 1 }));
         dispatch(setNextPage({ field: 'tenorNext', value: null }));
 
-        const searchQuery = queryRef.current?.value?.replace(/[^a-zA-Z ]/g, "") || "";
-        const currentFilters = getCurrentFilters();
-
-        dispatch(
-            setQuery({
-                query: searchQuery,
-                isImg: currentFilters.isImg,
-                isSVG: currentFilters.isSVG,
-                isGif: currentFilters.isGif,
-            })
-        );
-
         try {
             const newData =
-                searchQuery.length === 0
-                    ? await getContentWithoutQuery(currentFilters)
-                    : await getContentByQuery(currentFilters, searchQuery, data);
+                searchState.query.length === 0
+                    ? await getContentWithoutQuery(searchState)
+                    : await getContentByQuery(searchState, data);
 
             dispatch(setData({ data: newData }));
         } catch (error) {
-            console.error('New fetch error:', error);
+            notify();
         } finally {
             dispatch(setSimpleField({ field: 'loading', value: false }));
         }
-    }, [getContentWithoutQuery, getContentByQuery, dispatch, getCurrentFilters, data]);
+    }, [getContentWithoutQuery, getContentByQuery, dispatch, data]);
 
     const newFetch = debounce(unDebouncedNewFetch, 500);
 
-    const handleSearchClick = useCallback(() => {
-        newFetch();
+    const handleSearchClick = useCallback((state) => {
+        setLocalState(state);
+        setTimeout(() => {
+            newFetch(state);
+        }, 0);
     }, [newFetch]);
 
     const memoizedSkeletons = useMemo(() =>
@@ -228,7 +233,7 @@ const DashboardPage = () => {
     const [sentryRef] = useInfiniteScroll({
         loading,
         hasNextPage: hasMore,
-        onLoadMore: loadMore,
+        onLoadMore: () => loadMore(localState),
         rootMargin: '0px 0px 1000px 0px',
     });
 
@@ -239,76 +244,11 @@ const DashboardPage = () => {
             border: '1px solid #D4BBFC',
             borderRadius: '1em',
             p: '1em',
-            maxWidth: '80%',
-            minWidth: '80%',
+            maxWidth: !isMobile ? '80%' : '100%',
+            minWidth: !isMobile ? '80%' : '100%',
             m: '4em auto 2em auto'
         }}>
-            <Typography variant="h1" gutterBottom>поиск</Typography>
-
-            <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: '2em' }}>
-                <TextField
-                    size="small"
-                    inputRef={queryRef}
-                    type="text"
-                    variant="outlined"
-                    placeholder="используйте английский язык"
-                    color="primary"
-                    sx={{ minWidth: '50%' }}
-                    slotProps={{
-                        input: {
-                            style: { color: '#F2EBFB' },
-                            startAdornment: (
-                                <InputAdornment position="start">
-                                    <SearchIcon sx={{ color: '#F2EBFB' }} />
-                                </InputAdornment>
-                            ),
-                        },
-                    }}
-                    onKeyDown={(e) => {
-                        if (e.key === 'Enter') {
-                            handleSearchClick();
-                        }
-                    }}
-                />
-
-                <Button
-                    loading={loading}
-                    onClick={handleSearchClick}
-                    variant="contained"
-                >
-                    поиск
-                </Button>
-
-                <FormGroup sx={{ display: 'flex', flexDirection: 'row' }}>
-                    <FormControlLabel
-                        control={
-                            <Checkbox
-                                slotProps={{ input: { ref: isImgRef } }}
-                                defaultChecked
-                            />
-                        }
-                        label="картинки"
-                    />
-                    <FormControlLabel
-                        control={
-                            <Checkbox
-                                slotProps={{ input: { ref: isSVGRef } }}
-                                defaultChecked
-                            />
-                        }
-                        label="SVG"
-                    />
-                    <FormControlLabel
-                        control={
-                            <Checkbox
-                                slotProps={{ input: { ref: isGifRef } }}
-                                defaultChecked
-                            />
-                        }
-                        label="гифки"
-                    />
-                </FormGroup>
-            </Box>
+            {isMobile ? (<TabletMenu handleSearchClick={handleSearchClick} />) : (<DesctopMenu handleSearchClick={handleSearchClick} />)}
 
             <Masonry
                 breakpointCols={{

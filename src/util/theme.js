@@ -1,3 +1,31 @@
+/**
+ * Material-UI тема приложения
+ * 
+ * Цветовая схема (палитра):
+ * - primary: #a27ae2ff (фиолетовый)
+ * - secondary: #df80d5ff (розовый)
+ * - linkColor: #2196f3 (синий для ссылок)
+ * - success: #61c254ff (зеленый)
+ * - error: #f44336 (красный)
+ * - hide: #9e9e9e (серый)
+ * 
+ * Типография:
+ * - Основной шрифт: 'Hasking'
+ * - Заголовки (h1-h4): шрифт 'Palui', фиолетовый цвет
+ * - body1: #F2EBFB, 1em
+ * - body2: #9e9e9e, 0.8em
+ * 
+ * Кастомные стили компонентов:
+ * - MuiChip: 4 варианта (tenor, whvn, svg, noun) с уникальными стилями
+ *   • Tenor: градиентная обводка
+ *   • WHVN: синий边框 на темном фоне
+ *   • SVG: желтый фон, черный текст
+ *   • Noun: черный фон, белый текст
+ * 
+ * - MuiButton, MuiTextField, MuiInputLabel, MuiLink и др.
+ *   с переопределенными цветами для темной темы
+ */
+
 import { createTheme } from "@mui/material/styles";
 
 export const theme = createTheme({
@@ -33,6 +61,16 @@ export const theme = createTheme({
             color: '#a27ae2ff',
             fontFamily: 'Palui',
             fontSize: '1.5em',
+        },
+        h3: {
+            color: '#a27ae2ff',
+            fontFamily: 'Palui',
+            fontSize: '1.2em',
+        },
+        h4: {
+            color: '#a27ae2ff',
+            fontFamily: 'Palui',
+            fontSize: '3em',
         },
         body1: {
             color: '#F2EBFB',
@@ -183,8 +221,8 @@ export const theme = createTheme({
                 {
                     props: { variant: 'svg' },
                     style: {
-                        backgroundColor: 'rgb(255,225,33)', // Основной желтый цвет Storyblok
-                        color: '#000', // Черный текст
+                        backgroundColor: 'rgb(255,225,33)',
+                        color: '#000',
                         fontWeight: 'bold',
                         fontSize: '12px',
                         cursor: 'pointer',

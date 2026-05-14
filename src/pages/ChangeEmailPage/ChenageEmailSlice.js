@@ -1,3 +1,23 @@
+/**
+ * Redux Slice для управления состоянием смены email
+ * 
+ * Состояние:
+ * @property {Object} email - { value: string, error: boolean }
+ * @property {string} code - 6-значный код подтверждения
+ * @property {number} timer - Таймер обратного отсчета (сек)
+ * @property {number} step - Текущий шаг (0 или 1)
+ * 
+ * Reducers:
+ * @function setAuthField - Обновление email поля (только value)
+ * @function setAuthError - Обновление статуса ошибки email
+ * @function setSimpleField - Универсальное обновление простых полей
+ * 
+ * Проверка полей:
+ * - hasOwnProperty перед обновлением (безопасность)
+ * 
+ * Используется в ChangeEmailPage компоненте
+ */
+
 import { createSlice } from "@reduxjs/toolkit";
 
 const chnageEmailSlice = createSlice({

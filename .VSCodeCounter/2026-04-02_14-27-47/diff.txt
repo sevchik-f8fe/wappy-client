@@ -1,0 +1,69 @@
+Date : 2026-04-02 14:27:47
+Directory : c:\Users\TBG\Documents\wappy\client
+Total : 32 files,  0 codes, 722 comments, 32 blanks, all 754 lines
+
+Languages
++----------------+------------+------------+------------+------------+------------+
+| language       | files      | code       | comment    | blank      | total      |
++----------------+------------+------------+------------+------------+------------+
+| JavaScript JSX |         18 |          0 |        459 |         18 |        477 |
+| JavaScript     |         14 |          0 |        263 |         14 |        277 |
++----------------+------------+------------+------------+------------+------------+
+
+Directories
++------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                               | files      | code       | comment    | blank      | total      |
++------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                                  |         32 |          0 |        722 |         32 |        754 |
+| src                                                                                |         32 |          0 |        722 |         32 |        754 |
+| src (Files)                                                                        |          2 |          0 |         51 |          2 |         53 |
+| src\components                                                                     |          9 |          0 |        208 |          9 |        217 |
+| src\pages                                                                          |         13 |          0 |        324 |         13 |        337 |
+| src\pages\ChangeEmailPage                                                          |          2 |          0 |         44 |          2 |         46 |
+| src\pages\DashboardPage                                                            |          2 |          0 |         54 |          2 |         56 |
+| src\pages\FavoritePage                                                             |          2 |          0 |         45 |          2 |         47 |
+| src\pages\HistoryPage                                                              |          1 |          0 |         22 |          1 |         23 |
+| src\pages\ItemPage                                                                 |          3 |          0 |         69 |          3 |         72 |
+| src\pages\SignInPage                                                               |          1 |          0 |         31 |          1 |         32 |
+| src\pages\SignUpPage                                                               |          2 |          0 |         59 |          2 |         61 |
+| src\util                                                                           |          8 |          0 |        139 |          8 |        147 |
++------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++------------------------------------------------------------------------------------+----------------+------------+------------+------------+------------+
+| filename                                                                           | language       | code       | comment    | blank      | total      |
++------------------------------------------------------------------------------------+----------------+------------+------------+------------+------------+
+| c:\Users\TBG\Documents\wappy\client\src\App.jsx                                    | JavaScript JSX |          0 |         29 |          1 |         30 |
+| c:\Users\TBG\Documents\wappy\client\src\components\AuthContainer.jsx               | JavaScript JSX |          0 |         20 |          1 |         21 |
+| c:\Users\TBG\Documents\wappy\client\src\components\AuthField.jsx                   | JavaScript JSX |          0 |         18 |          1 |         19 |
+| c:\Users\TBG\Documents\wappy\client\src\components\Checkbox.jsx                    | JavaScript JSX |          0 |         22 |          1 |         23 |
+| c:\Users\TBG\Documents\wappy\client\src\components\ErrorPage.jsx                   | JavaScript JSX |          0 |         21 |          1 |         22 |
+| c:\Users\TBG\Documents\wappy\client\src\components\Footer.jsx                      | JavaScript JSX |          0 |         20 |          1 |         21 |
+| c:\Users\TBG\Documents\wappy\client\src\components\GetPDFButton.jsx                | JavaScript JSX |          0 |         26 |          1 |         27 |
+| c:\Users\TBG\Documents\wappy\client\src\components\Header.jsx                      | JavaScript JSX |          0 |         27 |          1 |         28 |
+| c:\Users\TBG\Documents\wappy\client\src\components\HeaderSlice.js                  | JavaScript     |          0 |         18 |          1 |         19 |
+| c:\Users\TBG\Documents\wappy\client\src\components\ListItem.jsx                    | JavaScript JSX |          0 |         36 |          1 |         37 |
+| c:\Users\TBG\Documents\wappy\client\src\main.jsx                                   | JavaScript JSX |          0 |         22 |          1 |         23 |
+| c:\Users\TBG\Documents\wappy\client\src\pages\ChangeEmailPage\ChangeEmailPage.jsx  | JavaScript JSX |          0 |         25 |          1 |         26 |
+| c:\Users\TBG\Documents\wappy\client\src\pages\ChangeEmailPage\ChenageEmailSlice.js | JavaScript     |          0 |         19 |          1 |         20 |
+| c:\Users\TBG\Documents\wappy\client\src\pages\DashboardPage\DashboardPage.jsx      | JavaScript JSX |          0 |         32 |          1 |         33 |
+| c:\Users\TBG\Documents\wappy\client\src\pages\DashboardPage\DashboardSlice.js      | JavaScript     |          0 |         22 |          1 |         23 |
+| c:\Users\TBG\Documents\wappy\client\src\pages\FavoritePage\FavoritePage.jsx        | JavaScript JSX |          0 |         20 |          1 |         21 |
+| c:\Users\TBG\Documents\wappy\client\src\pages\FavoritePage\FavoritesHooks.js       | JavaScript     |          0 |         25 |          1 |         26 |
+| c:\Users\TBG\Documents\wappy\client\src\pages\HistoryPage\HistoryPage.jsx          | JavaScript JSX |          0 |         22 |          1 |         23 |
+| c:\Users\TBG\Documents\wappy\client\src\pages\ItemPage\ItemPage.jsx                | JavaScript JSX |          0 |         27 |          1 |         28 |
+| c:\Users\TBG\Documents\wappy\client\src\pages\ItemPage\ItemSlice.js                | JavaScript     |          0 |         18 |          1 |         19 |
+| c:\Users\TBG\Documents\wappy\client\src\pages\ItemPage\itemHooks.jsx               | JavaScript JSX |          0 |         24 |          1 |         25 |
+| c:\Users\TBG\Documents\wappy\client\src\pages\SignInPage\SignInPage.jsx            | JavaScript JSX |          0 |         31 |          1 |         32 |
+| c:\Users\TBG\Documents\wappy\client\src\pages\SignUpPage\AuthSlice.js              | JavaScript     |          0 |         22 |          1 |         23 |
+| c:\Users\TBG\Documents\wappy\client\src\pages\SignUpPage\SignUpPage.jsx            | JavaScript JSX |          0 |         37 |          1 |         38 |
+| c:\Users\TBG\Documents\wappy\client\src\util\authHooks.js                          | JavaScript     |          0 |         13 |          1 |         14 |
+| c:\Users\TBG\Documents\wappy\client\src\util\axiosConfig.js                        | JavaScript     |          0 |         16 |          1 |         17 |
+| c:\Users\TBG\Documents\wappy\client\src\util\dashboard.js                          | JavaScript     |          0 |         13 |          1 |         14 |
+| c:\Users\TBG\Documents\wappy\client\src\util\globalSlice.js                        | JavaScript     |          0 |         14 |          1 |         15 |
+| c:\Users\TBG\Documents\wappy\client\src\util\headerHoocks.js                       | JavaScript     |          0 |         15 |          1 |         16 |
+| c:\Users\TBG\Documents\wappy\client\src\util\persist.js                            | JavaScript     |          0 |         19 |          1 |         20 |
+| c:\Users\TBG\Documents\wappy\client\src\util\routerHooks.js                        | JavaScript     |          0 |         22 |          1 |         23 |
+| c:\Users\TBG\Documents\wappy\client\src\util\theme.js                              | JavaScript     |          0 |         27 |          1 |         28 |
+| Total                                                                              |                |          0 |        722 |         32 |        754 |
++------------------------------------------------------------------------------------+----------------+------------+------------+------------+------------+

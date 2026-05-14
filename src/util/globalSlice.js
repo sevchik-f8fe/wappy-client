@@ -1,3 +1,18 @@
+/**
+ * Redux Slice для глобального состояния приложения
+ * 
+ * Состояние:
+ * - user: объект текущего пользователя (null по умолчанию)
+ * - token: JWT токен аутентификации (null по умолчанию)
+ * - dialog: состояние диалогового окна (boolean)
+ * 
+ * Reducers:
+ * - setGlobalData: Универсальный reducer для обновления любого поля в состоянии
+ *   Принимает { field, value } и обновляет state[field] = value
+ * 
+ * Экспорт: actions (setGlobalData) и reducer (globalReducer)
+ */
+
 import { createSlice } from "@reduxjs/toolkit";
 
 const globalSlice = createSlice({

@@ -1,3 +1,26 @@
+/**
+ * Redux Slice для аутентификации (регистрация/вход)
+ * 
+ * Состояние:
+ * @property {Object} email - { value: string, error: boolean }
+ * @property {Object} password - { value: string, error: boolean }
+ * @property {Object} passwordRep - { value: string, error: boolean }
+ * @property {string} code - 6-значный код подтверждения
+ * @property {number} timer - Таймер обратного отсчета (сек)
+ * @property {number} step - Текущий шаг (0 или 1)
+ * @property {boolean} confOk - Согласие с политикой конфиденциальности
+ * @property {boolean} persOk - Согласие на обработку персональных данных
+ * @property {boolean} loading - Флаг загрузки
+ * 
+ * Reducers:
+ * @function setAuthField - Обновление полей с value (email, password, passwordRep)
+ * @function setAuthError - Обновление ошибок полей
+ * @function setSimpleField - Обновление простых полей (code, timer, step, loading)
+ * 
+ * Проверка hasOwnProperty перед обновлением для безопасности
+ * Используется в SignUpPage и SignInPage
+ */
+
 import { createSlice } from "@reduxjs/toolkit";
 
 const authSlice = createSlice({

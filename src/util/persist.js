@@ -1,3 +1,23 @@
+/**
+ * Конфигурация Redux Persist для сохранения состояния приложения
+ * 
+ * Особенности:
+ * - Хранилище: sessionStorage (данные живут до закрытия вкладки)
+ * - Шифрование: AES-шифрование с использованием encryptTransform
+ * - Ключ шифрования: из переменной окружения VITE_CRYPTO_KEY
+ * - Обработка ошибок: автоматическая очистка хранилища при ошибках дешифрования
+ * 
+ * Persist конфигурация:
+ * - key: "user" - ключ для хранения
+ * - version: 1 - версия схемы данных
+ * - storage: sessionStorage - тип хранилища
+ * 
+ * Объединенные редюсеры:
+ * - global (persisted), auth, dashboard, header, changeEmail, item
+ * 
+ * Отключена сериализуемость для поддержки несериализуемых значений
+ */
+
 import sessionStorage from "redux-persist/lib/storage/session";
 import { persistStore, persistReducer } from "redux-persist";
 import { configureStore } from "@reduxjs/toolkit";
@@ -18,7 +38,6 @@ const persistConfig = {
         encryptTransform({
             secretKey: import.meta.env.VITE_CRYPTO_KEY,
             onError: function (error) {
-                console.error("Encryption error:", error);
                 if (error.message.includes("decrypt")) {
                     sessionStorage.removeItem("persist:user");
                 }

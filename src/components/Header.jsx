@@ -1,3 +1,31 @@
+/**
+ * Шапка приложения с навигацией и меню пользователя
+ * 
+ * Отображается на основных страницах (аналогично Footer)
+ * 
+ * Функциональность:
+ * 1. Навигационные иконки: Главная, История, Избранное
+ * 2. SpeedDial меню пользователя (авторизация/профиль)
+ * 3. Адаптивные версии: DesktopMenu и TabletMenu
+ * 4. Диалоги подтверждения: выход, удаление аккаунта
+ * 
+ * Безопасность:
+ * - Подтверждение действий через ввод "малосольный огурец"
+ * - Разделение логики через usePannel хук
+ * 
+ * Состояния:
+ * - delDialog: диалог удаления аккаунта
+ * - outDialog: диалог выхода из аккаунта
+ * 
+ * Адаптивность:
+ * - breakpoint 'md' переключает между десктопной и планшетной версией
+ * - Разные размеры иконок и отступов
+ * 
+ * Блокировка кнопок:
+ * - История/Избранное недоступны без авторизации
+ * - Активная страница отключает соответствующую иконку
+ */
+
 import { Box, Typography, IconButton, SpeedDial, SpeedDialAction, Dialog, DialogTitle, DialogContent, DialogContentText, TextField, DialogActions, Button } from "@mui/material";
 import { useLocation, useNavigate } from "react-router-dom";
 import DashboardIcon from '@mui/icons-material/Dashboard';
@@ -14,8 +42,12 @@ import { setHeaderData } from "./HeaderSlice";
 import { usePannel } from "../util/headerHoocks";
 import { useRef } from "react";
 import React from 'react'; //for tests
+import { useTheme } from '@mui/material/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
 
 const Header = () => {
+    const theme = useTheme();
+    const isMobile = useMediaQuery(theme.breakpoints.down('md'));
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const dialogRef = useRef(null)
@@ -34,9 +66,178 @@ const Header = () => {
         { icon: <LoginIcon />, name: 'авторизоваться', onClick: logInAction },
     ]
 
+    const actionsAuthSM = [
+        { icon: <AlternateEmailIcon sx={{ fontSize: '1.5em' }} />, name: 'изменить почту', onClick: changeEmailAction },
+        { icon: <LogoutIcon sx={{ fontSize: '1.5em' }} />, name: 'выйти из аккаунта', onClick: () => { dispatch(setHeaderData({ field: 'outDialog', data: true })) } },
+        { icon: <DeleteIcon sx={{ color: '#f44336', fontSize: '1.5em' }} />, name: 'удалить аккаунт', onClick: () => { dispatch(setHeaderData({ field: 'delDialog', data: true })) } },
+    ];
+
+    const actionsNotAuthSM = [
+        { icon: <LoginIcon sx={{ fontSize: '1.5em' }} />, name: 'авторизоваться', onClick: logInAction },
+    ]
+
     const handleClose = () => {
         dispatch(setHeaderData({ field: 'outDialog', data: false }))
         dispatch(setHeaderData({ field: 'delDialog', data: false }))
+    }
+
+    const DesktopMenu = () => {
+        return (
+            <>
+                <Typography onClick={() => {
+                    if (pathname != '/') navigate('/')
+                    else window.scrollTo(0, 0);
+                }} sx={{ cursor: 'pointer' }} variant="h2">ваппи</Typography>
+
+                <Typography variant="body2">твой проводник в мире медиа</Typography>
+                <Box sx={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '1em',
+                }}>
+                    <IconButton onClick={() => navigate('/')} disabled={pathname === '/'} color="primary">
+                        <DashboardIcon />
+                    </IconButton>
+                    <IconButton onClick={() => navigate('/history')} disabled={pathname === '/history' || !user?.historyLoad || !token?.length} color="primary">
+                        <ScheduleIcon />
+                    </IconButton>
+                    <IconButton onClick={() => navigate('/favorites')} disabled={pathname === '/favorites' || !user?.favorites || !token?.length} color="primary">
+                        <FavoriteIcon />
+                    </IconButton>
+                    <SpeedDial
+                        size="small"
+                        direction="down"
+                        sx={{
+                            maxHeight: '2.5em', maxWidth: '2.5em', minHeight: '2.5em', minWidth: '2.5em',
+                        }}
+                        FabProps={{
+                            sx: {
+                                maxHeight: '2.5em', maxWidth: '2.5em', minHeight: '2.5em', minWidth: '2.5em', fontSize: '.9em', backgroundColor: 'transparent', // Убираем фон
+                                boxShadow: 'none',
+                                '&:hover': {
+                                    backgroundColor: 'transparent',
+                                    boxShadow: 'none',
+                                },
+                                '&:active': {
+                                    backgroundColor: 'transparent',
+                                    boxShadow: 'none',
+                                }, color: '#a27ae2ff'
+                            },
+                        }}
+                        disabled={pathname === '/profile' || pathname === '/signin' || pathname === '/signup' || pathname === '/reset_pass' || pathname === '/change_pass'}
+                        ariaLabel="SpeedDial basic example"
+                        icon={<PersonIcon sx={{ fontSize: '2em' }} />}
+                    >
+                        {(!token || token.length < 1 || !user) ? (
+                            actionsNotAuth.map((action) => (
+                                <SpeedDialAction
+                                    key={nanoid()}
+                                    icon={action.icon}
+                                    onClick={action.onClick}
+                                    slotProps={{
+                                        tooltip: {
+                                            title: action.name,
+                                        },
+                                    }}
+                                />
+                            ))
+                        ) : (
+                            actionsAuth.map((action) => (
+                                <SpeedDialAction
+                                    key={nanoid()}
+                                    onClick={action.onClick}
+                                    icon={action.icon}
+                                    slotProps={{
+                                        tooltip: {
+                                            title: action.name,
+                                        },
+                                    }}
+                                />
+                            ))
+                        )}
+                    </SpeedDial>
+                </Box>
+            </>
+        )
+    }
+
+    const TabletMenu = () => {
+        return (
+            <>
+                <Typography onClick={() => {
+                    if (pathname != '/') navigate('/')
+                    else window.scrollTo(0, 0);
+                }} sx={{ cursor: 'pointer' }} variant="h3">ваппи</Typography>
+
+                <Box sx={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '.5em',
+                }}>
+                    <IconButton size="sm" onClick={() => navigate('/')} disabled={pathname === '/'} color="primary">
+                        <DashboardIcon sx={{ fontSize: '.9em' }} />
+                    </IconButton>
+                    <IconButton size="sm" onClick={() => navigate('/history')} disabled={pathname === '/history' || !user?.historyLoad || !token?.length} color="primary">
+                        <ScheduleIcon sx={{ fontSize: '.9em' }} />
+                    </IconButton>
+                    <IconButton size="sm" onClick={() => navigate('/favorites')} disabled={pathname === '/favorites' || !user?.favorites || !token?.length} color="primary">
+                        <FavoriteIcon sx={{ fontSize: '.9em' }} />
+                    </IconButton>
+                    <SpeedDial
+                        size="small"
+                        direction="down"
+                        sx={{
+                            maxHeight: '2.3em', maxWidth: '2.3em', minHeight: '2.3em', minWidth: '2.3em',
+                        }}
+                        FabProps={{
+                            sx: {
+                                maxHeight: '2.5em', maxWidth: '2.5em', minHeight: '2.5em', minWidth: '2.5em', fontSize: '.9em', backgroundColor: 'transparent', // Убираем фон
+                                boxShadow: 'none',
+                                '&:hover': {
+                                    backgroundColor: 'transparent',
+                                    boxShadow: 'none',
+                                },
+                                '&:active': {
+                                    backgroundColor: 'transparent',
+                                    boxShadow: 'none',
+                                }, color: '#a27ae2ff'
+                            },
+                        }}
+                        disabled={pathname === '/profile' || pathname === '/signin' || pathname === '/signup' || pathname === '/reset_pass' || pathname === '/change_pass'}
+                        ariaLabel="SpeedDial basic example"
+                        icon={<PersonIcon sx={{ fontSize: '1.5em', p: '0', m: '0' }} />}
+                    >
+                        {(!token || token.length < 1 || !user) ? (
+                            actionsNotAuthSM.map((action) => (
+                                <SpeedDialAction
+                                    key={nanoid()}
+                                    icon={action.icon}
+                                    onClick={action.onClick}
+                                    slotProps={{
+                                        tooltip: {
+                                            title: action.name,
+                                        },
+                                    }}
+                                />
+                            ))
+                        ) : (
+                            actionsAuthSM.map((action) => (
+                                <SpeedDialAction
+                                    key={nanoid()}
+                                    onClick={action.onClick}
+                                    icon={action.icon}
+                                    slotProps={{
+                                        tooltip: {
+                                            title: action.name,
+                                        },
+                                    }}
+                                />
+                            ))
+                        )}
+                    </SpeedDial>
+                </Box>
+            </>
+        )
     }
 
     return (
@@ -48,12 +249,12 @@ const Header = () => {
                         backdropFilter: 'blur(10px)',
                         border: '1px solid #D4BBFC',
                         borderRadius: '1em', p: '1em',
-                        minWidth: '80%',
-                        maxWidth: '80%',
+                        maxWidth: !isMobile ? '80%' : '100%',
+                        minWidth: !isMobile ? '80%' : '100%',
                         m: '0em auto 2em auto',
                         display: 'flex',
                         alignItems: 'center',
-                        padding: '.5em 4em',
+                        padding: '.5em 1em',
                         justifyContent: 'space-between',
                         gap: '1em',
                         position: 'sticky',
@@ -61,83 +262,11 @@ const Header = () => {
                         zIndex: '10000000',
                     }}
                 >
-                    <Typography onClick={() => {
-                        if (pathname != '/') navigate('/')
-                        else window.scrollTo(0, 0);
-                    }} sx={{ cursor: 'pointer' }} variant="h2">ваппи</Typography>
-
-                    <Typography variant="body2">твой проводник в мире медиа</Typography>
-                    <Box sx={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '1em',
-                    }}>
-                        <IconButton onClick={() => navigate('/')} disabled={pathname === '/'} color="primary">
-                            <DashboardIcon />
-                        </IconButton>
-                        <IconButton onClick={() => navigate('/history')} disabled={pathname === '/history' || !user?.historyLoad || !token?.length} color="primary">
-                            <ScheduleIcon />
-                        </IconButton>
-                        <IconButton onClick={() => navigate('/favorites')} disabled={pathname === '/favorites' || !user?.favorites || !token?.length} color="primary">
-                            <FavoriteIcon />
-                        </IconButton>
-                        <SpeedDial
-                            size="small"
-                            direction="down"
-                            sx={{
-                                maxHeight: '2.5em', maxWidth: '2.5em', minHeight: '2.5em', minWidth: '2.5em',
-                            }}
-                            FabProps={{
-                                sx: {
-                                    maxHeight: '2.5em', maxWidth: '2.5em', minHeight: '2.5em', minWidth: '2.5em', fontSize: '.9em', backgroundColor: 'transparent', // Убираем фон
-                                    boxShadow: 'none',
-                                    '&:hover': {
-                                        backgroundColor: 'transparent',
-                                        boxShadow: 'none',
-                                    },
-                                    '&:active': {
-                                        backgroundColor: 'transparent',
-                                        boxShadow: 'none',
-                                    }, color: '#a27ae2ff'
-                                },
-                            }}
-                            disabled={pathname === '/profile' || pathname === '/signin' || pathname === '/signup' || pathname === '/reset_pass' || pathname === '/change_pass'}
-                            ariaLabel="SpeedDial basic example"
-                            icon={<PersonIcon sx={{ fontSize: '2em' }} />}
-                        >
-                            {(!token || token.length < 1 || !user) ? (
-                                actionsNotAuth.map((action) => (
-                                    <SpeedDialAction
-                                        key={nanoid()}
-                                        icon={action.icon}
-                                        onClick={action.onClick}
-                                        slotProps={{
-                                            tooltip: {
-                                                title: action.name,
-                                            },
-                                        }}
-                                    />
-                                ))
-                            ) : (
-                                actionsAuth.map((action) => (
-                                    <SpeedDialAction
-                                        key={nanoid()}
-                                        onClick={action.onClick}
-                                        icon={action.icon}
-                                        slotProps={{
-                                            tooltip: {
-                                                title: action.name,
-                                            },
-                                        }}
-                                    />
-                                ))
-                            )}
-                        </SpeedDial>
-                    </Box>
+                    {isMobile ? <TabletMenu /> : <DesktopMenu />}
                 </Box >
 
                 <Dialog
-                    sx={{ backgroundColor: '#3C096C6' }}
+                    sx={{ backgroundColor: '#3C096C6', zIndex: '10000000000000000000' }}
                     open={outDialog || delDialog}
                     onClose={handleClose}>
                     <DialogTitle>вы уверены{delDialog ? ', что хотите удалить аккаунт навсегда?' : ', что хотите выйти из аккаунта?'}</DialogTitle>

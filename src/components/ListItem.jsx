@@ -1,9 +1,46 @@
+/**
+ * Компонент отображения медиа-элемента в ленте/галерее
+ * 
+ * Отвечает за:
+ * - Отображение превью изображения
+ * - Скачивание файла (с добавлением в историю)
+ * - Добавление/удаление из избранного
+ * - Навигацию на страницу детального просмотра
+ * 
+ * Оптимизация:
+ * - useMemo для вычисления URL, статуса избранного, даты
+ * - useCallback для обработчиков событий
+ * - React.memo? (не указан, но подразумевается)
+ * 
+ * Интеграция с Redux:
+ * - useSelector для получения user и token
+ * - dispatch для обновления глобального состояния
+ * 
+ * Взаимодействие с API:
+ * - Добавление в историю (POST /profile/history/add)
+ * - Обновление токена при необходимости
+ * 
+ * Адаптивность:
+ * - Masonry-подобное отображение (break-inside: avoid-column)
+ * - Обрезка и масштабирование через object-fit: contain
+ * 
+ * Props:
+ * @param {string} source - Источник (whvn/tenor/svg)
+ * @param {Object} data - Данные медиа-элемента
+ * @param {number} loadDate - Timestamp загрузки (для истории)
+ * 
+ * Ключевые функции:
+ * - handleDownloadClick: скачивание + запись в историю
+ * - handleFavoritesClick: добавление/удаление из избранного
+ * - handleItemClick: переход на детальную страницу
+ */
+
 import { Box, Chip, Typography, Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import DownloadIcon from '@mui/icons-material/Download';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useMemo } from "react";
 import { getUrl, handleDownload } from "../util/dashboard";
 import { useDispatch, useSelector } from "react-redux";
 import { useFavorites } from "../pages/FavoritePage/FavoritesHooks";
@@ -14,7 +51,6 @@ import React from 'react'; //for test
 const ListItem = ({ source, data, loadDate }) => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const [isMouseOver, setIsMouseOver] = useState(false);
     const { user, token } = useSelector(state => state.global)
     const { addToFavorites, removeFromFavorites } = useFavorites();
 
@@ -24,9 +60,6 @@ const ListItem = ({ source, data, loadDate }) => {
         user?.favorites?.find(elem => elem.data === data && elem.source === source),
         [user, data, source]
     );
-
-    const handleMouseEnter = useCallback(() => setIsMouseOver(true), []);
-    const handleMouseLeave = useCallback(() => setIsMouseOver(false), []);
 
     const handleItemClick = useCallback(() => {
         navigate('/item', { state: { id: data?.id, source, item: data } });
@@ -76,95 +109,92 @@ const ListItem = ({ source, data, loadDate }) => {
     );
 
     const hoverOverlay = useMemo(() =>
-        isMouseOver && (
-            <Box
-                onClick={handleItemClick}
-                sx={{
-                    position: 'absolute',
-                    height: '100%',
-                    width: '100%',
-                    backgroundColor: '#00000060',
-                    top: 0,
-                    left: 0,
-                    borderRadius: '1em',
-                    zIndex: 2,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'start',
-                    justifyContent: 'space-between',
-                    gap: '1em',
-                    padding: '1em',
-                    cursor: 'pointer'
-                }}
-            >
+        <Box
+            onClick={handleItemClick}
+            sx={{
+                position: 'absolute',
+                height: '100%',
+                width: '100%',
+                backgroundColor: 'transparent',
+                top: 0,
+                left: 0,
+                borderRadius: '1em',
+                zIndex: 2,
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'start',
+                justifyContent: 'space-between',
+                gap: '1em',
+                padding: '1em',
+                cursor: 'pointer'
+            }}
+        >
+            <Box sx={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                flexDirection: 'column',
+                gap: '1em',
+                minHeight: '100%',
+                minWidth: '100%',
+            }}>
                 <Box sx={{
                     display: 'flex',
-                    alignItems: 'center',
                     justifyContent: 'space-between',
-                    flexDirection: 'column',
-                    gap: '1em',
-                    minHeight: '100%',
                     minWidth: '100%',
-                }}>
-                    <Box sx={{
-                        display: 'flex',
-                        justifyContent: 'space-between',
-                        minWidth: '100%',
-                        gap: '1em',
-                    }}
+                    gap: '1em',
+                }}
+                >
+                    <Button
+                        onClick={handleDownloadClick}
+                        variant="contained"
+                        aria-label="Download"
+                        size="small"
                     >
-                        <Button
-                            onClick={handleDownloadClick}
-                            variant="contained"
-                            aria-label="Download"
-                        >
-                            <DownloadIcon sx={{ fontSize: '1.2em' }} />
-                        </Button>
-                        <Chip
-                            label={source?.toUpperCase()}
-                            variant={source}
-                        />
-                        <Button
-                            disabled={!user?.favorites && !token}
-                            onClick={handleFavoritesClick}
-                            variant="contained"
-                            aria-label="Favorite"
-                        >
-                            {isFavorite ? (
-                                <FavoriteIcon sx={{ fontSize: '1.2em' }} />
-                            ) : (
-                                <FavoriteBorderIcon sx={{ fontSize: '1.2em' }} />
-                            )}
-                        </Button>
-                    </Box>
-                    <Box sx={{
-                        alignSelf: 'end',
-                        display: 'flex',
-                        justifyContent: 'end',
-                        alignItems: 'end',
-                        gap: '1em',
-                    }}
+                        <DownloadIcon sx={{ fontSize: '1.2em' }} />
+                    </Button>
+                    <Chip
+                        label={source?.toUpperCase()}
+                        variant={source}
+                    />
+                    <Button
+                        disabled={!user?.favorites && !token}
+                        onClick={handleFavoritesClick}
+                        variant="contained"
+                        size="small"
+                        aria-label="Favorite"
                     >
-                        {formattedDate && (
-                            <Typography sx={{
-                                backgroundColor: '#333',
-                                p: '2px 5px',
-                                borderRadius: '5px'
-                            }}>
-                                {formattedDate}
-                            </Typography>
+                        {isFavorite ? (
+                            <FavoriteIcon sx={{ fontSize: '1.2em' }} />
+                        ) : (
+                            <FavoriteBorderIcon sx={{ fontSize: '1.2em' }} />
                         )}
-                    </Box>
+                    </Button>
+                </Box>
+                <Box sx={{
+                    alignSelf: 'end',
+                    display: 'flex',
+                    justifyContent: 'end',
+                    alignItems: 'end',
+                    gap: '1em',
+                }}
+                >
+                    {formattedDate && (
+                        <Typography sx={{
+                            backgroundColor: '#333',
+                            p: '2px 5px',
+                            borderRadius: '5px'
+                        }}>
+                            {formattedDate}
+                        </Typography>
+                    )}
                 </Box>
             </Box>
-        ),
-        [isMouseOver, handleItemClick, handleDownloadClick, source, handleFavoritesClick, user, token, isFavorite, formattedDate]
+        </Box>
     );
 
     return (
         <Box
-            onMouseEnter={handleMouseEnter}
-            onMouseLeave={handleMouseLeave}
             sx={{
                 backgroundColor: '#10002B',
                 borderRadius: '1em',

@@ -164,7 +164,7 @@ describe('SignUpPage', () => {
         renderWithProviders(<SignUpPage />, stateWithStep1);
 
         expect(screen.getByText('подтвердите почту')).toBeInTheDocument();
-        expect(screen.getByText(/на указанную почту придет письмо с кодом подтверждения/i)).toBeInTheDocument();
+        expect(screen.getByText(/на вашу почту отправлен код подтверждения/i)).toBeInTheDocument();
         expect(screen.getByTestId('otp-input')).toBeInTheDocument();
     });
 

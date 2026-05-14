@@ -1,0 +1,69 @@
+"filename", "language", "JSON", "JavaScript JSX", "JavaScript", "Markdown", "HTML", "CSS", "YAML", "comment", "blank", "total"
+"c:\Users\TBG\Documents\wappy\client\.github\workflows\test.yml", "YAML", 0, 0, 0, 0, 0, 0, 46, 0, 13, 59
+"c:\Users\TBG\Documents\wappy\client\README.md", "Markdown", 0, 0, 0, 23, 0, 0, 0, 0, 8, 31
+"c:\Users\TBG\Documents\wappy\client\eslint.config.js", "JavaScript", 0, 0, 28, 0, 0, 0, 0, 0, 2, 30
+"c:\Users\TBG\Documents\wappy\client\index.html", "HTML", 0, 0, 0, 0, 14, 0, 0, 0, 1, 15
+"c:\Users\TBG\Documents\wappy\client\package-lock.json", "JSON", 10962, 0, 0, 0, 0, 0, 0, 0, 1, 10963
+"c:\Users\TBG\Documents\wappy\client\package.json", "JSON", 88, 0, 0, 0, 0, 0, 0, 0, 1, 89
+"c:\Users\TBG\Documents\wappy\client\src\App.jsx", "JavaScript JSX", 0, 52, 0, 0, 0, 0, 0, 0, 4, 56
+"c:\Users\TBG\Documents\wappy\client\src\components\AuthContainer.jsx", "JavaScript JSX", 0, 31, 0, 0, 0, 0, 0, 0, 3, 34
+"c:\Users\TBG\Documents\wappy\client\src\components\AuthField.jsx", "JavaScript JSX", 0, 24, 0, 0, 0, 0, 0, 0, 2, 26
+"c:\Users\TBG\Documents\wappy\client\src\components\Checkbox.jsx", "JavaScript JSX", 0, 16, 0, 0, 0, 0, 0, 0, 1, 17
+"c:\Users\TBG\Documents\wappy\client\src\components\ErrorPage.jsx", "JavaScript JSX", 0, 32, 0, 0, 0, 0, 0, 0, 3, 35
+"c:\Users\TBG\Documents\wappy\client\src\components\Footer.jsx", "JavaScript JSX", 0, 53, 0, 0, 0, 0, 0, 0, 4, 57
+"c:\Users\TBG\Documents\wappy\client\src\components\GetPDFButton.jsx", "JavaScript JSX", 0, 88, 0, 0, 0, 0, 0, 0, 22, 110
+"c:\Users\TBG\Documents\wappy\client\src\components\Header.jsx", "JavaScript JSX", 0, 269, 0, 0, 0, 0, 0, 0, 14, 283
+"c:\Users\TBG\Documents\wappy\client\src\components\HeaderSlice.js", "JavaScript", 0, 0, 16, 0, 0, 0, 0, 0, 4, 20
+"c:\Users\TBG\Documents\wappy\client\src\components\ListItem.jsx", "JavaScript JSX", 0, 178, 0, 0, 0, 0, 0, 0, 13, 191
+"c:\Users\TBG\Documents\wappy\client\src\index.css", "CSS", 0, 0, 0, 0, 0, 72, 0, 0, 10, 82
+"c:\Users\TBG\Documents\wappy\client\src\main.jsx", "JavaScript JSX", 0, 11, 0, 0, 0, 0, 0, 0, 2, 13
+"c:\Users\TBG\Documents\wappy\client\src\pages\ChangeEmailPage\ChangeEmailPage.jsx", "JavaScript JSX", 0, 171, 0, 0, 0, 0, 0, 0, 24, 195
+"c:\Users\TBG\Documents\wappy\client\src\pages\ChangeEmailPage\ChenageEmailSlice.js", "JavaScript", 0, 0, 26, 0, 0, 0, 0, 0, 5, 31
+"c:\Users\TBG\Documents\wappy\client\src\pages\DashboardPage\DashboardPage.jsx", "JavaScript JSX", 0, 374, 0, 0, 0, 0, 0, 0, 49, 423
+"c:\Users\TBG\Documents\wappy\client\src\pages\DashboardPage\DashboardSlice.js", "JavaScript", 0, 0, 45, 0, 0, 0, 0, 0, 7, 52
+"c:\Users\TBG\Documents\wappy\client\src\pages\FavoritePage\FavoritePage.jsx", "JavaScript JSX", 0, 54, 0, 0, 0, 0, 0, 0, 7, 61
+"c:\Users\TBG\Documents\wappy\client\src\pages\FavoritePage\FavoritesHooks.js", "JavaScript", 0, 0, 35, 0, 0, 0, 0, 0, 6, 41
+"c:\Users\TBG\Documents\wappy\client\src\pages\HistoryPage\HistoryPage.jsx", "JavaScript JSX", 0, 57, 0, 0, 0, 0, 0, 0, 5, 62
+"c:\Users\TBG\Documents\wappy\client\src\pages\ItemPage\ItemPage.jsx", "JavaScript JSX", 0, 203, 0, 0, 0, 0, 0, 0, 19, 222
+"c:\Users\TBG\Documents\wappy\client\src\pages\ItemPage\ItemSlice.js", "JavaScript", 0, 0, 18, 0, 0, 0, 0, 0, 4, 22
+"c:\Users\TBG\Documents\wappy\client\src\pages\ItemPage\itemHooks.jsx", "JavaScript JSX", 0, 50, 0, 0, 0, 0, 0, 0, 5, 55
+"c:\Users\TBG\Documents\wappy\client\src\pages\SignInPage\SignInPage.jsx", "JavaScript JSX", 0, 204, 0, 0, 0, 0, 0, 0, 14, 218
+"c:\Users\TBG\Documents\wappy\client\src\pages\SignUpPage\AuthSlice.js", "JavaScript", 0, 0, 31, 0, 0, 0, 0, 0, 7, 38
+"c:\Users\TBG\Documents\wappy\client\src\pages\SignUpPage\SignUpPage.jsx", "JavaScript JSX", 0, 256, 0, 0, 0, 0, 0, 0, 15, 271
+"c:\Users\TBG\Documents\wappy\client\src\setupTests.js", "JavaScript", 0, 0, 41, 0, 0, 0, 0, 0, 7, 48
+"c:\Users\TBG\Documents\wappy\client\src\util\__mocks__\axiosConfig.js", "JavaScript", 0, 0, 14, 0, 0, 0, 0, 0, 1, 15
+"c:\Users\TBG\Documents\wappy\client\src\util\authHooks.js", "JavaScript", 0, 0, 199, 0, 0, 0, 0, 0, 31, 230
+"c:\Users\TBG\Documents\wappy\client\src\util\axiosConfig.js", "JavaScript", 0, 0, 74, 0, 0, 0, 0, 0, 15, 89
+"c:\Users\TBG\Documents\wappy\client\src\util\dashboard.js", "JavaScript", 0, 0, 61, 0, 0, 0, 0, 0, 9, 70
+"c:\Users\TBG\Documents\wappy\client\src\util\globalSlice.js", "JavaScript", 0, 0, 17, 0, 0, 0, 0, 0, 3, 20
+"c:\Users\TBG\Documents\wappy\client\src\util\headerHoocks.js", "JavaScript", 0, 0, 49, 0, 0, 0, 0, 0, 8, 57
+"c:\Users\TBG\Documents\wappy\client\src\util\persist.js", "JavaScript", 0, 0, 42, 0, 0, 0, 0, 0, 5, 47
+"c:\Users\TBG\Documents\wappy\client\src\util\routerHooks.js", "JavaScript", 0, 0, 28, 0, 0, 0, 0, 0, 5, 33
+"c:\Users\TBG\Documents\wappy\client\src\util\tests\components\AuthContainer.test.jsx", "JavaScript JSX", 0, 57, 0, 0, 0, 0, 0, 0, 8, 65
+"c:\Users\TBG\Documents\wappy\client\src\util\tests\components\AuthField.test.jsx", "JavaScript JSX", 0, 53, 0, 0, 0, 0, 0, 0, 9, 62
+"c:\Users\TBG\Documents\wappy\client\src\util\tests\components\Checkbox.test.jsx", "JavaScript JSX", 0, 63, 0, 0, 0, 0, 0, 0, 10, 73
+"c:\Users\TBG\Documents\wappy\client\src\util\tests\components\ErrorPage.test.jsx", "JavaScript JSX", 0, 33, 0, 0, 0, 0, 0, 0, 6, 39
+"c:\Users\TBG\Documents\wappy\client\src\util\tests\components\Footer.test.jsx", "JavaScript JSX", 0, 59, 0, 0, 0, 0, 0, 1, 11, 71
+"c:\Users\TBG\Documents\wappy\client\src\util\tests\components\GetPDFButton.test.jsx", "JavaScript JSX", 0, 86, 0, 0, 0, 0, 0, 0, 22, 108
+"c:\Users\TBG\Documents\wappy\client\src\util\tests\components\Header.test.jsx", "JavaScript JSX", 0, 90, 0, 0, 0, 0, 0, 0, 20, 110
+"c:\Users\TBG\Documents\wappy\client\src\util\tests\components\ListItem.test.jsx", "JavaScript JSX", 0, 144, 0, 0, 0, 0, 0, 0, 37, 181
+"c:\Users\TBG\Documents\wappy\client\src\util\tests\hooks\AuthSlice.test.js", "JavaScript", 0, 0, 41, 0, 0, 0, 0, 0, 7, 48
+"c:\Users\TBG\Documents\wappy\client\src\util\tests\hooks\ChenageEmailSlice.test.js", "JavaScript", 0, 0, 51, 0, 0, 0, 0, 0, 16, 67
+"c:\Users\TBG\Documents\wappy\client\src\util\tests\hooks\DashboardSlice.test.js", "JavaScript", 0, 0, 53, 0, 0, 0, 0, 0, 10, 63
+"c:\Users\TBG\Documents\wappy\client\src\util\tests\hooks\FavoritesHooks.test.js", "JavaScript", 0, 0, 153, 0, 0, 0, 0, 1, 27, 181
+"c:\Users\TBG\Documents\wappy\client\src\util\tests\hooks\GlobalSlice.test.js", "JavaScript", 0, 0, 27, 0, 0, 0, 0, 0, 5, 32
+"c:\Users\TBG\Documents\wappy\client\src\util\tests\hooks\HeaderSlice.test.js", "JavaScript", 0, 0, 50, 0, 0, 0, 0, 1, 15, 66
+"c:\Users\TBG\Documents\wappy\client\src\util\tests\hooks\authHooks.test.js", "JavaScript", 0, 0, 95, 0, 0, 0, 0, 0, 27, 122
+"c:\Users\TBG\Documents\wappy\client\src\util\tests\hooks\dashboard.test.js", "JavaScript", 0, 0, 35, 0, 0, 0, 0, 0, 8, 43
+"c:\Users\TBG\Documents\wappy\client\src\util\tests\hooks\headerHooks.test.js", "JavaScript", 0, 0, 134, 0, 0, 0, 0, 0, 28, 162
+"c:\Users\TBG\Documents\wappy\client\src\util\tests\hooks\itemHooks.test.js", "JavaScript", 0, 0, 86, 0, 0, 0, 0, 0, 23, 109
+"c:\Users\TBG\Documents\wappy\client\src\util\tests\hooks\itemSlice.test.js", "JavaScript", 0, 0, 62, 0, 0, 0, 0, 0, 14, 76
+"c:\Users\TBG\Documents\wappy\client\src\util\tests\hooks\routerHooks.test.js", "JavaScript", 0, 0, 200, 0, 0, 0, 0, 0, 47, 247
+"c:\Users\TBG\Documents\wappy\client\src\util\tests\pages\ChangeEmailPage.test.jsx", "JavaScript JSX", 0, 184, 0, 0, 0, 0, 0, 0, 32, 216
+"c:\Users\TBG\Documents\wappy\client\src\util\tests\pages\DashboardPage.test.jsx", "JavaScript JSX", 0, 159, 0, 0, 0, 0, 0, 3, 35, 197
+"c:\Users\TBG\Documents\wappy\client\src\util\tests\pages\ItemPage.test.jsx", "JavaScript JSX", 0, 139, 0, 0, 0, 0, 0, 1, 24, 164
+"c:\Users\TBG\Documents\wappy\client\src\util\tests\pages\SignInPage.test.jsx", "JavaScript JSX", 0, 180, 0, 0, 0, 0, 0, 2, 34, 216
+"c:\Users\TBG\Documents\wappy\client\src\util\tests\pages\SignUpPage.test.jsx", "JavaScript JSX", 0, 309, 0, 0, 0, 0, 0, 0, 52, 361
+"c:\Users\TBG\Documents\wappy\client\src\util\theme.js", "JavaScript", 0, 0, 242, 0, 0, 0, 0, 0, 1, 243
+"c:\Users\TBG\Documents\wappy\client\vite.config.js", "JavaScript", 0, 0, 14, 0, 0, 0, 0, 1, 2, 17
+"Total", "-", 11050, 3679, 1967, 23, 14, 72, 46, 10, 889, 17750

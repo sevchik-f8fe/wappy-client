@@ -1,3 +1,28 @@
+/**
+ * Хуки для обработки данных на странице элемента
+ * 
+ * Хуки и их функции:
+ * 
+ * 1. useTenor - для гифок с Tenor
+ *    @function getTenorVariants - извлекает все доступные форматы:
+ *      - GIF: gif, mediumgif, nanogif, tinygif
+ *      - MP4: mp4, loopedmp4, nanomp4, tinymp4
+ *      - WebM: webm, nanowebm, tinywebm
+ *      - WebP: webp
+ * 
+ * 2. useSVG - для SVG изображений
+ *    @function getSVGVariants - возвращает варианты:
+ *      - Если есть dark/light: возвращает оба варианта + wordmark
+ *      - Иначе: только основной route
+ * 
+ * 3. usePhoto - для фотографий с WHVN
+ *    @function getFormat - определяет формат файла из расширения
+ *    @function getPhotoVariants - возвращает массив с одним элементом
+ *      (содержит URL, размер, ширину, высоту)
+ * 
+ * Все функции фильтруют null/undefined значения
+ */
+
 export const useTenor = () => {
     const getTenorVariants = (data) => {
         if (!data?.media || !Array.isArray(data.media) || data.media.length === 0) {

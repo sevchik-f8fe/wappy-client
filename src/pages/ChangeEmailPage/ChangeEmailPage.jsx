@@ -1,3 +1,29 @@
+/**
+ * Страница смены email адреса пользователя
+ * 
+ * Двухшаговый процесс:
+ * 1. Ввод нового email
+ * 2. Подтверждение через код из письма
+ * 
+ * Особенности:
+ * - Требуется авторизация (редирект на главную если нет user/token)
+ * - Валидация email через регулярное выражение
+ * - Таймер обратного отсчета для повторной отправки (120 сек)
+ * - Stepper для визуализации прогресса
+ * 
+ * Используемые хуки:
+ * - useServer: changeEmail, sendMailForChange
+ * - Redux для состояния (email, code, timer, step)
+ * 
+ * API вызовы:
+ * - sendMailForChange: отправка письма на новый email
+ * - changeEmail: подтверждение смены email с кодом
+ * 
+ * Безопасность:
+ * - Требуется подтверждение через код
+ * - Проверка существующей сессии
+ */
+
 import { Box, Button, Step, StepLabel, Stepper, Typography } from "@mui/material";
 import { MuiOtpInput } from "mui-one-time-password-input";
 import { AuthField } from "../../components/AuthField";
@@ -54,13 +80,9 @@ const ChangeEmailPage = () => {
 
     const handleNextStep = useCallback(async () => {
         if (step === 0) {
-            try {
-                await sendMailForChange(email.value);
-                handleButtonClick();
-                setCurrentStep(step + 1);
-            } catch (error) {
-                console.error('Failed to send email:', error);
-            }
+            await sendMailForChange(email.value);
+            handleButtonClick();
+            setCurrentStep(step + 1);
         } else if (step === 1) {
             changeEmail(code, email.value);
         }

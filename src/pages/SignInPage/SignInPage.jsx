@@ -1,8 +1,42 @@
+/**
+ * Страница входа в аккаунт
+ * 
+ * Двухшаговый процесс:
+ * 1. Ввод email и пароля
+ * 2. Подтверждение через код из письма (2FA)
+ * 
+ * Валидация:
+ * - Email: формат и длина
+ * - Пароль: длина 8-64 символа
+ * - Код: ровно 6 цифр
+ * 
+ * Используемые хуки:
+ * - useEmailHandle, usePasswordHandle, useCodeHandle
+ * - useTimer (таймер для повторной отправки)
+ * - useServer (setOldUser, sendMail, confirmMail)
+ * 
+ * API вызовы:
+ * - /auth/signin - вход
+ * - /auth/sendMail - отправка кода
+ * - /auth/confirmMail - подтверждение входа
+ * 
+ * Особенности:
+ * - Автоматический переход на подтверждение после успешного входа
+ * - Возможность повторной отправки кода (с таймером 120 сек)
+ * - Кнопка "назад" для возврата к вводу данных
+ * 
+ * Адаптивность:
+ * - Мобильная версия: вертикальный layout
+ * - Десктоп: горизонтальный (Stepper + форма)
+ */
+
 import { Box, Typography, Button, Step, Stepper, StepLabel } from "@mui/material";
 import { MuiOtpInput } from 'mui-one-time-password-input';
 import { useCallback, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import React from 'react'; //for test
+import { useTheme } from '@mui/material/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
 
 import { setSimpleField } from "../SignUpPage/AuthSlice";
 import { AuthField } from "../../components/AuthField";
@@ -13,6 +47,8 @@ const SignInPage = () => {
     const dispatch = useDispatch();
     const { email, password, timer, code, step, loading } = useSelector((state) => state.auth)
     const { user } = useSelector((state) => state.global)
+    const theme = useTheme();
+    const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
     const emailHandle = useEmailHandle();
     const passwordHandle = usePasswordHandle();
@@ -37,13 +73,9 @@ const SignInPage = () => {
 
     const handleNextStep = useCallback(async () => {
         if (step === 0) {
-            try {
-                await setOldUser({ email: email.value, password: password.value });
-                setCurrentStep(step + 1);
-                handleButtonClick();
-            } catch (error) {
-                console.error('Sign in failed:', error);
-            }
+            await setOldUser({ email: email.value, password: password.value });
+            setCurrentStep(step + 1);
+            handleButtonClick();
         } else if (step === 1) {
             confirmMail(code, 'signInVerification');
         }
@@ -60,75 +92,51 @@ const SignInPage = () => {
 
     const steps = useMemo(() => ['введите данные аккаунта', 'подтвердите вход'], []);
 
-    const stepContent = useMemo(() => {
-        if (step === 0) {
-            return (
-                <>
-                    <AuthField
-                        help="введите адрес электронной почты"
-                        onchange={emailHandle}
-                        value={email.value}
-                        error={email.error}
-                        label="эл. почта"
-                        type="email"
-                        placeholder="wappy@yandex.ru"
-                    />
-                    <AuthField
-                        help="мин. длинна пароля - 8 символов, разрешены спец-символы: ! @ # $ ? % & { } _ ( )"
-                        onchange={passwordHandle}
-                        value={password.value}
-                        error={password.error}
-                        label="пароль"
-                        type="password"
-                    />
-                </>
-            );
-        }
-
-        return (
-            <>
-                <Typography sx={{ minWidth: '100%' }} variant="body2">
-                    на указанную почту придет письмо с кодом подтверждения <br />
-                    если письмо не приходит проверьте папку спама
-                </Typography>
-                <MuiOtpInput
-                    length={6}
-                    value={code}
-                    onChange={codeHandle}
-                />
-                <Button
-                    disabled={resendDisabled}
-                    sx={{ alignSelf: 'end' }}
-                    loading={loading}
-                    color="linkColor"
-                    variant="text"
-                    onClick={handleResendCode}
-                    size="small"
-                >
-                    {resendDisabled ? formatTime(timer) : 'отправить снова'}
-                </Button>
-            </>
-        );
-    }, [step, email, password, code, resendDisabled, loading, timer, emailHandle, passwordHandle, codeHandle, handleResendCode, formatTime]);
-
     return (
         <AuthContainer text='еще нет аккаунта?' href='/signup' link='регистрация'>
-            <Box sx={{ mt: '1em', display: 'flex', alignItems: 'start', gap: '1em' }}>
-                <Box sx={{ flex: 1, display: 'flex', justifyContent: 'end' }}>
-                    <Stepper alternativeLabel activeStep={step}>
-                        {steps.map((label, i) => (
-                            <Step key={label}>
-                                <StepLabel>
-                                    <Typography variant={step >= i ? 'subtitle1' : 'subtitle2'}>
-                                        {label}
-                                    </Typography>
-                                </StepLabel>
-                            </Step>
-                        ))}
-                    </Stepper>
-                </Box>
-                <Box component="form" sx={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '1em' }}>
-                    {stepContent}
+            {isMobile ? (
+                <Box component="form" sx={{ mt: '1em', flex: 1, display: 'flex', flexDirection: 'column', gap: '1em' }}>
+                    {step === 0 ? (
+                        <>
+                            <AuthField
+                                onchange={emailHandle}
+                                value={email.value}
+                                error={email.error}
+                                label="эл. почта"
+                                type="email"
+                                placeholder="wappy@yandex.ru"
+                            />
+                            <AuthField
+                                onchange={passwordHandle}
+                                value={password.value}
+                                error={password.error}
+                                label="пароль"
+                                type="password"
+                            />
+                        </>
+                    ) : (
+                        <>
+                            <Typography sx={{ minWidth: '100%' }} variant="body2">
+                                на вашу почту отправлен код подтверждения
+                            </Typography>
+                            <MuiOtpInput
+                                length={6}
+                                value={code}
+                                onChange={codeHandle}
+                            />
+                            <Button
+                                disabled={resendDisabled}
+                                sx={{ alignSelf: 'end' }}
+                                loading={loading}
+                                color="linkColor"
+                                variant="text"
+                                onClick={handleResendCode}
+                                size="small"
+                            >
+                                {resendDisabled ? formatTime(timer) : 'отправить снова'}
+                            </Button>
+                        </>
+                    )}
 
                     <Box sx={{ display: 'flex', justifyContent: 'space-between', minWidth: '100%' }}>
                         <Button
@@ -149,7 +157,88 @@ const SignInPage = () => {
                         </Button>
                     </Box>
                 </Box>
-            </Box>
+            ) : (
+                <Box sx={{ mt: '1em', display: 'flex', alignItems: 'start', gap: '1em' }}>
+                    <Box sx={{ flex: 1, display: 'flex', justifyContent: 'end' }}>
+                        <Stepper alternativeLabel activeStep={step}>
+                            {steps.map((label, i) => (
+                                <Step key={label}>
+                                    <StepLabel>
+                                        <Typography variant={step >= i ? 'subtitle1' : 'subtitle2'}>
+                                            {label}
+                                        </Typography>
+                                    </StepLabel>
+                                </Step>
+                            ))}
+                        </Stepper>
+                    </Box>
+                    <Box component="form" sx={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '1em' }}>
+                        {step === 0 ? (
+                            <>
+                                <AuthField
+                                    help="введите адрес электронной почты"
+                                    onchange={emailHandle}
+                                    value={email.value}
+                                    error={email.error}
+                                    label="эл. почта"
+                                    type="email"
+                                    placeholder="wappy@yandex.ru"
+                                />
+                                <AuthField
+                                    help="мин. длинна пароля - 8 символов, разрешены спец-символы: ! @ # $ ? % & { } _ ( )"
+                                    onchange={passwordHandle}
+                                    value={password.value}
+                                    error={password.error}
+                                    label="пароль"
+                                    type="password"
+                                />
+                            </>
+                        ) : (
+                            <>
+                                <Typography sx={{ minWidth: '100%' }} variant="body2">
+                                    на вашу почту отправлен код подтверждения
+                                </Typography>
+                                <MuiOtpInput
+                                    length={6}
+                                    value={code}
+                                    onChange={codeHandle}
+                                />
+                                <Button
+                                    disabled={resendDisabled}
+                                    sx={{ alignSelf: 'end' }}
+                                    loading={loading}
+                                    color="linkColor"
+                                    variant="text"
+                                    onClick={handleResendCode}
+                                    size="small"
+                                >
+                                    {resendDisabled ? formatTime(timer) : 'отправить снова'}
+                                </Button>
+                            </>
+                        )}
+
+                        <Box sx={{ display: 'flex', justifyContent: 'space-between', minWidth: '100%' }}>
+                            <Button
+                                onClick={handleBackStep}
+                                disabled={loading || step === 0}
+                                color="secondary"
+                                variant="outlined"
+                            >
+                                назад
+                            </Button>
+                            <Button
+                                loading={loading}
+                                disabled={!fieldsOk || loading}
+                                onClick={handleNextStep}
+                                variant="outlined"
+                            >
+                                далее
+                            </Button>
+                        </Box>
+                    </Box>
+                </Box>
+            )}
+
         </AuthContainer>
     );
 }

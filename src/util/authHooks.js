@@ -1,3 +1,17 @@
+/**
+ * Хуки для аутентификации и управления формой регистрации/входа
+ * 
+ * Содержит пользовательские хуки React для:
+ * - useEmailHandle: Валидация и обработка ввода email (разрешены буквы, цифры, _, @, .)
+ * - usePasswordHandle: Валидация пароля (длина 8-64 символа, спецсимволы)
+ * - usePasswordRepHandle: Проверка совпадения паролей
+ * - useCodeHandle: Обработка кода подтверждения (только цифры)
+ * - useTimer: Таймер обратного отсчета (120 секунд) для повторной отправки кода
+ * - useServer: API-запросы к серверу (регистрация, вход, отправка писем, подтверждение, смена email)
+ * 
+ * Зависимости: Redux (dispatch, useSelector), React Router, React Toastify, axios
+ */
+
 import { useDispatch, useSelector } from "react-redux";
 import { setAuthField, setAuthError, setSimpleField } from "../pages/SignUpPage/AuthSlice";
 import { setGlobalData } from "./globalSlice";
@@ -138,7 +152,6 @@ export const useServer = () => {
         const fetchData = await api.post('/auth/signin', data, { headers: { 'Content-Type': 'application/json' } })
             .then((res) => res.data)
             .catch((err) => {
-                console.log(err)
                 notify();
             })
             .finally(() => {

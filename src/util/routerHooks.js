@@ -1,8 +1,30 @@
+/**
+ * Хуки для управления маршрутизацией и навигацией
+ * 
+ * Компонент ScrollToTop выполняет:
+ * 
+ * 1. Защита маршрутов:
+ *    - Проверяет доступ к /change_email, /favorites, /history
+ *    - Перенаправляет на '/' если пользователь не авторизован
+ * 
+ * 2. Сброс состояния на страницах аутентификации:
+ *    - При переходе на /signin или /signup:
+ *      • Сбрасывает таймер (120 сек)
+ *      • Очищает код подтверждения
+ *      • Сбрасывает шаг (step: 0)
+ *      • Сбрасывает флаги подтверждения (confOk, persOk)
+ * 
+ * 3. Прокрутка вверх:
+ *    - Для всех страниц кроме '/', '/item', '/favorites', '/history'
+ *    - Плавная прокрутка к началу страницы
+ * 
+ * Зависимости: React Router DOM (useLocation, useNavigate), Redux
+ */
+
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { setSimpleField } from "../pages/SignUpPage/AuthSlice";
-import { getCsrfToken } from "./axiosConfig";
 
 export const ScrollToTop = () => {
     const { user, token } = useSelector((state) => state.global);
@@ -30,6 +52,5 @@ export const ScrollToTop = () => {
             window.scrollTo(0, 0);
         }
     }, [pathname, dispatch]);
-
     return null;
 }
