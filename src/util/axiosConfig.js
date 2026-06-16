@@ -9,7 +9,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-    baseURL: 'http://161.104.16.134:3000',
+    baseURL: import.meta.env.VITE_API_BASE_URL,
     withCredentials: true,
     timeout: 5000,
 });
