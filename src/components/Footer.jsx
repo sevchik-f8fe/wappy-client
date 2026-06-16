@@ -57,7 +57,7 @@ const Footer = () => {
                         <Button onClick={() => {
                             if (pathname != '/') navigate('/')
                             else window.scrollTo(0, 0);
-                        }} size={isMobile ? 'small' : 'medium'} color="primary" variant="contained">поиск</Button>
+                        }} size={isMobile ? 'small' : 'medium'} color="primary" variant="contained">поиск!</Button>
                     </Box>
                     <Box sx={{
                         display: 'flex',
