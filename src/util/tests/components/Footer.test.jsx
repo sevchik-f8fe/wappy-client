@@ -26,7 +26,7 @@ describe('Footer', () => {
 
         expect(screen.getByText('ваппи')).toBeInTheDocument();
         expect(screen.getByText('твой проводник в мире медиа')).toBeInTheDocument();
-        expect(screen.getByText('поиск')).toBeInTheDocument();
+        expect(screen.getByText('поиск!')).toBeInTheDocument();
         expect(screen.getByText('GitHub')).toBeInTheDocument();
         expect(screen.getByText('эл. почта')).toBeInTheDocument();
     });
