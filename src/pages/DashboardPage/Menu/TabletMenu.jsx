@@ -55,7 +55,7 @@ const TabletMenu = ({ handleSearchClick }) => {
                         <FormControlLabel
                             control={
                                 <Checkbox
-                                    onChange={(e) => { setLocalState({ ...localState, isImg: e.target.checked }) }}
+                                    onchange={(e) => { setLocalState({ ...localState, isImg: e.target.checked }) }}
                                     value={localState.isImg}
                                 />
                             }
@@ -64,7 +64,7 @@ const TabletMenu = ({ handleSearchClick }) => {
                         <FormControlLabel
                             control={
                                 <Checkbox
-                                    onChange={(e) => { setLocalState({ ...localState, isSVG: e.target.checked }) }}
+                                    onchange={(e) => { setLocalState({ ...localState, isSVG: e.target.checked }) }}
                                     value={localState.isSVG}
                                 />
                             }
@@ -73,7 +73,7 @@ const TabletMenu = ({ handleSearchClick }) => {
                         <FormControlLabel
                             control={
                                 <Checkbox
-                                    onChange={(e) => { setLocalState({ ...localState, isGif: e.target.checked }) }}
+                                    onchange={(e) => { setLocalState({ ...localState, isGif: e.target.checked }) }}
                                     value={localState.isGif}
                                 />
                             }

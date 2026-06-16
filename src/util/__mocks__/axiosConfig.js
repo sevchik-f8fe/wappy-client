@@ -5,6 +5,11 @@ export default {
         interceptors: {
             request: { use: jest.fn(), eject: jest.fn() },
             response: { use: jest.fn(), eject: jest.fn() }
+        },
+        defaults: {
+            baseURL: 'http://localhost:3000',
+            withCredentials: true,
+            timeout: 5000
         }
     })),
     get: jest.fn(),

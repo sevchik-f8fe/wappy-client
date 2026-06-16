@@ -79,6 +79,7 @@ const DashboardPage = () => {
                 dispatch(setNextPage({ field: 'tenorNext', next: res.next }));
                 return res.results;
             }).catch((e) => {
+                console.log(e)
                 notify();
                 return [];
             }) : Promise.resolve([]),
@@ -87,9 +88,11 @@ const DashboardPage = () => {
                 { page },
                 { headers: { 'Content-Type': 'application/json' } }
             ).then(res => res?.data?.photo).catch((err) => {
+                console.log(err)
                 notify();
                 return [];
             }).catch((e) => {
+                console.log(e)
                 notify();
                 return [];
             }) : Promise.resolve([]),
@@ -116,6 +119,7 @@ const DashboardPage = () => {
                 { page, query: searchState.query },
                 { headers: { 'Content-Type': 'application/json' } }
             ).then(res => res?.data?.tenor).catch((err) => {
+                console.log(err)
                 notify();
                 return [];
             }) : Promise.resolve([]),
@@ -126,6 +130,7 @@ const DashboardPage = () => {
             ).then(res => {
                 return res?.data?.photo
             }).catch((err) => {
+                console.log(err)
                 notify();
                 return [];
             }) : Promise.resolve([]),
@@ -134,6 +139,7 @@ const DashboardPage = () => {
                 { page, query: searchState.query },
                 { headers: { 'Content-Type': 'application/json' } }
             ).then(res => res?.data?.svg).catch((err) => {
+                console.log(err)
                 notify();
                 return [];
             }) : Promise.resolve([])
@@ -165,6 +171,7 @@ const DashboardPage = () => {
 
             dispatch(setData({ data: [...data, ...newData] }));
         } catch (error) {
+            console.log(error)
             notify();
         } finally {
             dispatch(setSimpleField({ field: 'loading', value: false }));
@@ -187,6 +194,7 @@ const DashboardPage = () => {
 
             dispatch(setData({ data: newData }));
         } catch (error) {
+            console.log(error)
             notify();
         } finally {
             dispatch(setSimpleField({ field: 'loading', value: false }));
