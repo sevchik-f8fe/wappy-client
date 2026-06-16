@@ -49,7 +49,7 @@ describe('Footer', () => {
             </BrowserRouter>
         );
 
-        fireEvent.click(screen.getByText('поиск'));
+        fireEvent.click(screen.getByText('поиск!'));
         expect(window.scrollTo).toHaveBeenCalledWith(0, 0);
     });
 
