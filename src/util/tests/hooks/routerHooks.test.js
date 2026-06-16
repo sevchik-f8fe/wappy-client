@@ -3,8 +3,7 @@ import { renderHook } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
 import { BrowserRouter } from 'react-router-dom';
-import { ScrollToTop, UseCSRF } from '../../routerHooks';
-import { initializeCSRF } from '../../axiosConfig';
+import { ScrollToTop } from '../../routerHooks';
 
 jest.mock('../../axiosConfig', () => ({
     initializeCSRF: jest.fn(() => Promise.resolve())
