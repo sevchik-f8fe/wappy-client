@@ -36,7 +36,7 @@ const persistConfig = {
     storage: sessionStorage,
     transforms: [
         encryptTransform({
-            secretKey: import.meta.env.VITE_CRYPTO_KEY,
+            secretKey: '019a1d16-0ca4-7555-a814-bb733993cde7',
             onError: function (error) {
                 if (error.message.includes("decrypt")) {
                     sessionStorage.removeItem("persist:user");
