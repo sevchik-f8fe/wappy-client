@@ -33,6 +33,11 @@ jobs:
         run: npm test
         env:
           CI: true
+      - name: Build project
+        run: npm run build
+        env:
+          VITE_REDUX_SECRET_KEY: ${{ secrets.VITE_REDUX_SECRET_KEY }}
+          VITE_BASE_SERVER_URL: ${{ secrets.VITE_BASE_SERVER_URL }}
 
   deploy:
     name: deploy to prod
